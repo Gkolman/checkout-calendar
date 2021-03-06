@@ -1,5 +1,5 @@
 const express = require('express');
-const productTitleDB = require('./models/ProductTitle');
+const checkoutDB = require('./models/Checkout');
 
 const app = express();
 
@@ -7,11 +7,10 @@ app.get('/', (req, res) => {
   res.send('hello logged on');
 });
 
-app.get('/productListingTitle/:productId', (req, res) => {
-  productTitleDB.getProductTitleByListingId(req.params.productId)
-    .then(results => res.send(results))
-    .catch(err => res.send(err));
-
+app.get('/checkoutInformation/:productId', (req, res) => {
+  checkoutDB.getListingCheckoutInformation(1)
+    .then(response => res.send(response))
+    .catch(err => console.log(`error looking for checkout information ${err}`));
 });
 
 
