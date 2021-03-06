@@ -56,7 +56,7 @@ newListing.save()
 
 const getListingCheckoutInformation = (listingId) => {
   return new Promise((resolve, reject) => {
-    checkoutDB.find({ 'listingId': listingId })
+    CheckoutDB.find({ 'listingId': listingId })
       .then(response => resolve(response))
       .catch(err => reject(err));
   });
