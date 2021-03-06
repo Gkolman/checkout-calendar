@@ -1,3 +1,4 @@
+const { response } = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -80,6 +81,8 @@ if (!CheckoutDB) {
 
 
 const getListingCheckoutInformation = (listingId) => {
+  listingId = Number(listingId);
+
   return new Promise((resolve, reject) => {
     CheckoutDB.find({ 'listingId': listingId })
       .then(response => resolve(response))
