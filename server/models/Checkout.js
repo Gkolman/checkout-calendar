@@ -37,6 +37,12 @@ const CheckoutDB = mongoose.model('CheckoutDB', checkoutDBSchema);
 
 CheckoutDB.remove({}, () => console.log('cleared all rows in checkout db'));
 
+const listingIdOptions = [0, 100];
+const daysNoticeOptions = [0, 1, 2, 3, 7];
+const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
+const cleaningFeeOptions = [0.15, 0.3];
+const serviceFeeOptions = [0.1, 0.2];
+
 
 const newListing = new CheckoutDB({
   'listingId': 1,

@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/checkoutInformation/:productId', (req, res) => {
   getListingCheckoutInformation(1)
-    .then(response => res.send(response))
+    .then(response => res.send(response[0]))
     .catch(err => console.log(`error looking for checkout information ${err}`));
 });
 
