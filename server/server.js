@@ -8,8 +8,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/checkoutInformation/:productId', (req, res) => {
-  getListingCheckoutInformation(1)
-    .then(response => res.send(response))
+  if (Number(req.params.productId) > 100) {
+    res.send('invalid product id');
+  }
+  
+  getListingCheckoutInformation(req.params.productId)
+    .then(response => res.send(response[0]))
     .catch(err => console.log(`error looking for checkout information ${err}`));
 });
 
