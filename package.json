@@ -7,12 +7,22 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",
+    "react-dev": "webpack --config webpack.config.js --watch",
+    "react-prod": "webpack --config webpack.config.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.1.1",
     "dotenv": "^8.2.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -1,11 +1,10 @@
 const express = require('express');
+const path = require('path');
 const { getListingCheckoutInformation } = require('./models/Checkout');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('hello logged on');
-});
+app.use(express.static('public'));
 
 app.get('/checkoutInformation/:productId', (req, res) => {
   if (Number(req.params.productId) > 100) {
