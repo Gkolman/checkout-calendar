@@ -35,7 +35,23 @@ const checkoutDBSchema = mongoose.Schema({
 
 const CheckoutDB = mongoose.model('CheckoutDB', checkoutDBSchema);
 
-if (!CheckoutDB) {
+let checkIfDBEmpty = () => {
+  console.log('db empty seeding');
+  return new Promise ((resolve, reject) => {
+    CheckoutDB.find({})
+      .then(response => resolve(response.length))
+      .catch(err => reject(err));
+  });
+};
+
+let needsSeed = () => {
+  checkIfDBEmpty()
+    .then(response => response)
+    .catch(err => err);
+};
+
+
+if (!needsSeed()) {
 
   const getRandomInclusiveIntervals = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -80,6 +96,8 @@ if (!CheckoutDB) {
 
 
 const getListingCheckoutInformation = (listingId) => {
+  console.log('checkout database: ', CheckoutDB);
+  console.log('listing id: ', listingId)
   listingId = Number(listingId);
 
   return new Promise((resolve, reject) => {
@@ -89,8 +107,17 @@ const getListingCheckoutInformation = (listingId) => {
   });
 };
 
+const clearDatabaseUtility = () => {
+  return new Promise((resolve, reject) => {
+    CheckoutDB.deleteMany({})
+      .then(response => resolve(response))
+      .catch(err => reject(err));
+  });
+};
+
 
 
 module.exports = {
-  getListingCheckoutInformation
+  getListingCheckoutInformation,
+  clearDatabaseUtility
 };

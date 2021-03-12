@@ -11,20 +11,25 @@ class CheckoutCalendar extends React.Component {
       allowedGuests: numberOfGuests.numberOfGuests,
       totalReviews: totalReviewCount,
       averageRating: averageReviewRatings.averageRating,
+      pricePerNight: '',
     };
   }
 
   componentDidMount() {
-    // axios.get('/checkoutInformation/10')
-    //   .then(checkoutInfo => {})
+    console.log('inside axios')
+    axios.get('/checkoutInformation/10')
+      .then(checkoutInfo => {
+        this.setState({ pricePerNight: checkoutInfo.data.priceForDate })
+      });
   }
 
   render() {
-    const { allowedGuests, totalReviews, averageRating } = this.state;
+    const { allowedGuests, totalReviews, averageRating, pricePerNight } = this.state;
 
-    return(
+    return (
       <div>
         <h1> Checkout Calendar Component Filler </h1>
+        <h2>{pricePerNight} /night</h2>
         <h2>Number of guests allowed are: {allowedGuests}</h2>
         <h2>Average Rating: {averageRating} {totalReviews}</h2>
       </div>
