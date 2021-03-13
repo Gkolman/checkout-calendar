@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { numberOfGuests, totalReviewCount, averageReviewRatings } from '../../../sampleData/sampleData';
 
@@ -15,9 +14,10 @@ class CheckoutCalendar extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/checkoutInformation/10')
+    let productId = window.location.pathname.split('/')[1];
+    axios.get(`/checkoutInformation/${productId}`)
       .then(checkoutInfo => {
-        this.setState({ pricePerNight: checkoutInfo.data.priceForDate })
+        this.setState({ pricePerNight: checkoutInfo.data.priceForDate });
       });
   }
 
