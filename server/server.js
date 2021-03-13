@@ -4,7 +4,7 @@ const { getListingCheckoutInformation, clearDatabaseUtility } = require('./model
 
 const app = express();
 
-app.use(express.static('public'));
+app.use('/:productId', express.static(path.join(__dirname, '../public')));
 
 app.get('/checkoutInformation/:productId', (req, res) => {
   if (Number(req.params.productId) > 100) {
