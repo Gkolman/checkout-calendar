@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon server/server.js",
-    "react-dev": "webpack --config webpack.config.js --watch",
+    "react-dev": "webpack --config webpack.config.js --watch --mode=development ",
     "react-prod": "webpack --config webpack.config.js"
   },
   "devDependencies": {
