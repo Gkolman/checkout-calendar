@@ -27,7 +27,7 @@ class CheckoutCalendar extends React.Component {
 
     return (
       <div>
-        <h1> Checkout Calendar Component Filler </h1>
+        <h1>Checkout Calendar Component Filler</h1>
         <h2>{pricePerNight} /night</h2>
         <h2>Number of guests allowed are: {allowedGuests}</h2>
         <h2>Average Rating: {averageRating} {totalReviews}</h2>
