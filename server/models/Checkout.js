@@ -35,32 +35,16 @@ const checkoutDBSchema = mongoose.Schema({
 
 const CheckoutDB = mongoose.model('CheckoutDB', checkoutDBSchema);
 
-let checkIfDBEmpty = () => {
-  console.log('db empty seeding');
-  return new Promise ((resolve, reject) => {
-    CheckoutDB.find({})
-      .then(response => resolve(response.length))
-      .catch(err => reject(err));
-  });
+const getRandomInclusiveIntervals = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-let needsSeed = () => {
-  checkIfDBEmpty()
-    .then(response => response)
-    .catch(err => err);
-};
+const daysNoticeOptions = [0, 1, 2, 3, 7];
+const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
+const cleaningFeeOptions = [0.15, 0.3];
+const serviceFeeOptions = [0.1, 0.2];
 
-
-if (!needsSeed()) {
-
-  const getRandomInclusiveIntervals = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const daysNoticeOptions = [0, 1, 2, 3, 7];
-  const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
-  const cleaningFeeOptions = [0.15, 0.3];
-  const serviceFeeOptions = [0.1, 0.2];
+const seedCheckoutDB = () => {
 
   for (let i = 0; i < 100; i++) {
 
@@ -90,14 +74,20 @@ if (!needsSeed()) {
         console.log(`successfully created new Listing with the following checkout values ${response}`);
       })
       .catch(err => console.log(`there was an error creating the new listing ${err}`));
-
   }
-} 
+};
+
+CheckoutDB.find({})
+  .then(response => {
+    if (!response.length) {
+      seedCheckoutDB();
+    }
+  })
+  .catch(err => console.log(err));
+
 
 
 const getListingCheckoutInformation = (listingId) => {
-  console.log('checkout database: ', CheckoutDB);
-  console.log('listing id: ', listingId)
   listingId = Number(listingId);
 
   return new Promise((resolve, reject) => {
