@@ -8,7 +8,6 @@ class CheckoutCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allowedGuests: numberOfGuests.numberOfGuests,
       totalReviews: totalReviewCount,
       averageRating: averageReviewRatings.averageRating,
       pricePerNight: '',
@@ -16,7 +15,6 @@ class CheckoutCalendar extends React.Component {
   }
 
   componentDidMount() {
-    console.log('inside axios')
     axios.get('/checkoutInformation/10')
       .then(checkoutInfo => {
         this.setState({ pricePerNight: checkoutInfo.data.priceForDate })
@@ -24,7 +22,8 @@ class CheckoutCalendar extends React.Component {
   }
 
   render() {
-    const { allowedGuests, totalReviews, averageRating, pricePerNight } = this.state;
+    const { totalReviews, averageRating, pricePerNight } = this.state;
+    const allowedGuests = numberOfGuests.numberOfGuests;
 
     return (
       <div>
