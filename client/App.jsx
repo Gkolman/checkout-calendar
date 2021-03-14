@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CheckoutCalendar from './components/CheckoutCalendar/CheckoutCalendar.js';
+
+import { DisplayCalendar } from './components/DisplayCalendar/DisplayCalendar';
+import CheckoutTool from './components/CheckoutTool/CheckoutTool';
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <CheckoutCalendar />
+        <DisplayCalendar />
+        <CheckoutTool />
       </div>
     );
   }
