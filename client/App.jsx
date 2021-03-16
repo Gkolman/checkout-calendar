@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <div>
         <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate}/>
-        <CheckoutTool guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee}/>
+        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee}/>
       </div>
     );
   }
