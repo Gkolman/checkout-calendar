@@ -17,6 +17,9 @@ class App extends React.Component {
       cleaningFee: '',
       serviceFee: '',
       occupancyFee: '',
+      selectedAdults: 1,
+      selectedChildren: 0,
+      selectedInfants: 0
 
     };
   }
@@ -35,12 +38,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { checkInDate, checkOutdate, pricePerNight, cleaningFee, serviceFee, occupancyFee } = this.state;
+    const { checkInDate, checkOutdate, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
 
     return (
       <div>
         <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate}/>
-        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee}/>
+        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants}/>
       </div>
     );
   }
