@@ -15,12 +15,31 @@ class CheckoutTool extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState({
+        pricePerNight: this.props.pricePerNight,
+        cleaningFee: this.props.cleaningFee,
+        serviceFee: this.props.serviceFee,
+        checkInDate: this.props.checkInDate,
+        checkOutDate: this.props.checkOutDate,
+        selectedAdults: this.props.selectedAdults,
+        selectedChildren: this.props.selectedChildren,
+        selectedInfants: this.props.selectedInfants
+      });
+    }
+  }
+
   render() {
+    const { pricePerNight, cleaningFee, serviceFee, checkInDate, checkOutDate, selectedAdults, selectedChildren, selectedInfants } = this.state;
+
+    const guestsAllowed = this.props.guestsAllowed;
+
     return (
       <div id="container">
         <div id="price-and-reviews-container">
           <div id="price">
-            1231231 / night
+            {pricePerNight} / night
           </div>
           <div id="reviews">
             average reviews - total reviews
