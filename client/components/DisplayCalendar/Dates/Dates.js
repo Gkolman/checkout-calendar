@@ -11,7 +11,7 @@ class Dates extends React.Component {
     weekdayNames.forEach((day, index) => weekdayNameDivs.push(<div key={index}>{day}</div>));
     
     let allDates = [];
-    for (let date = 1; date <=this.props.days; date ++) {
+    for (let date = 1; date <= this.props.days; date ++) {
       allDates.push(<div key={date}>{date}</div>);
     }
     return (
