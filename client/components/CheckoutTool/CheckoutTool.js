@@ -31,26 +31,22 @@ class CheckoutTool extends React.Component {
   }
 
   render() {
-    const { pricePerNight, cleaningFee, serviceFee, checkInDate, checkOutDate, selectedAdults, selectedChildren, selectedInfants } = this.state;
-
-    const { guestsAllowed, totalReviews, averageReviews } = this.props;
-
     return (
       <div id="container">
         <div id="price-and-reviews-container">
           <div id="price">
-            {pricePerNight} / night
+            1231231 / night
           </div>
           <div id="reviews">
-            {averageReviews} - {totalReviews} 
+            average reviews - total reviews
           </div>
         </div>
         <div id="checkout-options-container">
           <div id="checkin-date">
-            {checkInDate}
+            checkin date
           </div>
           <div id="checkout-date">
-            {checkOutDate}
+            checkout date
           </div>
           <div id="guests">
             guests selected
@@ -59,12 +55,12 @@ class CheckoutTool extends React.Component {
         <div id="price-summary-container">
           <ul>
             <li>price for x nights</li>
-            <li>cleaning fee {(pricePerNight * cleaningFee).toPrecision(4)}</li>
-            <li>service fee {(pricePerNight * serviceFee).toPrecision(4)}</li>
+            <li>cleaning fee</li>
+            <li>service fee</li>
             <li>occupancy fee</li>
           </ul>
           <div id="price-total">
-            total amount: {Number(pricePerNight + (pricePerNight * cleaningFee) + (pricePerNight * serviceFee)).toPrecision(5)}
+            total amount
           </div>
         </div>
       </div>

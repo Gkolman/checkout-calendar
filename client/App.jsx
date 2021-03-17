@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import { DisplayCalendar } from './components/DisplayCalendar/DisplayCalendar';
+import DisplayCalendar from './components/DisplayCalendar/DisplayCalendar';
 import CheckoutTool from './components/CheckoutTool/CheckoutTool';
 
 import { numberOfGuests, totalReviewCount, averageReviewRatings } from '../sampleData/sampleData';
@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       checkInDate: '',
       checkOutdate: '',
+      monthsInAdvance: '',
       pricePerNight: '',
       cleaningFee: '',
       serviceFee: '',
@@ -30,6 +31,7 @@ class App extends React.Component {
     axios.get(`/checkoutInformation/${productId}`)
       .then(response => {
         this.setState({
+          monthsInAdvance: response.data.monthsInAdvance,
           pricePerNight: response.data.priceForDate,
           serviceFee: response.data.serviceFee,
           cleaningFee: response.data.cleaningFee,
@@ -38,11 +40,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { checkInDate, checkOutdate, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
+    const { checkInDate, checkOutdate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
 
     return (
       <div>
-        <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate}/>
+        <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate} monthsInAdvance={monthsInAdvance}/>
         <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants}/>
       </div>
     );
