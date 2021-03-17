@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dates } from './Dates/Dates';
+import Dates from './Dates/Dates';
 import { months } from './calendarMonths';
 
 class DisplayCalendar extends React.Component {
@@ -19,6 +19,8 @@ class DisplayCalendar extends React.Component {
   }
 
   render() {
+    let currentDate = Date();
+    let currentDateDayOfWeek = currentDate.split(' ')[0];
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
     const { monthsInAdvance } = this.state;
     const { checkInDate, checkOutDate } = this.props;
@@ -30,13 +32,17 @@ class DisplayCalendar extends React.Component {
       <div>
         months in advance : {monthsInAdvance}
         <br />
-        current month: {months[month]};
+        current date: {currentDateDayOfWeek}
+        <br /> 
+        {months[month]} {year}
         <br />
-        dates in month of {months[month]} is {datesInMonth};
+        <Dates days={datesInMonth} dayOfWeek={currentDateDayOfWeek}/>
         <br />
-        selected check in date: {checkInDate};
+        dates in month of {months[month]} is {datesInMonth}
         <br />
-        selected check out date: {checkOutDate};
+        selected check in date: {checkInDate}
+        <br />
+        selected check out date: {checkOutDate}
       </div>
     );
   }
