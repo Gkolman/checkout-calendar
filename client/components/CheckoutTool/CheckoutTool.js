@@ -4,9 +4,9 @@ class CheckoutTool extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pricePerNight: '',
-      cleaningFee: '',
-      serviceFee: '',
+      pricePerNight: this.props.pricePerNight,
+      cleaningFee: this.props.cleaningFee,
+      serviceFee: this.props.serviceFee,
       checkInDate: '',
       checkOutDate: '',
       selectedAdults: '',
