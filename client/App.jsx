@@ -30,7 +30,7 @@ class App extends React.Component {
     axios.get(`/checkoutInformation/${productId}`)
       .then(response => {
         this.setState({
-          pricePerNight: response.data.pricePerDate,
+          pricePerNight: response.data.priceForDate,
           serviceFee: response.data.serviceFee,
           cleaningFee: response.data.cleaningFee,
         });

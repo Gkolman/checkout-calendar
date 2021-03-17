@@ -15,23 +15,42 @@ class CheckoutTool extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState({
+        pricePerNight: this.props.pricePerNight,
+        cleaningFee: this.props.cleaningFee,
+        serviceFee: this.props.serviceFee,
+        checkInDate: this.props.checkInDate,
+        checkOutDate: this.props.checkOutDate,
+        selectedAdults: this.props.selectedAdults,
+        selectedChildren: this.props.selectedChildren,
+        selectedInfants: this.props.selectedInfants
+      });
+    }
+  }
+
   render() {
+    const { pricePerNight, cleaningFee, serviceFee, checkInDate, checkOutDate, selectedAdults, selectedChildren, selectedInfants } = this.state;
+
+    const { guestsAllowed, totalReviews, averageReviews } = this.props;
+
     return (
       <div id="container">
         <div id="price-and-reviews-container">
           <div id="price">
-            1231231 / night
+            {pricePerNight} / night
           </div>
           <div id="reviews">
-            average reviews - total reviews
+            {averageReviews} - {totalReviews} 
           </div>
         </div>
         <div id="checkout-options-container">
           <div id="checkin-date">
-            checkin date
+            {checkInDate}
           </div>
           <div id="checkout-date">
-            checkout date
+            {checkOutDate}
           </div>
           <div id="guests">
             guests selected
@@ -40,12 +59,12 @@ class CheckoutTool extends React.Component {
         <div id="price-summary-container">
           <ul>
             <li>price for x nights</li>
-            <li>cleaning fee</li>
-            <li>service fee</li>
+            <li>cleaning fee {(pricePerNight * cleaningFee).toPrecision(4)}</li>
+            <li>service fee {(pricePerNight * serviceFee).toPrecision(4)}</li>
             <li>occupancy fee</li>
           </ul>
           <div id="price-total">
-            total amount
+            total amount: {Number(pricePerNight + (pricePerNight * cleaningFee) + (pricePerNight * serviceFee)).toPrecision(5)}
           </div>
         </div>
       </div>
