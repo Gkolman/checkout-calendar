@@ -21,12 +21,22 @@ class DisplayCalendar extends React.Component {
   render() {
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
     const { monthsInAdvance } = this.state;
+    const { checkInDate, checkOutDate } = this.props;
+
+    let datesInMonth = ((month <= 6 && month % 2 === 0) || (month >= 7 && month % 2 === 1)) ? 31 : 30;
+    if (month === 1) { datesInMonth = 28; }
 
     return (
       <div>
         months in advance : {monthsInAdvance}
         <br />
         current month: {months[month]};
+        <br />
+        dates in month of {months[month]} is {datesInMonth};
+        <br />
+        selected check in date: {checkInDate};
+        <br />
+        selected check out date: {checkOutDate};
       </div>
     );
   }
