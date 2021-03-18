@@ -23,6 +23,8 @@ class App extends React.Component {
       selectedInfants: 0
 
     };
+
+    this.selectCheckInDate = this.selectCheckInDate.bind(this);
   }
 
   componentDidMount() {
@@ -39,13 +41,18 @@ class App extends React.Component {
       });
   }
 
+  selectCheckInDate() {
+    
+  }
+
+
   render() {
     const { checkInDate, checkOutdate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
 
     return (
       <div>
-        <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate} monthsInAdvance={monthsInAdvance}/>
-        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants}/>
+        <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate} monthsInAdvance={monthsInAdvance} selectCheckInDate={this.selectCheckInDate} />
+        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
       </div>
     );
   }
