@@ -85,8 +85,6 @@ CheckoutDB.find({})
   })
   .catch(err => console.log(err));
 
-
-
 const getListingCheckoutInformation = (listingId) => {
   listingId = Number(listingId);
 
@@ -97,17 +95,6 @@ const getListingCheckoutInformation = (listingId) => {
   });
 };
 
-const clearDatabaseUtility = () => {
-  return new Promise((resolve, reject) => {
-    CheckoutDB.deleteMany({})
-      .then(response => resolve(response))
-      .catch(err => reject(err));
-  });
-};
-
-
-
 module.exports = {
-  getListingCheckoutInformation,
-  clearDatabaseUtility
+  getListingCheckoutInformation
 };
