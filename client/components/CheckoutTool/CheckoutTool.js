@@ -3,33 +3,8 @@ import React from 'react';
 class CheckoutTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      pricePerNight: this.props.pricePerNight,
-      cleaningFee: this.props.cleaningFee,
-      serviceFee: this.props.serviceFee,
-      checkInDate: '',
-      checkOutDate: '',
-      selectedAdults: '',
-      selectedChildren: '',
-      selectedInfants: ''
-    };
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps !== this.props) {
-  //     this.setState({
-  //       pricePerNight: this.props.pricePerNight,
-  //       cleaningFee: this.props.cleaningFee,
-  //       serviceFee: this.props.serviceFee,
-  //       checkInDate: this.props.checkInDate,
-  //       checkOutDate: this.props.checkOutDate,
-  //       selectedAdults: this.props.selectedAdults,
-  //       selectedChildren: this.props.selectedChildren,
-  //       selectedInfants: this.props.selectedInfants
-  //     });
-  //   }
-  // }
-
+  
   render() {
     const { checkInDate, checkOutDate, pricePerNight, averageReviews, totalReviews, cleaningFee, serviceFee } = this.props;
     
