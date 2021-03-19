@@ -11,6 +11,7 @@ class DisplayCalendar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('this props: ', this.props);
     if (prevProps !== this.props) {
       this.setState({
         monthsInAdvance: this.props.monthsInAdvance
@@ -23,7 +24,7 @@ class DisplayCalendar extends React.Component {
     let currentDateDayOfWeek = currentDate.split(' ')[0];
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
     const { monthsInAdvance } = this.state;
-    let { checkInDate, checkOutDate, selectCheckInDate } = this.props;
+    const { checkInDate, checkOutDate, selectDate } = this.props;
 
     let datesInMonth = ((month <= 6 && month % 2 === 0) || (month >= 7 && month % 2 === 1)) ? 31 : 30;
     if (month === 1) { datesInMonth = 28; }
@@ -40,7 +41,7 @@ class DisplayCalendar extends React.Component {
         <br />
         selected check out date: {checkOutDate}
         <br />
-        <Dates days={datesInMonth} dayOfWeek={currentDateDayOfWeek} selectCheckInDate={selectCheckInDate}/>
+        <Dates days={datesInMonth} dayOfWeek={currentDateDayOfWeek} selectDate={selectDate}/>
         <br />
         dates in month of {months[month]} is {datesInMonth}
         <br />
