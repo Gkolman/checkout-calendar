@@ -29,6 +29,8 @@ class DisplayCalendar extends React.Component {
     let datesInMonth = ((month <= 6 && month % 2 === 0) || (month >= 7 && month % 2 === 1)) ? 31 : 30;
     if (month === 1) { datesInMonth = 28; }
 
+    let fullCheckInDate = !checkInDate ? '' : new Date(year, month, checkInDate).toLocaleDateString('en-US');
+    let fullCheckOutDate = !checkOutDate ? '' : new Date(year, month, checkOutDate).toLocaleDateString('en-US');
     return (
       <div>
         months in advance : {monthsInAdvance}
@@ -37,9 +39,9 @@ class DisplayCalendar extends React.Component {
         <br /> 
         {months[month]} {year}
         <br />
-        selected check in date: {checkInDate}
+        selected check in date: {fullCheckInDate}
         <br />
-        selected check out date: {checkOutDate}
+        selected check out date: {fullCheckOutDate}
         <br />
         <Dates days={datesInMonth} dayOfWeek={currentDateDayOfWeek} selectDate={selectDate}/>
         <br />
