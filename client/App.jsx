@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       checkInDate: '',
-      checkOutdate: '',
+      checkOutDate: '',
       monthsInAdvance: '',
       pricePerNight: '',
       cleaningFee: '',
@@ -23,6 +23,8 @@ class App extends React.Component {
       selectedInfants: 0
 
     };
+
+    this.selectDate = this.selectDate.bind(this);
   }
 
   componentDidMount() {
@@ -39,13 +41,26 @@ class App extends React.Component {
       });
   }
 
+  selectDate(e) {
+    if (!this.state.checkInDate) {
+      this.setState({ checkInDate: e.target.name});
+    } else if (this.state.checkInDate && this.state.checkOutDate) {
+      this.setState({ 
+        checkInDate: e.target.name,
+        checkOutDate: ''
+      });
+    } else {
+      this.setState({ checkOutDate: e.target.name});
+    }
+  }
+
   render() {
-    const { checkInDate, checkOutdate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
+    const { checkInDate, checkOutDate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
 
     return (
       <div>
-        <DisplayCalendar checkInDate={checkInDate} checkInDate={checkOutdate} monthsInAdvance={monthsInAdvance}/>
-        <CheckoutTool checkInDate={checkInDate} checkInDate={checkOutdate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants}/>
+        <DisplayCalendar checkInDate={checkInDate} checkOutDate={checkOutDate} monthsInAdvance={monthsInAdvance} selectDate={this.selectDate}/>
+        <CheckoutTool checkInDate={checkInDate} checkOutDate={checkOutDate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
       </div>
     );
   }

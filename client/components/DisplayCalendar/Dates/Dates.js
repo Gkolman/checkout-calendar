@@ -7,12 +7,14 @@ class Dates extends React.Component {
   }
 
   render() {
+    const { selectDate } = this.props;
+
     let weekdayNameDivs = [];
     weekdayNames.forEach((day, index) => weekdayNameDivs.push(<div key={index}>{day}</div>));
     
     let allDates = [];
     for (let date = 1; date <= this.props.days; date ++) {
-      allDates.push(<div key={date}>{date}</div>);
+      allDates.push(<button key={date} name={date} onClick={selectDate}>{date}</button>);
     }
     return (
       <div>
