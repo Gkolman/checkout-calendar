@@ -23,4 +23,4 @@ app.get('/clearDatabaseUtility', (req, res) => {
     .catch(err => console.log('there was an error clearing the database: ', err));
 });
 
-app.listen(3000, () => console.log('connected to server'));
+app.listen(3004, () => console.log('connected to server'));
