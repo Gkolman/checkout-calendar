@@ -42,8 +42,6 @@ class App extends React.Component {
   }
 
   selectDate(e) {
-    console.log('e: ', e.target.name);
-
     if (!this.state.checkInDate) {
       this.setState({ checkInDate: e.target.name});
     } else if (this.state.checkInDate && this.state.checkOutDate) {
