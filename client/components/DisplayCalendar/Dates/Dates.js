@@ -14,7 +14,7 @@ class Dates extends React.Component {
     
     let allDates = [];
     for (let date = 1; date <= this.props.days; date ++) {
-      allDates.push(<div key={date} onClick={selectCheckInDate}>{date}</div>);
+      allDates.push(<button key={date} name={date} onClick={selectCheckInDate}>{date}</button>);
     }
     return (
       <div>

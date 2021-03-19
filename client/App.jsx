@@ -41,8 +41,8 @@ class App extends React.Component {
       });
   }
 
-  selectCheckInDate() {
-    
+  selectCheckInDate(e) {
+    console.log('e: ', e.target.name);
   }
 
 
