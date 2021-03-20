@@ -10,11 +10,15 @@ class Dates extends React.Component {
 
   render() {
     const {
+      currentDate,
       currentMonth,
+      dayOfWeek,
       selectDate,
       monthsInAdvance,
       currentYear,
     } = this.props;
+
+    console.log('crrent date: ', typeof currentDate);
     let weekdayNameDivs = [];
     let allDates;
     let combinedCalendars = [];
@@ -26,11 +30,12 @@ class Dates extends React.Component {
 
     // returns current month as only option to book
     if (monthsInAdvance === 0) {
-      allDates = [];
+      allDates = new Array(this.props.days);
 
-      for (let date = 1; date <= this.props.days; date++) {
-        allDates.push(
+      for (let date = 0; date <= this.props.days; date++) {
+        allDates[date] = (
           <button
+            disabled={date < Number(currentDate) ? true : false}
             key={date}
             name={new Date(
               currentYear,
@@ -72,10 +77,17 @@ class Dates extends React.Component {
       let allowedBookingMonths = [];
 
       while (counter < monthsInAdvance) {
-        allDates = [];
+        allDates = new Array(this.props.days);
+
         for (let date = 1; date <= this.props.days; date++) {
           allDates.push(
             <button
+              disabled={
+                Number(currentMonth) - 1 === currentMonthIndex &&
+                date < Number(currentDate)
+                  ? true
+                  : false
+              }
               key={date}
               name={new Date(
                 currentYear,

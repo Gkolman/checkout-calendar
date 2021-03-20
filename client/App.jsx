@@ -84,6 +84,7 @@ class App extends React.Component {
     return (
       <div>
         <DisplayCalendar
+          currentDate={date}
           currentMonth={month}
           currentYear={year}
           checkInDate={checkInDate}
