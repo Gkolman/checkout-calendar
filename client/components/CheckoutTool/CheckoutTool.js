@@ -18,6 +18,7 @@ class CheckoutTool extends React.Component {
       let checkOutDateTransformed = new Date(year, month, date);
       duration = ((checkOutDateTransformed - checkInDateTransformed) / 1000) / 86400;
     }
+
     let basePrice = pricePerNight * duration;
     let cleaningFees = basePrice * cleaningFee;
     let serviceFees = basePrice * serviceFee;
