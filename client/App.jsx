@@ -17,7 +17,7 @@ class App extends React.Component {
       pricePerNight: '',
       cleaningFee: '',
       serviceFee: '',
-      occupancyFee: '',
+      occupancyFee: 0.1,
       selectedAdults: 1,
       selectedChildren: 0,
       selectedInfants: 0
@@ -45,25 +45,28 @@ class App extends React.Component {
     if (!this.state.checkInDate) {
       this.setState({ checkInDate: e.target.name});
     } else if (this.state.checkInDate && this.state.checkOutDate) {
-      this.setState({ 
+      this.setState({
         checkInDate: e.target.name,
         checkOutDate: ''
       });
     } else {
+
       this.setState({ checkOutDate: e.target.name});
     }
   }
 
   render() {
     const { checkInDate, checkOutDate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
+    let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
+    console.log(`month: ${month} date:${date} year:${year}`)
 
     return (
       <div>
         <DisplayCalendar checkInDate={checkInDate} checkOutDate={checkOutDate} monthsInAdvance={monthsInAdvance} selectDate={this.selectDate}/>
-        <CheckoutTool checkInDate={checkInDate} checkOutDate={checkOutDate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
+        <CheckoutTool currentMonth={month} checkInDate={checkInDate} checkOutDate={checkOutDate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} occupancyFee={occupancyFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('checkoutCalendar'));

@@ -4,14 +4,15 @@ class CheckoutTool extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const { checkInDate, checkOutDate, pricePerNight, averageReviews, totalReviews, cleaningFee, serviceFee } = this.props;
-    
+    const { checkInDate, checkOutDate, pricePerNight, averageReviews, totalReviews, cleaningFee, serviceFee, occupancyFee } = this.props;
+
     let duration = !checkOutDate ? '' : checkOutDate - checkInDate;
     let basePrice = pricePerNight * duration;
     let cleaningFees = basePrice * cleaningFee;
     let serviceFees = basePrice * serviceFee;
+    let occupancyFees = basePrice * occupancyFee;
     let totalPrice = (basePrice + cleaningFees + serviceFees).toFixed(2);
 
     return (
@@ -37,10 +38,10 @@ class CheckoutTool extends React.Component {
         </div>
         <div id="price-summary-container">
           <ul>
-            <li>{pricePerNight} for {duration} nights = {basePrice} </li>
+            <li>{pricePerNight} for {duration} nights = {basePrice.toFixed(2)} </li>
             <li>cleaning fee = {cleaningFees.toFixed(2)} </li>
             <li>service fee = {serviceFees.toFixed(2)} </li>
-            <li>occupancy fee</li>
+            <li>occupancy fee = {occupancyFees.toFixed(2)}</li>
           </ul>
           <div id="price-total">
             total amount = {totalPrice}
