@@ -58,12 +58,11 @@ class App extends React.Component {
   render() {
     const { checkInDate, checkOutDate, monthsInAdvance, pricePerNight, cleaningFee, serviceFee, occupancyFee, selectedAdults, selectedChildren, selectedInfants } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
-    console.log(`month: ${month} date:${date} year:${year}`)
 
     return (
       <div>
-        <DisplayCalendar checkInDate={checkInDate} checkOutDate={checkOutDate} monthsInAdvance={monthsInAdvance} selectDate={this.selectDate}/>
-        <CheckoutTool currentMonth={month} checkInDate={checkInDate} checkOutDate={checkOutDate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} occupancyFee={occupancyFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
+        <DisplayCalendar currentMonth={month} currentYear={year} checkInDate={checkInDate} checkOutDate={checkOutDate} monthsInAdvance={monthsInAdvance} selectDate={this.selectDate}/>
+        <CheckoutTool currentMonth={month} currentYear={year} checkInDate={checkInDate} checkOutDate={checkOutDate} guestsAllowed={numberOfGuests.numberOfGuests} totalReviews={totalReviewCount} averageReviews={averageReviewRatings.averageRating} pricePerNight={pricePerNight} serviceFee={serviceFee} cleaningFee={cleaningFee} occupancyFee={occupancyFee} selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} />
       </div>
     );
   }
