@@ -53,7 +53,7 @@ class Dates extends React.Component {
             key={date}
             name={new Date(
               currentYear,
-              currentMonthIndex,
+              currentMonthIndex - 1,
               date
             ).toLocaleDateString()}
             onClick={selectDate}
@@ -63,23 +63,23 @@ class Dates extends React.Component {
         );
       }
       combinedCalendars.push(
-        <div className="full-month-container" key={months[currentMonthIndex]}>
+        <div className="full-month-container" key={months[currentMonthIndex - 1]}>
           {[
             <div
               className="month-name-container"
-              key={months[currentMonthIndex]}
+              key={months[currentMonthIndex - 1]}
             >
-              {months[currentMonthIndex]}
+              {months[currentMonthIndex - 1]}
             </div>,
             <div
               className="weekday-names-container"
-              key={months[currentMonthIndex] + 'weekdays'}
+              key={months[currentMonthIndex - 1] + 'weekdays'}
             >
               {weekdayNameDivs}
             </div>,
             <div
               className="date-container"
-              key={months[currentMonthIndex] + 'dates'}
+              key={months[currentMonthIndex - 1] + 'dates'}
             >
               {allDates}
             </div>,
