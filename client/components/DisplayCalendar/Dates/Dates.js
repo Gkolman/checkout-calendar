@@ -182,18 +182,35 @@ class Dates extends React.Component {
 
           allDates = new Array(datesInMonth);
           for (let date = 1; date <= datesInMonth; date++) {
+            if (date < dayOfWeekForButtonsIndex + 2) {
+              allDates[date] = (
+                <button
+                  disabled={true}
+                  key={date}
+                  name={new Date(
+                    currentYear,
+                    currentMonthIndex,
+                    date
+                  ).toLocaleDateString()}
+                  onClick={selectDate}
+                ></button>
+              );
+              datesInMonth++;
+              continue;
+            }
+
             allDates[date] = (
               <button
                 disabled={false}
-                key={date}
+                key={date - dayOfWeekForButtonsIndex - 1}
                 name={new Date(
                   currentYear,
                   currentMonthIndex,
-                  date
+                  date - dayOfWeekForButtonsIndex - 1
                 ).toLocaleDateString()}
                 onClick={selectDate}
               >
-                {date}
+                {date - dayOfWeekForButtonsIndex - 1}
               </button>
             );
           }
