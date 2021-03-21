@@ -18,7 +18,7 @@ class Dates extends React.Component {
       monthsInAdvance,
     } = this.props;
 
-    console.log('crrent date: ',  currentMonth);
+    console.log('crrent date: ', typeof monthsInAdvance);
     let weekdayNameDivs = [];
     let allDates;
     let lastDayOfMonth;
@@ -32,14 +32,14 @@ class Dates extends React.Component {
 
     // returns current month as only option to book
     if (monthsInAdvance === 0) {
-      console.log(
-        `
-        current month: ${currentMonth}
-        current month index already 0 indexed (-1): ${currentMonthIndex}
-        `)
-
-      datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(currentMonth) ? 31 : 30;
-      if (currentMonth === '2') { datesInMonth = 28; };
+      datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
+        currentMonth
+      )
+        ? 31
+        : 30;
+      if (currentMonth === '2') {
+        datesInMonth = 28;
+      }
 
       allDates = new Array(datesInMonth);
 
@@ -84,7 +84,124 @@ class Dates extends React.Component {
         </div>
       );
     } else {
+      let counter = 0;
+      while (counter < Number(monthsInAdvance)) {
+        if (currentMonth === currentMonthIndex + 1 + '') {
+          datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
+            currentMonth
+          )
+            ? 31
+            : 30;
+          if (currentMonth === '2') {
+            datesInMonth = 28;
+          }
 
+          allDates = new Array(datesInMonth);
+
+          for (let date = 0; date <= datesInMonth; date++) {
+            allDates[date] = (
+              <button
+                disabled={date < Number(currentDate) ? true : false}
+                key={date}
+                name={new Date(
+                  currentYear,
+                  currentMonthIndex,
+                  date
+                ).toLocaleDateString()}
+                onClick={selectDate}
+              >
+                {date}
+              </button>
+            );
+          }
+
+          combinedCalendars.push(
+            <div
+              className="full-month-container"
+              key={months[currentMonthIndex]}
+            >
+              {[
+                <div
+                  className="month-name-container"
+                  key={months[currentMonthIndex]}
+                >
+                  {months[currentMonthIndex]}
+                </div>,
+                <div
+                  className="weekday-names-container"
+                  key={months[currentMonthIndex] + 'weekdays'}
+                >
+                  {weekdayNameDivs}
+                </div>,
+                <div
+                  className="date-container"
+                  key={months[currentMonthIndex] + 'dates'}
+                >
+                  {allDates}
+                </div>,
+              ]}
+            </div>
+          );
+        } else {
+          datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
+            Number(currentMonthIndex) + 1 + ''
+          )
+            ? 31
+            : 30;
+          if (Number(currentMonthIndex) + 1 + '' === '2') {
+            datesInMonth = 28;
+          }
+
+          allDates = new Array(datesInMonth);
+          for (let date = 0; date <= datesInMonth; date++) {
+            allDates[date] = (
+              <button
+                disabled={false}
+                key={date}
+                name={new Date(
+                  currentYear,
+                  currentMonthIndex,
+                  date
+                ).toLocaleDateString()}
+                onClick={selectDate}
+              >
+                {date}
+              </button>
+            );
+          }
+
+          combinedCalendars.push(
+            <div
+              className="full-month-container"
+              key={months[currentMonthIndex]}
+            >
+              {[
+                <div
+                  className="month-name-container"
+                  key={months[currentMonthIndex]}
+                >
+                  {months[currentMonthIndex]}
+                </div>,
+                <div
+                  className="weekday-names-container"
+                  key={months[currentMonthIndex] + 'weekdays'}
+                >
+                  {weekdayNameDivs}
+                </div>,
+                <div
+                  className="date-container"
+                  key={months[currentMonthIndex] + 'dates'}
+                >
+                  {allDates}
+                </div>,
+              ]}
+            </div>
+          );
+        }
+
+        counter++;
+        currentMonthIndex++;
+      }
     }
 
     // <div id="display-month">{allowedBookingMonths}</div>
