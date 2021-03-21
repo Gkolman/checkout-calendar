@@ -12,16 +12,18 @@ class Dates extends React.Component {
     const {
       currentDate,
       currentMonth,
+      currentYear,
       dayOfWeek,
       selectDate,
       monthsInAdvance,
-      currentYear,
     } = this.props;
 
-    console.log('crrent date: ', typeof currentDate);
+    console.log('crrent date: ',  currentMonth);
     let weekdayNameDivs = [];
     let allDates;
+    let lastDayOfMonth;
     let combinedCalendars = [];
+    let datesInMonth;
     let currentMonthIndex = Number(currentMonth) - 1;
 
     weekdayNames.forEach((day, index) =>
@@ -30,9 +32,18 @@ class Dates extends React.Component {
 
     // returns current month as only option to book
     if (monthsInAdvance === 0) {
-      allDates = new Array(this.props.days);
+      console.log(
+        `
+        current month: ${currentMonth}
+        current month index already 0 indexed (-1): ${currentMonthIndex}
+        `)
 
-      for (let date = 0; date <= this.props.days; date++) {
+      datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(currentMonth) ? 31 : 30;
+      if (currentMonth === '2') { datesInMonth = 28; };
+
+      allDates = new Array(datesInMonth);
+
+      for (let date = 0; date <= datesInMonth; date++) {
         allDates[date] = (
           <button
             disabled={date < Number(currentDate) ? true : false}
@@ -73,65 +84,7 @@ class Dates extends React.Component {
         </div>
       );
     } else {
-      let counter = 0;
-      let allowedBookingMonths = [];
 
-      while (counter < monthsInAdvance) {
-        allDates = new Array(this.props.days);
-
-        for (let date = 1; date <= this.props.days; date++) {
-          allDates.push(
-            <button
-              disabled={
-                Number(currentMonth) - 1 === currentMonthIndex &&
-                date < Number(currentDate)
-                  ? true
-                  : false
-              }
-              key={date}
-              name={new Date(
-                currentYear,
-                currentMonthIndex,
-                date
-              ).toLocaleDateString()}
-              onClick={selectDate}
-            >
-              {date}
-            </button>
-          );
-        }
-
-        allowedBookingMonths.push([
-          <div className="month-name-container" key={months[currentMonthIndex]}>
-            {months[currentMonthIndex]}
-          </div>,
-          <div
-            className="weekday-names-container"
-            key={months[currentMonthIndex] + 'weekdays'}
-          >
-            {weekdayNameDivs}
-          </div>,
-          <div
-            className="date-container"
-            key={months[currentMonthIndex] + 'dates'}
-          >
-            {allDates}
-          </div>,
-        ]);
-        currentMonthIndex++;
-        if (currentMonthIndex > 12) {
-          currentMonthIndex = 0;
-        }
-        counter++;
-      }
-
-      allowedBookingMonths.forEach((formattedMonth, index) =>
-        combinedCalendars.push(
-          <div className="full-month-container" key={index}>
-            {formattedMonth}
-          </div>
-        )
-      );
     }
 
     // <div id="display-month">{allowedBookingMonths}</div>
