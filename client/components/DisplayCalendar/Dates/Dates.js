@@ -18,10 +18,13 @@ class Dates extends React.Component {
       monthsInAdvance,
     } = this.props;
 
-    console.log('crrent date: ', typeof monthsInAdvance);
+    console.log('crrent date type: ', typeof dayOfWeek);
+    console.log('crrent date: ', dayOfWeek);
+
     let weekdayNameDivs = [];
     let allDates;
     let lastDayOfMonth;
+    let dayOfWeekForButtonsIndex = weekdayNames.indexOf(dayOfWeek);
     let combinedCalendars = [];
     let datesInMonth;
     let currentMonthIndex = Number(currentMonth) - 1;
@@ -113,6 +116,31 @@ class Dates extends React.Component {
                 {date}
               </button>
             );
+            dayOfWeekForButtonsIndex++;
+            if (dayOfWeekForButtonsIndex > 6) {
+              dayOfWeekForButtonsIndex = 0;
+            }
+            if (date === datesInMonth) {
+              console.log(`lastDayOfMonth: ${date} type: ${typeof date}`);
+              console.log(
+                `current date / start: ${currentDate} type: ${typeof currentDate} day of week: ${dayOfWeek}`
+              );
+              console.log(
+                `index of current date / start date of week: ${weekdayNames.indexOf(
+                  dayOfWeek
+                )}`
+              );
+              console.log(
+                `difference between last and start: ${
+                  date - Number(currentDate)
+                }`
+              );
+              console.log(
+                `button weekday index at end: ${dayOfWeekForButtonsIndex}`
+              );
+              console.log(`this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`)
+              console.log(`next month should start on this day: ${weekdayNames[dayOfWeekForButtonsIndex + 1]}`)
+            }
           }
 
           combinedCalendars.push(
@@ -153,7 +181,7 @@ class Dates extends React.Component {
           }
 
           allDates = new Array(datesInMonth);
-          for (let date = 0; date <= datesInMonth; date++) {
+          for (let date = 1; date <= datesInMonth; date++) {
             allDates[date] = (
               <button
                 disabled={false}
