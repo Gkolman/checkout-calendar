@@ -1,0 +1,21 @@
+#container {
+  height: 400px;
+  width: 400px;
+  border-style: solid;
+
+}
+
+#price-and-reviews-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#checkout-options-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+}
+
+#reserve-button {
+  width: 100%
+}
