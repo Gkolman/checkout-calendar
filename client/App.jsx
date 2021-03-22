@@ -32,6 +32,8 @@ class App extends React.Component {
     };
 
     this.selectDate = this.selectDate.bind(this);
+    this.clearDates = this.clearDates.bind(this);
+
   }
 
   componentDidMount() {
@@ -98,6 +100,15 @@ class App extends React.Component {
     }
   }
 
+  clearDates() {
+    this.setState({
+      checkInDate: '',
+      checkOutDate: '',
+      calendarMessage: 'Select check-in date',
+      calendarSubMessage: 'Add your travel dates for exact pricing',
+    })
+  }
+
   render() {
     const {
       checkInDate,
@@ -125,6 +136,7 @@ class App extends React.Component {
           checkOutDate={checkOutDate}
           monthsInAdvance={monthsInAdvance}
           selectDate={this.selectDate}
+          clearDates={this.clearDates}
           calendarMessage={calendarMessage}
           calendarSubMessage={calendarSubMessage}
         />
