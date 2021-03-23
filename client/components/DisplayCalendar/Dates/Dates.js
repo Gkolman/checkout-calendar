@@ -63,7 +63,10 @@ class Dates extends React.Component {
         );
       }
       combinedCalendars.push(
-        <div className="full-month-container" key={months[currentMonthIndex - 1]}>
+        <div
+          className="full-month-container"
+          key={months[currentMonthIndex - 1]}
+        >
           {[
             <div
               className="month-name-container"
@@ -87,8 +90,10 @@ class Dates extends React.Component {
         </div>
       );
     } else {
+      // !!! START OF DISPLAYING ALL CALENDAR MONTHS FOR LISTINGS THAT ALLOW FOR LARGE ADVANCED BOOKINGS !!!
       let counter = 0;
       while (counter < Number(monthsInAdvance)) {
+        // CURRENT MONTH FOR MULTI MONTH ALLOWED BOOKINGS
         if (currentMonth === currentMonthIndex + 1 + '') {
           datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
             currentMonth
@@ -138,11 +143,22 @@ class Dates extends React.Component {
               console.log(
                 `button weekday index at end: ${dayOfWeekForButtonsIndex}`
               );
-              console.log(`this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`)
-              console.log(`next month should start on this day: ${weekdayNames[dayOfWeekForButtonsIndex + 1]}`)
+              console.log(
+                `this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`
+              );
+              console.log(
+                `next month should start on this day: ${
+                  weekdayNames[dayOfWeekForButtonsIndex + 1]
+                }`
+              );
             }
           }
-
+          console.log(
+            `
+  months[currentMonthIndex]: ${months[currentMonthIndex]}
+  actual month: ${months[currentMonth - 1]}
+  `
+          );
           combinedCalendars.push(
             <div
               className="full-month-container"
@@ -171,6 +187,7 @@ class Dates extends React.Component {
             </div>
           );
         } else {
+          // MULTI MONTH ALLOWED BOOKINGS START OF FUTURE MONTHS
           datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
             Number(currentMonthIndex) + 1 + ''
           )
@@ -181,39 +198,19 @@ class Dates extends React.Component {
           }
 
           allDates = new Array(datesInMonth);
-          for (let date = 1; date <= datesInMonth; date++) {
-            if (date < dayOfWeekForButtonsIndex + 2) {
-              allDates[date] = (
-                <button
-                  disabled={true}
-                  key={date}
-                  name={new Date(
-                    currentYear,
-                    currentMonthIndex,
-                    date
-                  ).toLocaleDateString()}
-                  onClick={selectDate}
-                ></button>
-              );
-              datesInMonth++;
-              continue;
-            }
 
-            allDates[date] = (
-              <button
-                disabled={false}
-                key={date - dayOfWeekForButtonsIndex - 1}
-                name={new Date(
-                  currentYear,
-                  currentMonthIndex,
-                  date - dayOfWeekForButtonsIndex - 1
-                ).toLocaleDateString()}
-                onClick={selectDate}
-              >
-                {date - dayOfWeekForButtonsIndex - 1}
-              </button>
-            );
-          }
+          const createCalendar = (howManyDays, monthIndex, dayOfWeekStart) => {
+            let calendar = new Array(howManyDays);
+
+            let monthTitle = months[monthIndex];
+            return calendar; // array
+          };
+
+          const createCalendarTitle = (monthIndex) => {
+            return <div className="month-name-container" key={months[monthIndex] + currentYear}>testing {months[monthIndex]}</div>;
+          };
+
+          let test = createCalendarTitle(currentMonthIndex);
 
           combinedCalendars.push(
             <div
@@ -221,12 +218,13 @@ class Dates extends React.Component {
               key={months[currentMonthIndex]}
             >
               {[
-                <div
-                  className="month-name-container"
-                  key={months[currentMonthIndex]}
-                >
-                  {months[currentMonthIndex]}
-                </div>,
+                // <div
+                //   className="month-name-container"
+                //   key={months[currentMonthIndex]}
+                // >
+                //   {months[currentMonthIndex]}
+                // </div>,
+                test,
                 <div
                   className="weekday-names-container"
                   key={months[currentMonthIndex] + 'weekdays'}
@@ -248,10 +246,6 @@ class Dates extends React.Component {
         currentMonthIndex++;
       }
     }
-
-    // <div id="display-month">{allowedBookingMonths}</div>
-    // <div id="weekday-names">{weekdayNameDivs}</div>
-    // <div id="all-dates">{allDates}</div>
     return (
       <div>
         {/* <div className="carousel">
