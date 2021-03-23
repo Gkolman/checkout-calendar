@@ -178,7 +178,7 @@ class Dates extends React.Component {
     // END HELPER FUNCTIONS
 
     weekdayNames.forEach((day, index) =>
-      weekdayNameDivs.push(<div key={index}>{day}</div>)
+      weekdayNameDivs.push(<div key={index}>{day.slice(0,2)}</div>)
     );
 
     // returns current month as only option to book

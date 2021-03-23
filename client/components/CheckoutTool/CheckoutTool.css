@@ -6,7 +6,8 @@ li {
   height: 200px;
   width: 100%;
   border-style: solid;
-
+  border-width: thin;
+  padding: 10px;
 }
 
 #price-and-reviews-container {
