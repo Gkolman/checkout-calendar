@@ -18,24 +18,42 @@ class Dates extends React.Component {
       monthsInAdvance,
     } = this.props;
 
-    console.log('crrent date type: ', typeof dayOfWeek);
-    console.log('crrent date: ', dayOfWeek);
-
-    let weekdayNameDivs = [];
+    let currentCalendarTitle;
     let allDates;
+    let fullCalendar;
     let lastDayOfMonth;
+    let datesInMonth;
+    let weekdayNameDivs = [];
     let dayOfWeekForButtonsIndex = weekdayNames.indexOf(dayOfWeek);
     let combinedCalendars = [];
-    let datesInMonth;
     let currentMonthIndex = Number(currentMonth) - 1;
+    let counter = 0;
 
-    weekdayNames.forEach((day, index) =>
-      weekdayNameDivs.push(<div key={index}>{day}</div>)
-    );
 
-    // returns current month as only option to book
-    if (monthsInAdvance === 0) {
-      datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
+    // HELPER FUNCTIONS
+    const createCalendar = (calendarTitle, formattedDates) => {
+      let calendar = [];
+      calendar.push(
+        <div className="full-month-container" key={months[currentMonthIndex]}>
+          {[calendarTitle, formattedDates]}
+        </div>
+      );
+      return calendar; // array
+    };
+
+    const createCalendarTitle = (monthIndex) => {
+      return (
+        <div
+          className="month-name-container"
+          key={months[monthIndex] + currentYear}
+        >
+          {months[monthIndex]}
+        </div>
+      );
+    };
+
+    const determineMonthsInDays = (monthIndex) => {
+      let datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
         currentMonth
       )
         ? 31
@@ -43,226 +61,95 @@ class Dates extends React.Component {
       if (currentMonth === '2') {
         datesInMonth = 28;
       }
+      return datesInMonth;
+    };
 
-      allDates = new Array(datesInMonth);
+    const determineMonthStartDayOfWeek = (howManyDaysInMonth) => {
+      if (howManyDaysInMonth === 31) {
+        dayOfWeekForButtonsIndex += 3;
+      } else if (howManyDaysInMonth === 30) {
+        dayOfWeekForButtonsIndex += 2;
+      } else {
+        dayOfWeekForButtonsIndex += 1;
+      }
 
-      for (let date = 0; date <= datesInMonth; date++) {
-        allDates[date] = (
+      if (dayOfWeekForButtonsIndex >= 7) {
+        dayOfWeekForButtonsIndex -= 7;
+      }
+    };
+
+    const createDates = (howManyDaysInMonth, dayOfWeekStart) => {
+      let nullDaysTracker = 0;
+      let allDatesInMonth = new Array(howManyDaysInMonth);
+      allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth];
+
+      for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
+        if (nullDaysTracker < dayOfWeekStart) {
+          allDatesInMonth[nullDaysTracker + 7] = (
+            <button disabled={true}></button>
+          );
+          nullDaysTracker++;
+          eachDate--;
+          continue;
+        }
+        allDatesInMonth[dayOfWeekStart + eachDate + 6] = (
           <button
-            disabled={date < Number(currentDate) ? true : false}
-            key={date}
             name={new Date(
               currentYear,
-              currentMonthIndex - 1,
-              date
+              currentMonthIndex,
+              eachDate
             ).toLocaleDateString()}
             onClick={selectDate}
           >
-            {date}
+            {eachDate}
           </button>
         );
       }
-      combinedCalendars.push(
-        <div
-          className="full-month-container"
-          key={months[currentMonthIndex - 1]}
-        >
-          {[
-            <div
-              className="month-name-container"
-              key={months[currentMonthIndex - 1]}
-            >
-              {months[currentMonthIndex - 1]}
-            </div>,
-            <div
-              className="weekday-names-container"
-              key={months[currentMonthIndex - 1] + 'weekdays'}
-            >
-              {weekdayNameDivs}
-            </div>,
-            <div
-              className="date-container"
-              key={months[currentMonthIndex - 1] + 'dates'}
-            >
-              {allDates}
-            </div>,
-          ]}
-        </div>
-      );
+
+      determineMonthStartDayOfWeek(howManyDaysInMonth);
+
+      return <div className="weekdays-dates-container">{allDatesInMonth}</div>; // arr
+    };
+
+    // END HELPER FUNCTIONS
+
+    weekdayNames.forEach((day, index) =>
+      weekdayNameDivs.push(<div key={index}>{day}</div>)
+    );
+
+    // returns current month as only option to book
+    if (monthsInAdvance === 0) {
+      datesInMonth = determineMonthsInDays(currentMonthIndex);
+      currentCalendarTitle = createCalendarTitle(currentMonthIndex);
+      allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+      fullCalendar = createCalendar(currentCalendarTitle, allDates);
+
+      combinedCalendars.push(fullCalendar);
     } else {
       // !!! START OF DISPLAYING ALL CALENDAR MONTHS FOR LISTINGS THAT ALLOW FOR LARGE ADVANCED BOOKINGS !!!
-      let counter = 0;
       while (counter < Number(monthsInAdvance)) {
         // CURRENT MONTH FOR MULTI MONTH ALLOWED BOOKINGS
         if (currentMonth === currentMonthIndex + 1 + '') {
-          datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
-            currentMonth
-          )
-            ? 31
-            : 30;
-          if (currentMonth === '2') {
-            datesInMonth = 28;
-          }
+          datesInMonth = determineMonthsInDays(currentMonthIndex);
+          currentCalendarTitle = createCalendarTitle(currentMonthIndex);
+          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+          fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
-          allDates = new Array(datesInMonth);
-
-          for (let date = 0; date <= datesInMonth; date++) {
-            allDates[date] = (
-              <button
-                disabled={date < Number(currentDate) ? true : false}
-                key={date}
-                name={new Date(
-                  currentYear,
-                  currentMonthIndex,
-                  date
-                ).toLocaleDateString()}
-                onClick={selectDate}
-              >
-                {date}
-              </button>
-            );
-            dayOfWeekForButtonsIndex++;
-            if (dayOfWeekForButtonsIndex > 6) {
-              dayOfWeekForButtonsIndex = 0;
-            }
-            if (date === datesInMonth) {
-              // console.log(`lastDayOfMonth: ${date} type: ${typeof date}`);
-              // console.log(
-              //   `current date / start: ${currentDate} type: ${typeof currentDate} day of week: ${dayOfWeek}`
-              // );
-              // console.log(
-              //   `index of current date / start date of week: ${weekdayNames.indexOf(
-              //     dayOfWeek
-              //   )}`
-              // );
-              // console.log(
-              //   `difference between last and start: ${
-              //     date - Number(currentDate)
-              //   }`
-              // );
-              // console.log(
-              //   `button weekday index at end: ${dayOfWeekForButtonsIndex}`
-              // );
-              // console.log(
-              //   `this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`
-              // );
-              // console.log(
-              //   `next month should start on this day: ${
-              //     weekdayNames[dayOfWeekForButtonsIndex + 1]
-              //   }`
-              // );
-            }
-          }
-          combinedCalendars.push(
-            <div
-              className="full-month-container"
-              key={months[currentMonthIndex]}
-            >
-              {[
-                <div
-                  className="month-name-container"
-                  key={months[currentMonthIndex]}
-                >
-                  {months[currentMonthIndex]}
-                </div>,
-                <div
-                  className="weekday-names-container"
-                  key={months[currentMonthIndex] + 'weekdays'}
-                >
-                  {weekdayNameDivs}
-                </div>,
-                <div
-                  className="date-container"
-                  key={months[currentMonthIndex] + 'dates'}
-                >
-                  {allDates}
-                </div>,
-              ]}
-            </div>
-          );
+          combinedCalendars.push(fullCalendar);
         } else {
           // MULTI MONTH ALLOWED BOOKINGS START OF FUTURE MONTHS
-          datesInMonth = ['1', '3', '5', '7', '8', '10', '12'].includes(
-            Number(currentMonthIndex) + 1 + ''
-          )
-            ? 31
-            : 30;
-          if (Number(currentMonthIndex) + 1 + '' === '2') {
-            datesInMonth = 28;
-          }
+          datesInMonth = determineMonthsInDays(currentMonthIndex);
+          currentCalendarTitle = createCalendarTitle(currentMonthIndex);
+          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+          fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
-          const createCalendar = (howManyDays, monthIndex, dayOfWeekStart) => {
-            let calendar = new Array(howManyDays);
-
-            let monthTitle = months[monthIndex];
-            return calendar; // array
-          };
-
-          const createCalendarTitle = (monthIndex) => {
-            return <div className="month-name-container" key={months[monthIndex] + currentYear}>testing {months[monthIndex]}</div>;
-          };
-
-          const createDates = (howManyDaysInMonth, dayOfWeekStart) => {
-            let counter = 0;
-            let allDatesInMonth = new Array(howManyDaysInMonth);
-            allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth]
-
-            for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
-              if (counter < dayOfWeekStart) {
-                allDatesInMonth[counter + 7] = <button disabled={true}></button>
-                counter++;
-                eachDate--;
-                continue;
-              }
-              allDatesInMonth[dayOfWeekStart + eachDate + 6] = <button>{eachDate}</button>
-            }
-
-            if (datesInMonth === 31) {
-              dayOfWeekForButtonsIndex += 3;
-            } else if (datesInMonth === 30) {
-              dayOfWeekForButtonsIndex += 2;
-            } else {
-              dayOfWeekForButtonsIndex += 1;
-            }
-
-            if (dayOfWeekForButtonsIndex >= 7) {
-              dayOfWeekForButtonsIndex -= 7;
-            }
-            return <div className="weekdays-dates-container">{allDatesInMonth}</div>; // arr
-          }
-
-          let calendarTitle = createCalendarTitle(currentMonthIndex);
-          let allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1)
-
-          combinedCalendars.push(
-            <div
-              className="full-month-container"
-              key={months[currentMonthIndex]}
-            >
-              {[
-                calendarTitle,
-                allDates
-              ]}
-            </div>
-          );
+          combinedCalendars.push(fullCalendar);
         }
-
         counter++;
         currentMonthIndex++;
       }
     }
-    return (
-      <div>
-        {/* <div className="carousel">
-          <button className="carousel-button"></button>
-          <div className="carousel-track-container">
-            <ul className="carousel-track">{allowedBookingMonths}</ul>
-          </div>
-          <button className="carousel-button"></button>
-        </div> */}
-        {combinedCalendars}
-      </div>
-    );
+    return <div>{combinedCalendars}</div>;
   }
 }
 
