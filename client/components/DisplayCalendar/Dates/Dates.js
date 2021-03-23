@@ -209,8 +209,18 @@ class Dates extends React.Component {
           const createCalendarTitle = (monthIndex) => {
             return <div className="month-name-container" key={months[monthIndex] + currentYear}>testing {months[monthIndex]}</div>;
           };
+          const createWeekdayTitle = (monthIndex) => {
+            return <div
+            className="weekday-titles-container"
+            key={months[currentMonthIndex] + currentYear + 'weekdays'}
+          >
+            {weekdayNameDivs}
+          </div>
+          }
 
-          let test = createCalendarTitle(currentMonthIndex);
+
+          let calendarTitle = createCalendarTitle(currentMonthIndex);
+          let weekdayTitle = createWeekdayTitle(currentMonthIndex);
 
           combinedCalendars.push(
             <div
@@ -218,19 +228,8 @@ class Dates extends React.Component {
               key={months[currentMonthIndex]}
             >
               {[
-                // <div
-                //   className="month-name-container"
-                //   key={months[currentMonthIndex]}
-                // >
-                //   {months[currentMonthIndex]}
-                // </div>,
-                test,
-                <div
-                  className="weekday-names-container"
-                  key={months[currentMonthIndex] + 'weekdays'}
-                >
-                  {weekdayNameDivs}
-                </div>,
+                calendarTitle,
+                weekdayTitle,
                 <div
                   className="date-container"
                   key={months[currentMonthIndex] + 'dates'}
