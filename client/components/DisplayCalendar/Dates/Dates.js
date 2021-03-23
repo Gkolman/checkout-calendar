@@ -78,15 +78,28 @@ class Dates extends React.Component {
       }
     };
 
-    const createDates = (howManyDaysInMonth, dayOfWeekStart) => {
+    const createDates = (howManyDaysInMonth, dayOfWeekStart, inCurrentMonth) => {
       let nullDaysTracker = 0;
       let allDatesInMonth = new Array(howManyDaysInMonth);
       allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth];
 
       for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
+        if (inCurrentMonth) {
+          console.log('start day for incurrent month: ', dayOfWeekStart)
+        }
         if (nullDaysTracker < dayOfWeekStart) {
           allDatesInMonth[nullDaysTracker + 7] = (
-            <button disabled={true}></button>
+            <button
+              key={
+                weekdayNames[dayOfWeekStart] +
+                '-nulled-' +
+                months[currentMonthIndex] +
+                '-' +
+                nullDaysTracker +
+                '-'
+              }
+              disabled={true}
+            ></button>
           );
           nullDaysTracker++;
           eachDate--;
@@ -94,6 +107,11 @@ class Dates extends React.Component {
         }
         allDatesInMonth[dayOfWeekStart + eachDate + 6] = (
           <button
+            key={new Date(
+              currentYear,
+              currentMonthIndex,
+              eachDate
+            ).toLocaleDateString()}
             name={new Date(
               currentYear,
               currentMonthIndex,
@@ -108,7 +126,14 @@ class Dates extends React.Component {
 
       determineMonthStartDayOfWeek(howManyDaysInMonth);
 
-      return <div className="weekdays-dates-container">{allDatesInMonth}</div>; // arr
+      return (
+        <div
+          className="weekdays-dates-container"
+          key={months[currentMonthIndex] + ' weeknames '}
+        >
+          {allDatesInMonth}
+        </div>
+      ); // arr
     };
 
     // END HELPER FUNCTIONS
@@ -121,7 +146,7 @@ class Dates extends React.Component {
     if (monthsInAdvance === 0) {
       datesInMonth = determineMonthsInDays(currentMonthIndex);
       currentCalendarTitle = createCalendarTitle(currentMonthIndex);
-      allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+      allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex, true);
       fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
       combinedCalendars.push(fullCalendar);
@@ -132,7 +157,7 @@ class Dates extends React.Component {
         if (currentMonth === currentMonthIndex + 1 + '') {
           datesInMonth = determineMonthsInDays(currentMonthIndex);
           currentCalendarTitle = createCalendarTitle(currentMonthIndex);
-          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex);
           fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
           combinedCalendars.push(fullCalendar);
@@ -140,7 +165,7 @@ class Dates extends React.Component {
           // MULTI MONTH ALLOWED BOOKINGS START OF FUTURE MONTHS
           datesInMonth = determineMonthsInDays(currentMonthIndex);
           currentCalendarTitle = createCalendarTitle(currentMonthIndex);
-          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1);
+          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex);
           fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
           combinedCalendars.push(fullCalendar);

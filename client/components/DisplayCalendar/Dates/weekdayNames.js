@@ -1,9 +1,9 @@
 export const weekdayNames = [
-  'Su',
-  'Mo',
-  'Tu',
-  'We',
-  'Th',
-  'Fr',
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
   'Sat'
 ];
