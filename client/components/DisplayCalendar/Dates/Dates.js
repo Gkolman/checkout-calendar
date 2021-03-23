@@ -29,7 +29,6 @@ class Dates extends React.Component {
     let currentMonthIndex = Number(currentMonth) - 1;
     let counter = 0;
 
-
     // HELPER FUNCTIONS
     const createCalendar = (calendarTitle, formattedDates) => {
       let calendar = [];
@@ -78,50 +77,90 @@ class Dates extends React.Component {
       }
     };
 
-    const createDates = (howManyDaysInMonth, dayOfWeekStart, inCurrentMonth) => {
+    const createDates = (
+      howManyDaysInMonth,
+      dayOfWeekStart,
+      inCurrentMonth
+    ) => {
       let nullDaysTracker = 0;
       let allDatesInMonth = new Array(howManyDaysInMonth);
       allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth];
 
       for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
         if (inCurrentMonth) {
-          console.log('start day for incurrent month: ', dayOfWeekStart)
-        }
-        if (nullDaysTracker < dayOfWeekStart) {
-          allDatesInMonth[nullDaysTracker + 7] = (
+          if (nullDaysTracker < dayOfWeekStart) {
+            allDatesInMonth[nullDaysTracker + 7] = (
+              <button
+                key={
+                  weekdayNames[dayOfWeekStart] +
+                  '-nulled-' +
+                  months[currentMonthIndex] +
+                  '-' +
+                  nullDaysTracker +
+                  '-'
+                }
+                disabled={true}
+              ></button>
+            );
+            nullDaysTracker++;
+            eachDate--;
+            continue;
+          }
+          allDatesInMonth[eachDate + 7] = (
             <button
-              key={
-                weekdayNames[dayOfWeekStart] +
-                '-nulled-' +
-                months[currentMonthIndex] +
-                '-' +
-                nullDaysTracker +
-                '-'
-              }
-              disabled={true}
-            ></button>
+              key={new Date(
+                currentYear,
+                currentMonthIndex,
+                eachDate
+              ).toLocaleDateString()}
+              name={new Date(
+                currentYear,
+                currentMonthIndex,
+                eachDate
+              ).toLocaleDateString()}
+              onClick={selectDate}
+              disabled={eachDate < Number(currentDate) ? true : false}
+            >
+              {eachDate}
+            </button>
           );
-          nullDaysTracker++;
-          eachDate--;
-          continue;
+        } else {
+          if (nullDaysTracker < dayOfWeekStart) {
+            allDatesInMonth[nullDaysTracker + 7] = (
+              <button
+                key={
+                  weekdayNames[dayOfWeekStart] +
+                  '-nulled-' +
+                  months[currentMonthIndex] +
+                  '-' +
+                  nullDaysTracker +
+                  '-'
+                }
+                disabled={true}
+              ></button>
+            );
+            nullDaysTracker++;
+            eachDate--;
+            continue;
+          }
+          allDatesInMonth[dayOfWeekStart + eachDate + 6] = (
+            <button
+              key={new Date(
+                currentYear,
+                currentMonthIndex,
+                eachDate
+              ).toLocaleDateString()}
+              name={new Date(
+                currentYear,
+                currentMonthIndex,
+                eachDate
+              ).toLocaleDateString()}
+              onClick={selectDate}
+            >
+              {eachDate}
+            </button>
+          );
         }
-        allDatesInMonth[dayOfWeekStart + eachDate + 6] = (
-          <button
-            key={new Date(
-              currentYear,
-              currentMonthIndex,
-              eachDate
-            ).toLocaleDateString()}
-            name={new Date(
-              currentYear,
-              currentMonthIndex,
-              eachDate
-            ).toLocaleDateString()}
-            onClick={selectDate}
-          >
-            {eachDate}
-          </button>
-        );
       }
 
       determineMonthStartDayOfWeek(howManyDaysInMonth);
@@ -157,7 +196,7 @@ class Dates extends React.Component {
         if (currentMonth === currentMonthIndex + 1 + '') {
           datesInMonth = determineMonthsInDays(currentMonthIndex);
           currentCalendarTitle = createCalendarTitle(currentMonthIndex);
-          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex);
+          allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex, true);
           fullCalendar = createCalendar(currentCalendarTitle, allDates);
 
           combinedCalendars.push(fullCalendar);
