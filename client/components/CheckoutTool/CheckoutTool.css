@@ -1,6 +1,10 @@
+li {
+  list-style: none;
+}
+
 #container {
   height: 200px;
-  width: 400px;
+  width: 100%;
   border-style: solid;
 
 }
@@ -19,3 +23,8 @@
 #reserve-button {
   width: 100%
 }
+
+#price-summary-container {
+  text-align: center;
+}
+

@@ -3,7 +3,6 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
-
 }
 
 .month-name-container {
@@ -12,6 +11,6 @@
 }
 
 .full-month-container {
-  width: 400px;
+  width: 100%;
   text-align: center;
 }

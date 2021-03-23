@@ -1,5 +1,6 @@
 import React from 'react';
 import Dates from './Dates/Dates';
+import './DisplayCalendar.css';
 
 class DisplayCalendar extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class DisplayCalendar extends React.Component {
     const { currentDate, currentMonth, currentYear, checkInDate, checkOutDate, selectDate, clearDates, monthsInAdvance, calendarMessage, calendarSubMessage } = this.props;
 
     return (
-      <div>
+      <div className="display-calendar-component">
         <div>{calendarMessage}</div>
         <div>{calendarSubMessage}</div>
         <Dates currentDate={currentDate} currentMonth={currentMonth} currentYear={currentYear} monthsInAdvance={monthsInAdvance} dayOfWeek={currentDateDayOfWeek} selectDate={selectDate}/>

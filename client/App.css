@@ -1,6 +1,5 @@
 #main-checkout-container{
-  width: 100%;
-  height: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  margin: 80px 20px 80px 20px;
 }
