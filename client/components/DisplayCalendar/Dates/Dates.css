@@ -1,3 +1,14 @@
+button {
+  border-radius: 50%;
+  background-color: white;
+  border-style: none;
+}
+
+button:focus {
+  outline:0;
+}
+
+
 .weekdays-dates-container {
   width: 100%;
   display: grid;
