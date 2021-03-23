@@ -19,7 +19,7 @@
   height: 100%;
 }
 
-.weekday-titles-container {
+.weekdays-dates-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);

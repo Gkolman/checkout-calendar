@@ -126,39 +126,33 @@ class Dates extends React.Component {
               dayOfWeekForButtonsIndex = 0;
             }
             if (date === datesInMonth) {
-              console.log(`lastDayOfMonth: ${date} type: ${typeof date}`);
-              console.log(
-                `current date / start: ${currentDate} type: ${typeof currentDate} day of week: ${dayOfWeek}`
-              );
-              console.log(
-                `index of current date / start date of week: ${weekdayNames.indexOf(
-                  dayOfWeek
-                )}`
-              );
-              console.log(
-                `difference between last and start: ${
-                  date - Number(currentDate)
-                }`
-              );
-              console.log(
-                `button weekday index at end: ${dayOfWeekForButtonsIndex}`
-              );
-              console.log(
-                `this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`
-              );
-              console.log(
-                `next month should start on this day: ${
-                  weekdayNames[dayOfWeekForButtonsIndex + 1]
-                }`
-              );
+              // console.log(`lastDayOfMonth: ${date} type: ${typeof date}`);
+              // console.log(
+              //   `current date / start: ${currentDate} type: ${typeof currentDate} day of week: ${dayOfWeek}`
+              // );
+              // console.log(
+              //   `index of current date / start date of week: ${weekdayNames.indexOf(
+              //     dayOfWeek
+              //   )}`
+              // );
+              // console.log(
+              //   `difference between last and start: ${
+              //     date - Number(currentDate)
+              //   }`
+              // );
+              // console.log(
+              //   `button weekday index at end: ${dayOfWeekForButtonsIndex}`
+              // );
+              // console.log(
+              //   `this month should end on this day: ${weekdayNames[dayOfWeekForButtonsIndex]}`
+              // );
+              // console.log(
+              //   `next month should start on this day: ${
+              //     weekdayNames[dayOfWeekForButtonsIndex + 1]
+              //   }`
+              // );
             }
           }
-          console.log(
-            `
-  months[currentMonthIndex]: ${months[currentMonthIndex]}
-  actual month: ${months[currentMonth - 1]}
-  `
-          );
           combinedCalendars.push(
             <div
               className="full-month-container"
@@ -197,8 +191,6 @@ class Dates extends React.Component {
             datesInMonth = 28;
           }
 
-          allDates = new Array(datesInMonth);
-
           const createCalendar = (howManyDays, monthIndex, dayOfWeekStart) => {
             let calendar = new Array(howManyDays);
 
@@ -209,18 +201,38 @@ class Dates extends React.Component {
           const createCalendarTitle = (monthIndex) => {
             return <div className="month-name-container" key={months[monthIndex] + currentYear}>testing {months[monthIndex]}</div>;
           };
-          const createWeekdayTitle = (monthIndex) => {
-            return <div
-            className="weekday-titles-container"
-            key={months[currentMonthIndex] + currentYear + 'weekdays'}
-          >
-            {weekdayNameDivs}
-          </div>
+
+          const createDates = (howManyDaysInMonth, dayOfWeekStart) => {
+            let counter = 0;
+            let allDatesInMonth = new Array(howManyDaysInMonth);
+            allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth]
+
+            for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
+              if (counter < dayOfWeekStart) {
+                allDatesInMonth[counter + 7] = <button disabled={true}></button>
+                counter++;
+                eachDate--;
+                continue;
+              }
+              allDatesInMonth[dayOfWeekStart + eachDate + 6] = <button>{eachDate}</button>
+            }
+
+            if (datesInMonth === 31) {
+              dayOfWeekForButtonsIndex += 3;
+            } else if (datesInMonth === 30) {
+              dayOfWeekForButtonsIndex += 2;
+            } else {
+              dayOfWeekForButtonsIndex += 1;
+            }
+
+            if (dayOfWeekForButtonsIndex >= 7) {
+              dayOfWeekForButtonsIndex -= 7;
+            }
+            return <div className="weekdays-dates-container">{allDatesInMonth}</div>; // arr
           }
 
-
           let calendarTitle = createCalendarTitle(currentMonthIndex);
-          let weekdayTitle = createWeekdayTitle(currentMonthIndex);
+          let allDates = createDates(datesInMonth, dayOfWeekForButtonsIndex + 1)
 
           combinedCalendars.push(
             <div
@@ -229,13 +241,7 @@ class Dates extends React.Component {
             >
               {[
                 calendarTitle,
-                weekdayTitle,
-                <div
-                  className="date-container"
-                  key={months[currentMonthIndex] + 'dates'}
-                >
-                  {allDates}
-                </div>,
+                allDates
               ]}
             </div>
           );
