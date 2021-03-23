@@ -4,9 +4,8 @@ button {
   border-style: none;
   height:auto;
   width: auto;
-  font-size: medium;
-
   margin: 10px;
+  font-size: x-large;
 }
 
 button:focus {
@@ -25,14 +24,14 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
-  font-size: larger;
+  font-size: small;
 
 }
 
 .month-name-container {
   text-align: center;
   width: 100%;
-  font-size: larger;
+  font-size: x-large;
 
 }
 
