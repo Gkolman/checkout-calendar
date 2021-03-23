@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import './App.css';
 
 import DisplayCalendar from './components/DisplayCalendar/DisplayCalendar';
 import CheckoutTool from './components/CheckoutTool/CheckoutTool';
@@ -126,7 +127,7 @@ class App extends React.Component {
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
     return (
-      <div>
+      <div id="main-checkout-container">
         <DisplayCalendar
           currentDate={date}
           currentMonth={month}
