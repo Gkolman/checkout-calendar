@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import './App.css';
 
 import DisplayCalendar from './components/DisplayCalendar/DisplayCalendar';
 import CheckoutTool from './components/CheckoutTool/CheckoutTool';
@@ -32,6 +33,7 @@ class App extends React.Component {
     };
 
     this.selectDate = this.selectDate.bind(this);
+    this.clearDates = this.clearDates.bind(this);
   }
 
   componentDidMount() {
@@ -50,26 +52,26 @@ class App extends React.Component {
   selectDate(e) {
     if (!this.state.checkInDate) {
       this.setState({
-        checkInDate: e.target.name,
-        calendarMessage: 'Select checkout date',
-        calendarSubMessage: 'Minimum stay: 1 night',
+        checkInDate: e.target.name
       });
     } else if (this.state.checkInDate && this.state.checkOutDate) {
       this.setState({
         checkInDate: e.target.name,
         checkOutDate: '',
+        calendarMessage: 'Select checkout date',
+        calendarSubMessage: 'Minimum stay: 1 night',
       });
     } else {
       let [month, date, year] = this.state.checkInDate.split('/');
       let checkInDateTransformed = new Date(
         Number(year),
-        Number(month),
+        Number(month) - 1,
         Number(date)
       );
       let [month2, date2, year2] = e.target.name.split('/');
       let checkOutDateTransformed = new Date(
         Number(year2),
-        Number(month2),
+        Number(month2) - 1,
         Number(date2)
       );
 
@@ -90,12 +92,21 @@ class App extends React.Component {
         this.setState({
           checkOutDate: e.target.name,
           calendarMessage: `${
-            (checkOutDateTransformed - checkInDateTransformed) / 1000 / 86400
+            ((checkOutDateTransformed - checkInDateTransformed) / 1000 / 86400).toFixed(0)
           } nights in {location}`,
           calendarSubMessage: `${formattedCheckIn} - ${formattedCheckOut}`,
         });
       }
     }
+  }
+
+  clearDates() {
+    this.setState({
+      checkInDate: '',
+      checkOutDate: '',
+      calendarMessage: 'Select check-in date',
+      calendarSubMessage: 'Add your travel dates for exact pricing',
+    });
   }
 
   render() {
@@ -116,7 +127,7 @@ class App extends React.Component {
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
     return (
-      <div>
+      <div id="main-checkout-container">
         <DisplayCalendar
           currentDate={date}
           currentMonth={month}
@@ -125,6 +136,7 @@ class App extends React.Component {
           checkOutDate={checkOutDate}
           monthsInAdvance={monthsInAdvance}
           selectDate={this.selectDate}
+          clearDates={this.clearDates}
           calendarMessage={calendarMessage}
           calendarSubMessage={calendarSubMessage}
         />

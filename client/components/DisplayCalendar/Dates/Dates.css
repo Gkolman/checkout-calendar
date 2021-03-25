@@ -1,46 +1,42 @@
-.carousel {
-  position: relative;
-  height: 200px;
-  width: 80%;
-  margin: 0 auto;
+button {
+  border-radius: 50%;
+  background-color: white;
+  border-style: none;
+  height:auto;
+  width: auto;
+  margin: 10px;
+  font-size: x-large;
 }
 
-.carousel-track {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+button:focus {
+  outline:0;
 }
 
-.carousel-slide {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+button:hover {
+  border-style: solid;
+  border-width: thin;
 }
 
-.weekday-names-container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-column-gap: 5px;
 
-}
 
-.date-container {
+.weekdays-dates-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
+  font-size: small;
 
 }
 
 .month-name-container {
   text-align: center;
   width: 100%;
+  font-size: x-large;
+
 }
 
 .full-month-container {
-  width: 400px;
+  width: 100%;
   text-align: center;
+
 }

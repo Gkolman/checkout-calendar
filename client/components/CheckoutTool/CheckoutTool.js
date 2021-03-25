@@ -1,4 +1,5 @@
 import React from 'react';
+import './CheckoutTool.css';
 
 class CheckoutTool extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class CheckoutTool extends React.Component {
             guests selected
           </div>
         </div>
+          <button id="reserve-button" disabled={true}>Reserve</button>
         <div id="price-summary-container">
           <ul>
             <li>{pricePerNight} for {duration} nights = {basePrice.toFixed(2)} </li>

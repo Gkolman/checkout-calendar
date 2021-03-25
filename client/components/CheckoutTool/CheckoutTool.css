@@ -1,0 +1,31 @@
+li {
+  list-style: none;
+}
+
+#container {
+  height: 200px;
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  padding: 10px;
+}
+
+#price-and-reviews-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#checkout-options-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+}
+
+#reserve-button {
+  width: 100%
+}
+
+#price-summary-container {
+  text-align: center;
+}
+
