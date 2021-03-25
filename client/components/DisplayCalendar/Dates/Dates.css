@@ -1,0 +1,42 @@
+button {
+  border-radius: 50%;
+  background-color: white;
+  border-style: none;
+  height:auto;
+  width: auto;
+  margin: 10px;
+  font-size: x-large;
+}
+
+button:focus {
+  outline:0;
+}
+
+button:hover {
+  border-style: solid;
+  border-width: thin;
+}
+
+
+
+.weekdays-dates-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-column-gap: 5px;
+  font-size: small;
+
+}
+
+.month-name-container {
+  text-align: center;
+  width: 100%;
+  font-size: x-large;
+
+}
+
+.full-month-container {
+  width: 100%;
+  text-align: center;
+
+}

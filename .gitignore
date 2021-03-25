@@ -30,3 +30,7 @@ dist/
 # ENV
 .env
 
+#bundle
+public/
+
+

@@ -1,11 +1,10 @@
 const express = require('express');
+const path = require('path');
 const { getListingCheckoutInformation } = require('./models/Checkout');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('hello logged on');
-});
+app.use('/:productId', express.static(path.join(__dirname, '../public')));
 
 app.get('/checkoutInformation/:productId', (req, res) => {
   if (Number(req.params.productId) > 100) {
@@ -17,5 +16,4 @@ app.get('/checkoutInformation/:productId', (req, res) => {
     .catch(err => console.log(`error looking for checkout information ${err}`));
 });
 
-
-app.listen(3000, () => console.log('connected to server'));
+app.listen(3004, () => console.log('connected to server'));
