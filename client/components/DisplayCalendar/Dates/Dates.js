@@ -213,6 +213,8 @@ class Dates extends React.Component {
         currentMonthIndex++;
       }
     }
+
+    console.log(`typeof: ${ Array.isArray(combinedCalendars)}`)
     return <div>{combinedCalendars}</div>;
   }
 }

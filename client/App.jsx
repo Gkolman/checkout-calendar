@@ -52,7 +52,9 @@ class App extends React.Component {
   selectDate(e) {
     if (!this.state.checkInDate) {
       this.setState({
-        checkInDate: e.target.name
+        checkInDate: e.target.name,
+        calendarMessage: 'Select checkout date',
+        calendarSubMessage: 'Minimum stay: 1 night',
       });
     } else if (this.state.checkInDate && this.state.checkOutDate) {
       this.setState({
