@@ -48,9 +48,9 @@ class Dates extends React.Component {
           className="month-name-container"
           key={months[monthIndex] + currentYear}
         >
-          <button name="left" onClick={changeSlider}>left click</button>
+          <button name="left" onClick={changeSlider} disabled={sliderPosition === 0 ? true : false}><i className="fas fa-chevron-left"></i></button>
           {months[monthIndex] + ' ' + currentYear}
-          <button name="right" onClick={changeSlider}>right click</button>
+          <button name="right" onClick={changeSlider} disabled={sliderPosition === monthsInAdvance - 1 ? true : false}><i className="fas fa-chevron-right"></i></button>
         </div>
       );
     };
@@ -218,7 +218,6 @@ class Dates extends React.Component {
       }
     }
 
-    console.log(`typeof: ${ Array.isArray(combinedCalendars)}`)
     return (
     <div className="carousel">
       {combinedCalendars[sliderPosition]}
