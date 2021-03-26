@@ -17,7 +17,9 @@ button:hover {
   border-width: thin;
 }
 
-
+.carousel {
+  width: 100%;
+}
 
 .weekdays-dates-container {
   width: 100%;

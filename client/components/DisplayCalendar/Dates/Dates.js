@@ -14,8 +14,10 @@ class Dates extends React.Component {
       currentMonth,
       currentYear,
       dayOfWeek,
-      selectDate,
       monthsInAdvance,
+      selectDate,
+      changeSlider,
+      sliderPosition
     } = this.props;
 
     let currentCalendarTitle;
@@ -46,7 +48,9 @@ class Dates extends React.Component {
           className="month-name-container"
           key={months[monthIndex] + currentYear}
         >
+          <button name="left" onClick={changeSlider}>left click</button>
           {months[monthIndex] + ' ' + currentYear}
+          <button name="right" onClick={changeSlider}>right click</button>
         </div>
       );
     };
@@ -215,7 +219,11 @@ class Dates extends React.Component {
     }
 
     console.log(`typeof: ${ Array.isArray(combinedCalendars)}`)
-    return <div>{combinedCalendars}</div>;
+    return (
+    <div className="carousel">
+      {combinedCalendars[sliderPosition]}
+      </div>
+      )
   }
 }
 

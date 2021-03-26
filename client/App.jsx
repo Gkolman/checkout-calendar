@@ -30,10 +30,12 @@ class App extends React.Component {
       selectedInfants: 0,
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
+      sliderPosition: 0
     };
 
     this.selectDate = this.selectDate.bind(this);
     this.clearDates = this.clearDates.bind(this);
+    this.changeSlider = this.changeSlider.bind(this);
   }
 
   componentDidMount() {
@@ -111,6 +113,14 @@ class App extends React.Component {
     });
   }
 
+  changeSlider(e) {
+    if (e.target.name === 'left') {
+      this.setState({ sliderPosition: --this.state.sliderPosition })
+    } else {
+      this.setState({ sliderPosition: ++this.state.sliderPosition })
+    }
+  }
+
   render() {
     const {
       checkInDate,
@@ -125,6 +135,7 @@ class App extends React.Component {
       selectedInfants,
       calendarMessage,
       calendarSubMessage,
+      sliderPosition
     } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
@@ -137,10 +148,12 @@ class App extends React.Component {
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
           monthsInAdvance={monthsInAdvance}
-          selectDate={this.selectDate}
-          clearDates={this.clearDates}
           calendarMessage={calendarMessage}
           calendarSubMessage={calendarSubMessage}
+          sliderPosition={sliderPosition}
+          selectDate={this.selectDate}
+          clearDates={this.clearDates}
+          changeSlider={this.changeSlider}
         />
         <CheckoutTool
           currentMonth={month}
