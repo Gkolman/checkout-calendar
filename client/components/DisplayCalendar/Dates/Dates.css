@@ -2,17 +2,17 @@ button {
   border-radius: 50%;
   background-color: white;
   border-style: none;
-  height:auto;
+  height: auto;
   width: auto;
   margin: 10px;
   font-size: x-large;
 }
 
 button:focus {
-  outline:0;
+  outline: 0;
 }
 
-button:hover {
+.dates:hover {
   border-style: solid;
   border-width: thin;
 }
@@ -27,23 +27,19 @@ button:hover {
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
   font-size: small;
-  animation: slideIn .4s forwards;
-
+  animation: slideIn 0.4s forwards;
 }
 
 .month-name-container {
-  display: grid;
-  text-align: center;
+  display: flex;
   width: 100%;
   font-size: x-large;
-  grid-template-columns: 1fr 2fr 1fr;
-
+  justify-content: space-between;
 }
 
 .full-month-container {
   width: 100%;
   text-align: center;
-
 }
 
 @keyframes slideIn {

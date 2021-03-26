@@ -17,7 +17,7 @@ class Dates extends React.Component {
       monthsInAdvance,
       selectDate,
       changeSlider,
-      sliderPosition
+      sliderPosition,
     } = this.props;
 
     let currentCalendarTitle;
@@ -48,9 +48,21 @@ class Dates extends React.Component {
           className="month-name-container"
           key={months[monthIndex] + currentYear}
         >
-          <button name="left" onClick={changeSlider} disabled={sliderPosition === 0 ? true : false}><i className="fas fa-chevron-left"></i></button>
+          <button
+            name="left"
+            onClick={changeSlider}
+            disabled={sliderPosition === 0 ? true : false}
+          >
+            <i className="fas fa-angle-left"></i>
+          </button>
           {months[monthIndex] + ' ' + currentYear}
-          <button name="right" onClick={changeSlider} disabled={sliderPosition === monthsInAdvance - 1 ? true : false}><i className="fas fa-chevron-right"></i></button>
+          <button
+            name="right"
+            onClick={changeSlider}
+            disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
+          >
+            <i className="fas fa-angle-right"></i>
+          </button>
         </div>
       );
     };
@@ -104,6 +116,7 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
+                className="dates"
               ></button>
             );
             nullDaysTracker++;
@@ -124,6 +137,7 @@ class Dates extends React.Component {
               ).toLocaleDateString()}
               onClick={selectDate}
               disabled={eachDate < Number(currentDate) ? true : false}
+              className="dates"
             >
               {eachDate}
             </button>
@@ -141,6 +155,7 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
+                className="dates"
               ></button>
             );
             nullDaysTracker++;
@@ -160,6 +175,7 @@ class Dates extends React.Component {
                 eachDate
               ).toLocaleDateString()}
               onClick={selectDate}
+              className="dates"
             >
               {eachDate}
             </button>
@@ -218,11 +234,7 @@ class Dates extends React.Component {
       }
     }
 
-    return (
-    <div className="carousel">
-      {combinedCalendars[sliderPosition]}
-      </div>
-      )
+    return <div className="carousel">{combinedCalendars[sliderPosition]}</div>;
   }
 }
 
