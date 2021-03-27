@@ -30,10 +30,13 @@ class App extends React.Component {
       selectedInfants: 0,
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
+      sliderPosition: 0,
+      direction: null,
     };
 
     this.selectDate = this.selectDate.bind(this);
     this.clearDates = this.clearDates.bind(this);
+    this.changeSlider = this.changeSlider.bind(this);
   }
 
   componentDidMount() {
@@ -93,9 +96,11 @@ class App extends React.Component {
       } else {
         this.setState({
           checkOutDate: e.target.name,
-          calendarMessage: `${
-            ((checkOutDateTransformed - checkInDateTransformed) / 1000 / 86400).toFixed(0)
-          } nights in {location}`,
+          calendarMessage: `${(
+            (checkOutDateTransformed - checkInDateTransformed) /
+            1000 /
+            86400
+          ).toFixed(0)} nights in {location}`,
           calendarSubMessage: `${formattedCheckIn} - ${formattedCheckOut}`,
         });
       }
@@ -109,6 +114,20 @@ class App extends React.Component {
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
     });
+  }
+
+  changeSlider(e) {
+    if (e.target.getAttribute('name') === 'left') {
+      this.setState({ direction: 'left' });
+      if (this.state.sliderPosition > 0) {
+        this.setState({ sliderPosition: --this.state.sliderPosition });
+      }
+    } else {
+      this.setState({
+        sliderPosition: ++this.state.sliderPosition,
+        direction: 'right',
+      });
+    }
   }
 
   render() {
@@ -125,6 +144,8 @@ class App extends React.Component {
       selectedInfants,
       calendarMessage,
       calendarSubMessage,
+      sliderPosition,
+      direction,
     } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
@@ -137,10 +158,13 @@ class App extends React.Component {
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
           monthsInAdvance={monthsInAdvance}
-          selectDate={this.selectDate}
-          clearDates={this.clearDates}
           calendarMessage={calendarMessage}
           calendarSubMessage={calendarSubMessage}
+          sliderPosition={sliderPosition}
+          direction={direction}
+          selectDate={this.selectDate}
+          clearDates={this.clearDates}
+          changeSlider={this.changeSlider}
         />
         <CheckoutTool
           currentMonth={month}

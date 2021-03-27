@@ -2,41 +2,86 @@ button {
   border-radius: 50%;
   background-color: white;
   border-style: none;
-  height:auto;
-  width: auto;
-  margin: 10px;
-  font-size: x-large;
+  font-size: 0.9em;
 }
 
 button:focus {
-  outline:0;
+  outline: 0;
 }
 
-button:hover {
+.slider {
+  border-radius: 50%;
+  width: fit-content;
+  height: fit-content;
+}
+
+.slider:hover {
+  background-color: grey;
+}
+
+
+.dates {
+  height: 77px;
+  width: 77px;
+}
+
+.dates--disabled {
+  height: 77px;
+  width: 77px;
+  text-decoration: line-through;
+}
+
+.dates:hover {
   border-style: solid;
   border-width: thin;
 }
 
-
+.carousel {
+  width: 100%;
+}
 
 .weekdays-dates-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
-  font-size: small;
+  font-size: 0.9em;
+}
 
+.slideable--left {
+  animation: slideInFromLeft 0.4s forwards;
+}
+
+.slideable--right {
+  animation: slideInFromLeft 0.4s forwards;
+}
+
+.full-month-dates-container {
+  width: 100%;
+  text-align: center;
 }
 
 .month-name-container {
-  text-align: center;
+  display: flex;
   width: 100%;
-  font-size: x-large;
-
+  justify-content: space-between;
+  font-size: 1.2em;
 }
 
-.full-month-container {
-  width: 100%;
-  text-align: center;
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

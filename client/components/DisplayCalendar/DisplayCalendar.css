@@ -1,3 +1,21 @@
 .display-calendar-component{
   width: 100%;
 }
+
+.display-calendar-component > * {
+  margin-bottom: 10px;
+}
+
+.bottom-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#calendarMessage {
+  font-size: 1.2em;
+}
+
+#calendarSubMessage {
+  color: grey;
+  font-size: 0.8em;
+}

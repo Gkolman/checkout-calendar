@@ -14,8 +14,11 @@ class Dates extends React.Component {
       currentMonth,
       currentYear,
       dayOfWeek,
-      selectDate,
       monthsInAdvance,
+      selectDate,
+      changeSlider,
+      sliderPosition,
+      direction,
     } = this.props;
 
     let currentCalendarTitle;
@@ -33,7 +36,10 @@ class Dates extends React.Component {
     const createCalendar = (calendarTitle, formattedDates) => {
       let calendar = [];
       calendar.push(
-        <div className="full-month-container" key={months[currentMonthIndex]}>
+        <div
+          className="full-month-dates-container"
+          key={months[currentMonthIndex]}
+        >
           {[calendarTitle, formattedDates]}
         </div>
       );
@@ -46,7 +52,38 @@ class Dates extends React.Component {
           className="month-name-container"
           key={months[monthIndex] + currentYear}
         >
-          {months[monthIndex] + ' ' + currentYear}
+          <div className="slider">
+            <button
+              id="left-slider-button"
+              name="left"
+              onClick={changeSlider}
+              disabled={sliderPosition === 0 ? true : false}
+            >
+              <i name="left" className="fas fa-angle-left fa-2x"></i>
+            </button>
+          </div>
+
+          <div
+            className={
+              !direction
+                ? 'slideable'
+                : direction === 'left'
+                ? 'slideable--left'
+                : 'slideable--right'
+            }
+          >
+            {months[monthIndex] + ' ' + currentYear}
+          </div>
+          <div className="slider">
+            <button
+              id="right-slider-button"
+              name="right"
+              onClick={changeSlider}
+              disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
+            >
+              <i name="right" className="fas fa-angle-right fa-2x"></i>
+            </button>
+          </div>
         </div>
       );
     };
@@ -84,12 +121,13 @@ class Dates extends React.Component {
     ) => {
       let nullDaysTracker = 0;
       let allDatesInMonth = new Array(howManyDaysInMonth);
-      allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth];
+      allDatesInMonth = [...allDatesInMonth];
 
       for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
         if (inCurrentMonth) {
           if (nullDaysTracker < dayOfWeekStart) {
-            allDatesInMonth[nullDaysTracker + 7] = (
+            allDatesInMonth[nullDaysTracker] = (
+              <div>
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -100,13 +138,17 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
+                className="dates--disabled"
               ></button>
+              </div>
+
             );
             nullDaysTracker++;
             eachDate--;
             continue;
           }
-          allDatesInMonth[eachDate + 7] = (
+          allDatesInMonth[eachDate] = (
+            <div>
             <button
               key={new Date(
                 currentYear,
@@ -120,13 +162,18 @@ class Dates extends React.Component {
               ).toLocaleDateString()}
               onClick={selectDate}
               disabled={eachDate < Number(currentDate) ? true : false}
+              className={eachDate < Number(currentDate) ? "dates--disabled" : "dates"}
             >
               {eachDate}
             </button>
+              </div>
+
           );
         } else {
           if (nullDaysTracker < dayOfWeekStart) {
-            allDatesInMonth[nullDaysTracker + 7] = (
+            allDatesInMonth[nullDaysTracker] = (
+              <div>
+
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -137,7 +184,10 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
+                className="dates--disabled"
               ></button>
+              </div>
+
             );
             nullDaysTracker++;
             eachDate--;
@@ -156,6 +206,7 @@ class Dates extends React.Component {
                 eachDate
               ).toLocaleDateString()}
               onClick={selectDate}
+              className="dates"
             >
               {eachDate}
             </button>
@@ -166,11 +217,33 @@ class Dates extends React.Component {
       determineMonthStartDayOfWeek(howManyDaysInMonth);
 
       return (
-        <div
-          className="weekdays-dates-container"
-          key={months[currentMonthIndex] + ' weeknames '}
-        >
-          {allDatesInMonth}
+        <div>
+          <div
+            className="weekdays-dates-container"
+            key={
+              months[currentMonthIndex] +
+              ' weeknamesOnly ' +
+              dayOfWeekForButtonsIndex
+            }
+          >
+            {[...weekdayNameDivs]}
+          </div>
+          <div
+            className={
+              !direction
+                ? 'weekdays-dates-container'
+                : direction === 'left'
+                ? 'weekdays-dates-container slideable--left'
+                : 'weekdays-dates-container slideable--right'
+            }
+            key={
+              months[currentMonthIndex] +
+              ' weeknamesDates ' +
+              dayOfWeekForButtonsIndex
+            }
+          >
+            {allDatesInMonth}
+          </div>
         </div>
       ); // arr
     };
@@ -214,8 +287,7 @@ class Dates extends React.Component {
       }
     }
 
-    console.log(`typeof: ${ Array.isArray(combinedCalendars)}`)
-    return <div>{combinedCalendars}</div>;
+    return <div className="carousel">{combinedCalendars[sliderPosition]}</div>;
   }
 }
 
