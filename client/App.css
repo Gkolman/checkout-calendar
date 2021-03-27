@@ -1,3 +1,7 @@
+body {
+  font-family: 'Varela Round', sans-serif;
+}
+
 #main-checkout-container{
   display: grid;
   grid-template-columns: repeat(2, 1fr);

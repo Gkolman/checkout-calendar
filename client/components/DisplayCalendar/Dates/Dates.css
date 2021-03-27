@@ -3,12 +3,17 @@ button {
   background-color: white;
   border-style: none;
   height: fit-content;
-  font-size: x-large;
+  font-size: 0.9rem;
   padding: 0;
 }
 
 button:focus {
   outline: 0;
+}
+
+.dates {
+  height: 77px;
+  width: 77px;
 }
 
 .dates:hover {
@@ -25,28 +30,15 @@ button:focus {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
-  font-size: small;
+  font-size: 0.9rem;
 }
 
 .slideable--left {
-  color: red;
   animation: slideInFromLeft 0.4s forwards;
 }
 
 .slideable--right {
-  color: blue;
   animation: slideInFromLeft 0.4s forwards;
-}
-
-.full-month-date-container {
-  width: 100%;
-  text-align: center;
-}
-
-.full-month-dates-container {
-  width: 100%;
-  text-align: center;
-  /* animation: slideInFromLeft 0.4s forwards; */
 }
 
 .full-month-dates-container {
@@ -57,11 +49,9 @@ button:focus {
 .month-name-container {
   display: flex;
   width: 100%;
-  font-size: x-large;
   justify-content: space-between;
+  font-size: 1rem;
 }
-
-
 
 @keyframes slideInFromRight {
   0% {

@@ -58,7 +58,7 @@ class Dates extends React.Component {
             onClick={changeSlider}
             disabled={sliderPosition === 0 ? true : false}
           >
-            <i name="left" className="fas fa-angle-left"></i>
+            <i name="left" className="fas fa-angle-left fa-2x"></i>
           </button>
           <div
             className={
@@ -77,7 +77,7 @@ class Dates extends React.Component {
             onClick={changeSlider}
             disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
           >
-            <i name="right" className="fas fa-angle-right"></i>
+            <i name="right" className="fas fa-angle-right fa-2x"></i>
           </button>
         </div>
       );
@@ -205,7 +205,7 @@ class Dates extends React.Component {
         <div>
           <div
             className="weekdays-dates-container"
-            key={months[currentMonthIndex] + ' weeknames '}
+            key={months[currentMonthIndex] + ' weeknamesOnly ' + dayOfWeekForButtonsIndex}
           >
             {[...weekdayNameDivs]}
           </div>
@@ -217,7 +217,7 @@ class Dates extends React.Component {
                 ? 'weekdays-dates-container slideable--left'
                 : 'weekdays-dates-container slideable--right'
             }
-            key={months[currentMonthIndex] + ' weeknames ' + ' dates '}
+            key={months[currentMonthIndex] + ' weeknamesDates ' + dayOfWeekForButtonsIndex}
           >
             {allDatesInMonth}
           </div>
