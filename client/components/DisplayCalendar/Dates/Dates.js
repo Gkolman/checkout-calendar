@@ -18,7 +18,7 @@ class Dates extends React.Component {
       selectDate,
       changeSlider,
       sliderPosition,
-      direction
+      direction,
     } = this.props;
 
     let currentCalendarTitle;
@@ -36,7 +36,10 @@ class Dates extends React.Component {
     const createCalendar = (calendarTitle, formattedDates) => {
       let calendar = [];
       calendar.push(
-        <div className="full-month-container" key={months[currentMonthIndex]}>
+        <div
+          className="full-month-dates-container"
+          key={months[currentMonthIndex]}
+        >
           {[calendarTitle, formattedDates]}
         </div>
       );
@@ -57,7 +60,7 @@ class Dates extends React.Component {
           >
             <i name="left" className="fas fa-angle-left"></i>
           </button>
-          <div>{months[monthIndex] + ' ' + currentYear}</div>
+          <div className={!direction ? "slideable" : direction === 'left' ? "slideable--left" : "slideable--right"}>{months[monthIndex] + ' ' + currentYear}</div>
           <button
             id="right-slider-button"
             name="right"
@@ -190,7 +193,7 @@ class Dates extends React.Component {
 
       return (
         <div
-          className={!direction ? "weekdays-dates-container" : direction === 'left' ? "weekdays-dates-container--left" : "weekdays-dates-container--right"}
+          className={!direction ? "weekdays-dates-container" : direction === 'left' ? "weekdays-dates-container slideable--left" : "weekdays-dates-container slideable--right"}
           key={months[currentMonthIndex] + ' weeknames '}
         >
           {allDatesInMonth}

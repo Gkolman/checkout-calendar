@@ -28,24 +28,30 @@ button:focus {
   font-size: small;
 }
 
-.weekdays-dates-container--left {
+.slideable--left {
   color: red;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-column-gap: 5px;
-  font-size: small;
   animation: slideInFromLeft 0.4s forwards;
 }
 
-.weekdays-dates-container--right {
+.slideable--right {
   color: blue;
+  animation: slideInFromLeft 0.4s forwards;
+}
+
+.full-month-date-container {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-column-gap: 5px;
-  font-size: small;
-  animation: slideInFromRight 0.4s forwards;
+  text-align: center;
+}
+
+.full-month-dates-container {
+  width: 100%;
+  text-align: center;
+  /* animation: slideInFromLeft 0.4s forwards; */
+}
+
+.full-month-dates-container {
+  width: 100%;
+  text-align: center;
 }
 
 .month-name-container {
@@ -55,10 +61,7 @@ button:focus {
   justify-content: space-between;
 }
 
-.full-month-container {
-  width: 100%;
-  text-align: center;
-}
+
 
 @keyframes slideInFromRight {
   0% {
