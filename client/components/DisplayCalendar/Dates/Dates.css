@@ -2,10 +2,9 @@ button {
   border-radius: 50%;
   background-color: white;
   border-style: none;
-  height: auto;
-  width: auto;
-  margin: 10px;
+  height: fit-content;
   font-size: x-large;
+  padding: 0;
 }
 
 button:focus {

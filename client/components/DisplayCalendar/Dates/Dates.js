@@ -49,6 +49,7 @@ class Dates extends React.Component {
           key={months[monthIndex] + currentYear}
         >
           <button
+            id="left-slider-button"
             name="left"
             onClick={changeSlider}
             disabled={sliderPosition === 0 ? true : false}
@@ -57,6 +58,7 @@ class Dates extends React.Component {
           </button>
           {months[monthIndex] + ' ' + currentYear}
           <button
+            id="right-slider-button"
             name="right"
             onClick={changeSlider}
             disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
