@@ -23,6 +23,7 @@ class DisplayCalendar extends React.Component {
       calendarMessage,
       calendarSubMessage,
       sliderPosition,
+      direction
     } = this.props;
 
     return (
@@ -38,6 +39,7 @@ class DisplayCalendar extends React.Component {
           selectDate={selectDate}
           changeSlider={changeSlider}
           sliderPosition={sliderPosition}
+          direction={direction}
         />
         <div className="bottom-bar">
           <button>keyboard input button</button>

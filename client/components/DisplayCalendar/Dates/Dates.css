@@ -26,7 +26,26 @@ button:focus {
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
   font-size: small;
-  animation: slideIn 0.4s forwards;
+}
+
+.weekdays-dates-container--left {
+  color: red;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-column-gap: 5px;
+  font-size: small;
+  animation: slideInFromLeft 0.4s forwards;
+}
+
+.weekdays-dates-container--right {
+  color: blue;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-column-gap: 5px;
+  font-size: small;
+  animation: slideInFromRight 0.4s forwards;
 }
 
 .month-name-container {
@@ -41,9 +60,18 @@ button:focus {
   text-align: center;
 }
 
-@keyframes slideIn {
+@keyframes slideInFromRight {
   0% {
     transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-10%);
   }
   100% {
     transform: translateX(0);
