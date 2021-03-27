@@ -127,6 +127,7 @@ class Dates extends React.Component {
         if (inCurrentMonth) {
           if (nullDaysTracker < dayOfWeekStart) {
             allDatesInMonth[nullDaysTracker] = (
+              <div>
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -139,12 +140,15 @@ class Dates extends React.Component {
                 disabled={true}
                 className="dates--disabled"
               ></button>
+              </div>
+
             );
             nullDaysTracker++;
             eachDate--;
             continue;
           }
           allDatesInMonth[eachDate] = (
+            <div>
             <button
               key={new Date(
                 currentYear,
@@ -162,10 +166,14 @@ class Dates extends React.Component {
             >
               {eachDate}
             </button>
+              </div>
+
           );
         } else {
           if (nullDaysTracker < dayOfWeekStart) {
             allDatesInMonth[nullDaysTracker] = (
+              <div>
+
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -178,6 +186,8 @@ class Dates extends React.Component {
                 disabled={true}
                 className="dates--disabled"
               ></button>
+              </div>
+
             );
             nullDaysTracker++;
             eachDate--;

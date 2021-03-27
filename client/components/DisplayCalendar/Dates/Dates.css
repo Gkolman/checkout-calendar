@@ -2,7 +2,6 @@ button {
   border-radius: 50%;
   background-color: white;
   border-style: none;
-  height: fit-content;
   font-size: 0.9em;
 }
 
