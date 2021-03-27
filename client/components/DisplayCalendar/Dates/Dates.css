@@ -3,17 +3,33 @@ button {
   background-color: white;
   border-style: none;
   height: fit-content;
-  font-size: 0.9rem;
-  padding: 0;
+  font-size: 0.9em;
 }
 
 button:focus {
   outline: 0;
 }
 
+.slider {
+  border-radius: 50%;
+  width: fit-content;
+  height: fit-content;
+}
+
+.slider:hover {
+  background-color: grey;
+}
+
+
 .dates {
   height: 77px;
   width: 77px;
+}
+
+.dates--disabled {
+  height: 77px;
+  width: 77px;
+  text-decoration: line-through;
 }
 
 .dates:hover {
@@ -30,7 +46,7 @@ button:focus {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 5px;
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }
 
 .slideable--left {
@@ -50,7 +66,7 @@ button:focus {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  font-size: 1rem;
+  font-size: 1.2em;
 }
 
 @keyframes slideInFromRight {

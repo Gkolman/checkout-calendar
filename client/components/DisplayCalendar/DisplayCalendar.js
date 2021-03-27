@@ -28,8 +28,8 @@ class DisplayCalendar extends React.Component {
 
     return (
       <div className="display-calendar-component">
-        <div>{calendarMessage}</div>
-        <div>{calendarSubMessage}</div>
+        <div id="calendarMessage">{calendarMessage}</div>
+        <div id="calendarSubMessage">{calendarSubMessage}</div>
         <Dates
           currentDate={currentDate}
           currentMonth={currentMonth}

@@ -52,14 +52,17 @@ class Dates extends React.Component {
           className="month-name-container"
           key={months[monthIndex] + currentYear}
         >
-          <button
-            id="left-slider-button"
-            name="left"
-            onClick={changeSlider}
-            disabled={sliderPosition === 0 ? true : false}
-          >
-            <i name="left" className="fas fa-angle-left fa-2x"></i>
-          </button>
+          <div className="slider">
+            <button
+              id="left-slider-button"
+              name="left"
+              onClick={changeSlider}
+              disabled={sliderPosition === 0 ? true : false}
+            >
+              <i name="left" className="fas fa-angle-left fa-2x"></i>
+            </button>
+          </div>
+
           <div
             className={
               !direction
@@ -71,14 +74,16 @@ class Dates extends React.Component {
           >
             {months[monthIndex] + ' ' + currentYear}
           </div>
-          <button
-            id="right-slider-button"
-            name="right"
-            onClick={changeSlider}
-            disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
-          >
-            <i name="right" className="fas fa-angle-right fa-2x"></i>
-          </button>
+          <div className="slider">
+            <button
+              id="right-slider-button"
+              name="right"
+              onClick={changeSlider}
+              disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
+            >
+              <i name="right" className="fas fa-angle-right fa-2x"></i>
+            </button>
+          </div>
         </div>
       );
     };
@@ -132,7 +137,7 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
-                className="dates"
+                className="dates--disabled"
               ></button>
             );
             nullDaysTracker++;
@@ -153,7 +158,7 @@ class Dates extends React.Component {
               ).toLocaleDateString()}
               onClick={selectDate}
               disabled={eachDate < Number(currentDate) ? true : false}
-              className="dates"
+              className={eachDate < Number(currentDate) ? "dates--disabled" : "dates"}
             >
               {eachDate}
             </button>
@@ -171,7 +176,7 @@ class Dates extends React.Component {
                   '-'
                 }
                 disabled={true}
-                className="dates"
+                className="dates--disabled"
               ></button>
             );
             nullDaysTracker++;
@@ -205,7 +210,11 @@ class Dates extends React.Component {
         <div>
           <div
             className="weekdays-dates-container"
-            key={months[currentMonthIndex] + ' weeknamesOnly ' + dayOfWeekForButtonsIndex}
+            key={
+              months[currentMonthIndex] +
+              ' weeknamesOnly ' +
+              dayOfWeekForButtonsIndex
+            }
           >
             {[...weekdayNameDivs]}
           </div>
@@ -217,7 +226,11 @@ class Dates extends React.Component {
                 ? 'weekdays-dates-container slideable--left'
                 : 'weekdays-dates-container slideable--right'
             }
-            key={months[currentMonthIndex] + ' weeknamesDates ' + dayOfWeekForButtonsIndex}
+            key={
+              months[currentMonthIndex] +
+              ' weeknamesDates ' +
+              dayOfWeekForButtonsIndex
+            }
           >
             {allDatesInMonth}
           </div>
