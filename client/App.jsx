@@ -114,8 +114,7 @@ class App extends React.Component {
   }
 
   changeSlider(e) {
-    console.log(`e target: ${[e.target.name]}`)
-    if (e.target.name === 'left') {
+    if (e.target.getAttribute('name') === 'left') {
       if (this.state.sliderPosition > 0) {
         this.setState({ sliderPosition: --this.state.sliderPosition })
       }

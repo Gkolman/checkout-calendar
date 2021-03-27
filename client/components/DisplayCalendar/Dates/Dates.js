@@ -53,7 +53,7 @@ class Dates extends React.Component {
             onClick={changeSlider}
             disabled={sliderPosition === 0 ? true : false}
           >
-            <i className="fas fa-angle-left"></i>
+            <i name="left" className="fas fa-angle-left"></i>
           </button>
           {months[monthIndex] + ' ' + currentYear}
           <button
@@ -61,7 +61,7 @@ class Dates extends React.Component {
             onClick={changeSlider}
             disabled={sliderPosition === monthsInAdvance - 1 ? true : false}
           >
-            <i className="fas fa-angle-right"></i>
+            <i name="right" className="fas fa-angle-right"></i>
           </button>
         </div>
       );
