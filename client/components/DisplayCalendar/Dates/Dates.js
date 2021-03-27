@@ -60,7 +60,17 @@ class Dates extends React.Component {
           >
             <i name="left" className="fas fa-angle-left"></i>
           </button>
-          <div className={!direction ? "slideable" : direction === 'left' ? "slideable--left" : "slideable--right"}>{months[monthIndex] + ' ' + currentYear}</div>
+          <div
+            className={
+              !direction
+                ? 'slideable'
+                : direction === 'left'
+                ? 'slideable--left'
+                : 'slideable--right'
+            }
+          >
+            {months[monthIndex] + ' ' + currentYear}
+          </div>
           <button
             id="right-slider-button"
             name="right"
@@ -106,12 +116,12 @@ class Dates extends React.Component {
     ) => {
       let nullDaysTracker = 0;
       let allDatesInMonth = new Array(howManyDaysInMonth);
-      allDatesInMonth = [...weekdayNameDivs, ...allDatesInMonth];
+      allDatesInMonth = [...allDatesInMonth];
 
       for (let eachDate = 1; eachDate < howManyDaysInMonth + 1; eachDate++) {
         if (inCurrentMonth) {
           if (nullDaysTracker < dayOfWeekStart) {
-            allDatesInMonth[nullDaysTracker + 7] = (
+            allDatesInMonth[nullDaysTracker] = (
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -129,7 +139,7 @@ class Dates extends React.Component {
             eachDate--;
             continue;
           }
-          allDatesInMonth[eachDate + 7] = (
+          allDatesInMonth[eachDate] = (
             <button
               key={new Date(
                 currentYear,
@@ -150,7 +160,7 @@ class Dates extends React.Component {
           );
         } else {
           if (nullDaysTracker < dayOfWeekStart) {
-            allDatesInMonth[nullDaysTracker + 7] = (
+            allDatesInMonth[nullDaysTracker] = (
               <button
                 key={
                   weekdayNames[dayOfWeekStart] +
@@ -192,11 +202,25 @@ class Dates extends React.Component {
       determineMonthStartDayOfWeek(howManyDaysInMonth);
 
       return (
-        <div
-          className={!direction ? "weekdays-dates-container" : direction === 'left' ? "weekdays-dates-container slideable--left" : "weekdays-dates-container slideable--right"}
-          key={months[currentMonthIndex] + ' weeknames '}
-        >
-          {allDatesInMonth}
+        <div>
+          <div
+            className="weekdays-dates-container"
+            key={months[currentMonthIndex] + ' weeknames '}
+          >
+            {[...weekdayNameDivs]}
+          </div>
+          <div
+            className={
+              !direction
+                ? 'weekdays-dates-container'
+                : direction === 'left'
+                ? 'weekdays-dates-container slideable--left'
+                : 'weekdays-dates-container slideable--right'
+            }
+            key={months[currentMonthIndex] + ' weeknames ' + ' dates '}
+          >
+            {allDatesInMonth}
+          </div>
         </div>
       ); // arr
     };
