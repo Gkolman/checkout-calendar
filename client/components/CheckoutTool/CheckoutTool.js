@@ -7,7 +7,20 @@ class CheckoutTool extends React.Component {
   }
 
   render() {
-    const { checkInDate, checkOutDate, pricePerNight, averageReviews, totalReviews, cleaningFee, serviceFee, occupancyFee } = this.props;
+    const {
+      checkInDate,
+      checkOutDate,
+      pricePerNight,
+      averageReviews,
+      totalReviews,
+      cleaningFee,
+      serviceFee,
+      occupancyFee,
+      checkoutButtonText,
+      selectedAdults,
+      selectedChildren,
+      selectedInfants,
+    } = this.props;
 
     let duration = '';
 
@@ -17,7 +30,8 @@ class CheckoutTool extends React.Component {
     if (checkOutDate) {
       [month, date, year] = checkOutDate.split('/');
       let checkOutDateTransformed = new Date(year, month, date);
-      duration = ((checkOutDateTransformed - checkInDateTransformed) / 1000) / 86400;
+      duration =
+        (checkOutDateTransformed - checkInDateTransformed) / 1000 / 86400;
     }
 
     let basePrice = pricePerNight * duration;
@@ -29,40 +43,58 @@ class CheckoutTool extends React.Component {
     return (
       <div id="container">
         <div id="price-and-reviews-container">
-          <div id="price">
-            {pricePerNight} / night
-          </div>
+          <div id="price">{pricePerNight} / night</div>
           <div id="reviews">
             {averageReviews} {totalReviews}
           </div>
         </div>
-        <div id="checkout-options-container">
-          <div id="checkin-date">
-            checkin date in tool: {checkInDate}
+        <div className="checkout-options" id="checkout-options-container">
+          <div id="date-selection-container">
+            <div className="selection-individual" id="checkin-date">
+              <div className="title">CHECK-IN</div>
+              <div
+                className={!checkInDate ? 'checkout--placeholder' : 'checkout'}
+              >
+                {!checkInDate ? 'Add date' : checkInDate}
+              </div>
+            </div>
+            <div className="selection-individual" id="checkout-date">
+              <div className="title">CHECKOUT</div>
+              <div
+                className={!checkOutDate ? 'checkout--placeholder' : 'checkout'}
+              >
+                {!checkOutDate ? 'Add date' : checkOutDate}
+              </div>
+            </div>
           </div>
-          <div id="checkout-date">
-            checkout date in tool: {checkOutDate}
-          </div>
-          <div id="guests">
-            guests selected
+          <div id="guest-selection-container">
+            <div className="selection-individual" id="guests-selected">
+              <div className="guest title">GUESTS</div>
+              <div className="">
+                {selectedAdults === 1
+                  ? `${selectedAdults} guest`
+                  : `${selectedAdults} guests`}
+              </div>
+            </div>
           </div>
         </div>
-          <button id="reserve-button" disabled={true}>Reserve</button>
-        <div id="price-summary-container">
+        <button id="checkout-button" disabled={true}>
+          {checkoutButtonText}
+        </button>
+        <div id="price-summary-container" hidden={!checkOutDate ? true : false}>
           <ul>
-            <li>{pricePerNight} for {duration} nights = {basePrice.toFixed(2)} </li>
+            <li>
+              {pricePerNight} for {duration} nights = {basePrice.toFixed(2)}{' '}
+            </li>
             <li>cleaning fee = {cleaningFees.toFixed(2)} </li>
             <li>service fee = {serviceFees.toFixed(2)} </li>
             <li>occupancy fee = {occupancyFees.toFixed(2)}</li>
           </ul>
-          <div id="price-total">
-            total amount = {totalPrice}
-          </div>
+          <div id="price-total">total amount = {totalPrice}</div>
         </div>
       </div>
     );
   }
-
 }
 
 export default CheckoutTool;

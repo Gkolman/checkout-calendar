@@ -32,6 +32,7 @@ class App extends React.Component {
       calendarSubMessage: 'Add your travel dates for exact pricing',
       sliderPosition: 0,
       direction: null,
+      checkoutButtonText: 'Check availability'
     };
 
     this.selectDate = this.selectDate.bind(this);
@@ -102,6 +103,7 @@ class App extends React.Component {
             86400
           ).toFixed(0)} nights in {location}`,
           calendarSubMessage: `${formattedCheckIn} - ${formattedCheckOut}`,
+          checkoutButtonText: 'Reserve'
         });
       }
     }
@@ -113,6 +115,7 @@ class App extends React.Component {
       checkOutDate: '',
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
+      checkoutButtonText: 'Check availability'
     });
   }
 
@@ -146,6 +149,7 @@ class App extends React.Component {
       calendarSubMessage,
       sliderPosition,
       direction,
+      checkoutButtonText
     } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
@@ -181,6 +185,7 @@ class App extends React.Component {
           selectedAdults={selectedAdults}
           selectedChildren={selectedChildren}
           selectedInfants={selectedInfants}
+          checkoutButtonText={checkoutButtonText}
         />
       </div>
     );
