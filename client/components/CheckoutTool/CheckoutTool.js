@@ -78,8 +78,8 @@ class CheckoutTool extends React.Component {
             </div>
           </div>
         </div>
-        <button id="checkout-button" disabled={true}>
-          {checkoutButtonText}
+        <button id="checkout-button">
+          <div>{checkoutButtonText}</div>
         </button>
         <div id="price-summary-container" hidden={!checkOutDate ? true : false}>
           <ul>

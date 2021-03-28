@@ -26,7 +26,6 @@ li {
   width: fit-content;
   border-style: solid;
   border-width: thin;
-  padding: 10px;
   border-radius: 5%;
 }
 
@@ -45,6 +44,11 @@ li {
 #price-and-reviews-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding: 20px 20px 0 20px;
+}
+
+#checkout-options-container {
+  padding: 20px;
 }
 
 #checkin-date {
@@ -53,7 +57,17 @@ li {
 }
 
 #checkout-button {
-  width: fit-content;
+  width: 100%;
+  padding: 0 20px 20px;
+  margin: auto;
+}
+
+#checkout-button div {
+  background: red;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5%;
 }
 
 #price-summary-container {
