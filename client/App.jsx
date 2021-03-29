@@ -32,12 +32,14 @@ class App extends React.Component {
       calendarSubMessage: 'Add your travel dates for exact pricing',
       sliderPosition: 0,
       direction: null,
-      checkoutButtonText: 'Check availability'
+      checkoutButtonText: 'Check availability',
+      guestSelectionClicked: false,
     };
 
     this.selectDate = this.selectDate.bind(this);
     this.clearDates = this.clearDates.bind(this);
     this.changeSlider = this.changeSlider.bind(this);
+    this.toggleGuestSelection = this.toggleGuestSelection.bind(this);
   }
 
   componentDidMount() {
@@ -103,7 +105,7 @@ class App extends React.Component {
             86400
           ).toFixed(0)} nights in {location}`,
           calendarSubMessage: `${formattedCheckIn} - ${formattedCheckOut}`,
-          checkoutButtonText: 'Reserve'
+          checkoutButtonText: 'Reserve',
         });
       }
     }
@@ -115,7 +117,7 @@ class App extends React.Component {
       checkOutDate: '',
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
-      checkoutButtonText: 'Check availability'
+      checkoutButtonText: 'Check availability',
     });
   }
 
@@ -131,6 +133,21 @@ class App extends React.Component {
         direction: 'right',
       });
     }
+  }
+
+  toggleGuestSelection() {
+    this.setState({ guestSelectionClicked: !this.state.guestSelectionClicked });
+    let guestSelectionPopupElement = React.createElement(
+      'div',
+      null,
+      React.createElement('label', null, 'enter name'),
+      React.createElement('input', {
+        onChange: this.onInputChange,
+        type: 'text',
+        placeholder: "what's your name",
+      })
+    );
+    ReactDOM.reander(guestSelectionClicked, document.getElementById('guest-selection-container'))
   }
 
   render() {
@@ -149,7 +166,8 @@ class App extends React.Component {
       calendarSubMessage,
       sliderPosition,
       direction,
-      checkoutButtonText
+      checkoutButtonText,
+      guestSelectionClicked,
     } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
@@ -175,9 +193,7 @@ class App extends React.Component {
           currentYear={year}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
-          guestsAllowed={numberOfGuests.numberOfGuests}
           totalReviews={totalReviewCount}
-          averageReviews={averageReviewRatings.averageRating}
           pricePerNight={pricePerNight}
           serviceFee={serviceFee}
           cleaningFee={cleaningFee}
@@ -186,6 +202,10 @@ class App extends React.Component {
           selectedChildren={selectedChildren}
           selectedInfants={selectedInfants}
           checkoutButtonText={checkoutButtonText}
+          guestSelectionClicked={guestSelectionClicked}
+          guestsAllowed={numberOfGuests.numberOfGuests}
+          averageReviews={averageReviewRatings.averageRating}
+          toggleGuestSelection={this.toggleGuestSelection}
         />
       </div>
     );

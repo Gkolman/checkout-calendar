@@ -20,6 +20,8 @@ class CheckoutTool extends React.Component {
       selectedAdults,
       selectedChildren,
       selectedInfants,
+      guestSelectionClicked,
+      toggleGuestSelection
     } = this.props;
 
     let duration = '';
@@ -43,9 +45,21 @@ class CheckoutTool extends React.Component {
     return (
       <div id="container">
         <div id="price-and-reviews-container">
-          <div id="price">{pricePerNight} / night</div>
-          <div id="reviews">
-            {averageReviews} {totalReviews}
+          <div
+            className="individual-price-reviews-container"
+            id="price-container"
+          >
+            <div id="price">${pricePerNight}</div>
+            <div> / night</div>
+          </div>
+          <div
+            className="individual-price-reviews-container"
+            id="reviews-container"
+          >
+            <div id="reviews">
+              <i class="fas fa-star"></i>&nbsp;{averageReviews}
+            </div>
+            <div id="total-reviews">&nbsp;{totalReviews}</div>
           </div>
         </div>
         <div className="checkout-options" id="checkout-options-container">
@@ -76,21 +90,50 @@ class CheckoutTool extends React.Component {
                   : `${selectedAdults} guests`}
               </div>
             </div>
+            <div id="guests-selection-popup">
+              <div onClick={toggleGuestSelection}>
+                {!guestSelectionClicked ? (
+                  <i className="fas fa-angle-down fa-2x"></i>
+                ) : (
+                  <i className="fas fa-angle-up fa-2x"></i>
+                )}
+              </div>
+            </div>
           </div>
         </div>
         <button id="checkout-button">
           <div>{checkoutButtonText}</div>
         </button>
+        <div id="disclaimer" hidden={!checkOutDate ? true : false}>
+          You won't be charged yet
+        </div>
         <div id="price-summary-container" hidden={!checkOutDate ? true : false}>
-          <ul>
-            <li>
-              {pricePerNight} for {duration} nights = {basePrice.toFixed(2)}{' '}
-            </li>
-            <li>cleaning fee = {cleaningFees.toFixed(2)} </li>
-            <li>service fee = {serviceFees.toFixed(2)} </li>
-            <li>occupancy fee = {occupancyFees.toFixed(2)}</li>
-          </ul>
-          <div id="price-total">total amount = {totalPrice}</div>
+          <div id="price-breakdown-container">
+            <div className="fee-containers" id="base-fee-container">
+              <div>
+                ${pricePerNight} x {duration} nights
+              </div>
+              <div>${basePrice.toFixed(2)}</div>
+            </div>
+            <div className="fee-containers" id="cleaning-fee-container">
+              <div>Cleaning fee</div>
+              <div>${cleaningFees.toFixed(2)}</div>
+            </div>
+            <div className="fee-containers" id="service-fee-container">
+              <div>Service fee</div>
+              <div>${serviceFees.toFixed(2)}</div>
+            </div>
+            <div className="fee-containers" id="occupancy-fee-container">
+              <div>Occupancy taxes and fees</div>
+              <div>${occupancyFees.toFixed(2)}</div>
+            </div>
+          </div>
+          <div id="total-price-container">
+            <div id="total-price">
+              <div>Total</div>
+              <div>${totalPrice}</div>
+            </div>
+          </div>
         </div>
       </div>
     );
