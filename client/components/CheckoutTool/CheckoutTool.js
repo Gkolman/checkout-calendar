@@ -101,7 +101,7 @@ class CheckoutTool extends React.Component {
                 )}
               </div>
             </div>
-            <div id="popup-component">
+            <div id="popup-component" hidden={!guestSelectionClicked}>
               <GuestCounter selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} handleGuestCounting={handleGuestCounting}/>
             </div>
           </div>

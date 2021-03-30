@@ -156,6 +156,10 @@ class App extends React.Component {
               'selected' + plusOrMinus[1]
             ],
           });
+        } else {
+          if (this.state.selectedAdults > 1) {
+            this.setState({ selectedAdults: --this.state.selectedAdults });
+          }
         }
       }
     } else {
