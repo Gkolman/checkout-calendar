@@ -36,6 +36,13 @@ button:focus {
   border-width: thin;
 }
 
+.dates--clicked {
+  height: 77px;
+  width: 77px;
+  color: white;
+  background-color: black;
+}
+
 .carousel {
   width: 100%;
 }

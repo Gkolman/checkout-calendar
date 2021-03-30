@@ -69,6 +69,12 @@ class App extends React.Component {
         calendarMessage: 'Select checkout date',
         calendarSubMessage: 'Minimum stay: 1 night',
       });
+    } else if (this.state.checkInDate === e.target.name) {
+      this.setState({
+        checkInDate: '',
+        calendarMessage: 'Select checkout date',
+        calendarSubMessage: 'Minimum stay: 1 night',
+      })
     } else {
       let [month, date, year] = this.state.checkInDate.split('/');
       let checkInDateTransformed = new Date(
