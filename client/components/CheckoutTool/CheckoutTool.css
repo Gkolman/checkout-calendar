@@ -154,3 +154,9 @@ li {
   justify-content: center;
 
 }
+
+#popup-component {
+  position: relative;
+  padding: 10px 0px 10px 30px;
+  width: 100%;
+}

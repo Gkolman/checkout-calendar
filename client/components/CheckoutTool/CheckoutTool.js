@@ -1,5 +1,6 @@
 import React from 'react';
 import './CheckoutTool.css';
+import GuestCounter from './GuestCounter/GuestCounter';
 
 class CheckoutTool extends React.Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class CheckoutTool extends React.Component {
       selectedChildren,
       selectedInfants,
       guestSelectionClicked,
-      toggleGuestSelection
+      toggleGuestSelection,
+      handleGuestCounting
     } = this.props;
 
     let duration = '';
@@ -40,7 +42,7 @@ class CheckoutTool extends React.Component {
     let cleaningFees = basePrice * cleaningFee;
     let serviceFees = basePrice * serviceFee;
     let occupancyFees = basePrice * occupancyFee;
-    let totalPrice = (basePrice + cleaningFees + serviceFees).toFixed(2);
+    let totalPrice = (basePrice + cleaningFees + serviceFees + occupancyFees).toFixed(2);
 
     return (
       <div id="container">
@@ -57,7 +59,7 @@ class CheckoutTool extends React.Component {
             id="reviews-container"
           >
             <div id="reviews">
-              <i class="fas fa-star"></i>&nbsp;{averageReviews}
+              <i className="fas fa-star"></i>&nbsp;{averageReviews}
             </div>
             <div id="total-reviews">&nbsp;{totalReviews}</div>
           </div>
@@ -98,6 +100,9 @@ class CheckoutTool extends React.Component {
                   <i className="fas fa-angle-up fa-2x"></i>
                 )}
               </div>
+            </div>
+            <div id="popup-component">
+              <GuestCounter selectedAdults={selectedAdults} selectedChildren={selectedChildren} selectedInfants={selectedInfants} handleGuestCounting={handleGuestCounting}/>
             </div>
           </div>
         </div>

@@ -1,0 +1,10 @@
+.individual-containers {
+  display: grid;
+  grid-template-columns: 4fr 2fr 1fr 2fr;
+}
+
+.counter-containers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

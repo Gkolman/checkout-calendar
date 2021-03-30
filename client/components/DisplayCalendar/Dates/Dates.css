@@ -43,6 +43,12 @@ button:focus {
   background-color: black;
 }
 
+.dates--selected {
+  height: 77px;
+  width: 77px;
+  background-color: rgb(247, 247, 247);
+}
+
 .carousel {
   width: 100%;
 }

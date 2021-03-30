@@ -40,6 +40,7 @@ class App extends React.Component {
     this.clearDates = this.clearDates.bind(this);
     this.changeSlider = this.changeSlider.bind(this);
     this.toggleGuestSelection = this.toggleGuestSelection.bind(this);
+    this.handleGuestCounting = this.handleGuestCounting.bind(this);
   }
 
   componentDidMount() {
@@ -143,17 +144,30 @@ class App extends React.Component {
 
   toggleGuestSelection() {
     this.setState({ guestSelectionClicked: !this.state.guestSelectionClicked });
-    let guestSelectionPopupElement = React.createElement(
-      'div',
-      null,
-      React.createElement('label', null, 'enter name'),
-      React.createElement('input', {
-        onChange: this.onInputChange,
-        type: 'text',
-        placeholder: "what's your name",
-      })
-    );
-    ReactDOM.reander(guestSelectionClicked, document.getElementById('guest-selection-container'))
+  }
+
+  handleGuestCounting(e) {
+    let plusOrMinus = e.target.getAttribute('name').split('-');
+console.log('inside')
+console.log(`plusOrMinus: ${plusOrMinus}`)
+    if (plusOrMinus[0] === 'minus') {
+      console.log('inside minus')
+      if (this.state[`selected${plusOrMinus[1]}`] > 0) {
+        console.log('inside minus 2')
+        console.log('state inside minus 2: ', this.state['selected' + plusOrMinus[1]])
+        this.setState({
+          ['selected' + plusOrMinus[1]]: this.state['selected' + plusOrMinus[1]]--
+        })
+      }
+    } else {
+      console.log('inside plus')
+      console.log(`selected${plusOrMinus[1]}`)
+      console.log('state inside plus: ', this.state['selected' + plusOrMinus[1]])
+
+      this.setState({
+        ['selected' + plusOrMinus[1]]: (this.state['selected' + plusOrMinus[1]])++
+    })
+    }
   }
 
   render() {
@@ -212,6 +226,7 @@ class App extends React.Component {
           guestsAllowed={numberOfGuests.numberOfGuests}
           averageReviews={averageReviewRatings.averageRating}
           toggleGuestSelection={this.toggleGuestSelection}
+          handleGuestCounting={this.handleGuestCounting}
         />
       </div>
     );

@@ -133,6 +133,25 @@ class Dates extends React.Component {
         ).toLocaleDateString();
 
         let dateSelected = buttonName === checkInDate ? true : buttonName === checkOutDate ? true : false;
+        let bothDatesSelected = () => {
+          if (checkInDate && checkOutDate) {
+            if (buttonName > checkInDate && buttonName < checkOutDate) {
+              console.log(
+                `
+                buttonName > checkInDate && buttonName < checkOutDate: ${buttonName > checkInDate && buttonName < checkOutDate}
+                buttonName: ${buttonName}
+                checkInDate: ${checkInDate}
+                checkOutDate: ${checkOutDate}
+                `
+                )
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        }
 
         if (inCurrentMonth) {
           if (nullDaysTracker < dayOfWeekStart) {
@@ -168,7 +187,7 @@ class Dates extends React.Component {
                 onClick={selectDate}
                 disabled={eachDate < Number(currentDate) ? true : false}
                 className={
-                  eachDate < Number(currentDate) ? 'dates--disabled' : dateSelected ? 'dates--clicked' : 'dates'
+                  eachDate < Number(currentDate) ? 'dates--disabled' : dateSelected ? 'dates--clicked' : bothDatesSelected() ? 'dates--selected' : 'dates'
                 }
               >
                 {eachDate}
@@ -206,7 +225,7 @@ class Dates extends React.Component {
               ).toLocaleDateString()}
               name={buttonName}
               onClick={selectDate}
-              className={dateSelected ? 'dates--clicked' : 'dates'}
+              className={dateSelected ? 'dates--clicked' : bothDatesSelected() ? 'dates--selected' : 'dates'}
             >
               {eachDate}
             </button>
