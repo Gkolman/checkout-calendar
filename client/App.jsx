@@ -32,11 +32,15 @@ class App extends React.Component {
       calendarSubMessage: 'Add your travel dates for exact pricing',
       sliderPosition: 0,
       direction: null,
+      checkoutButtonText: 'Check availability',
+      guestSelectionClicked: false,
     };
 
     this.selectDate = this.selectDate.bind(this);
     this.clearDates = this.clearDates.bind(this);
     this.changeSlider = this.changeSlider.bind(this);
+    this.toggleGuestSelection = this.toggleGuestSelection.bind(this);
+    this.handleGuestCounting = this.handleGuestCounting.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +67,12 @@ class App extends React.Component {
       this.setState({
         checkInDate: e.target.name,
         checkOutDate: '',
+        calendarMessage: 'Select checkout date',
+        calendarSubMessage: 'Minimum stay: 1 night',
+      });
+    } else if (this.state.checkInDate === e.target.name) {
+      this.setState({
+        checkInDate: '',
         calendarMessage: 'Select checkout date',
         calendarSubMessage: 'Minimum stay: 1 night',
       });
@@ -102,6 +112,7 @@ class App extends React.Component {
             86400
           ).toFixed(0)} nights in {location}`,
           calendarSubMessage: `${formattedCheckIn} - ${formattedCheckOut}`,
+          checkoutButtonText: 'Reserve',
         });
       }
     }
@@ -113,6 +124,7 @@ class App extends React.Component {
       checkOutDate: '',
       calendarMessage: 'Select check-in date',
       calendarSubMessage: 'Add your travel dates for exact pricing',
+      checkoutButtonText: 'Check availability',
     });
   }
 
@@ -126,6 +138,35 @@ class App extends React.Component {
       this.setState({
         sliderPosition: ++this.state.sliderPosition,
         direction: 'right',
+      });
+    }
+  }
+
+  toggleGuestSelection() {
+    this.setState({ guestSelectionClicked: !this.state.guestSelectionClicked });
+  }
+
+  handleGuestCounting(e) {
+    let plusOrMinus = e.target.getAttribute('name').split('-');
+    if (plusOrMinus[0] === 'minus') {
+      if (this.state[`selected${plusOrMinus[1]}`] > 0) {
+        if (plusOrMinus[1] !== 'Adults') {
+          this.setState({
+            ['selected' + plusOrMinus[1]]: --this.state[
+              'selected' + plusOrMinus[1]
+            ],
+          });
+        } else {
+          if (this.state.selectedAdults > 1) {
+            this.setState({ selectedAdults: --this.state.selectedAdults });
+          }
+        }
+      }
+    } else {
+      this.setState({
+        ['selected' + plusOrMinus[1]]: ++this.state[
+          'selected' + plusOrMinus[1]
+        ],
       });
     }
   }
@@ -146,6 +187,8 @@ class App extends React.Component {
       calendarSubMessage,
       sliderPosition,
       direction,
+      checkoutButtonText,
+      guestSelectionClicked,
     } = this.state;
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
@@ -171,9 +214,7 @@ class App extends React.Component {
           currentYear={year}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
-          guestsAllowed={numberOfGuests.numberOfGuests}
           totalReviews={totalReviewCount}
-          averageReviews={averageReviewRatings.averageRating}
           pricePerNight={pricePerNight}
           serviceFee={serviceFee}
           cleaningFee={cleaningFee}
@@ -181,6 +222,12 @@ class App extends React.Component {
           selectedAdults={selectedAdults}
           selectedChildren={selectedChildren}
           selectedInfants={selectedInfants}
+          checkoutButtonText={checkoutButtonText}
+          guestSelectionClicked={guestSelectionClicked}
+          guestsAllowed={numberOfGuests.numberOfGuests}
+          averageReviews={averageReviewRatings.averageRating}
+          toggleGuestSelection={this.toggleGuestSelection}
+          handleGuestCounting={this.handleGuestCounting}
         />
       </div>
     );

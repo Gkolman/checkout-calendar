@@ -2,30 +2,161 @@ li {
   list-style: none;
 }
 
-#container {
-  height: 200px;
-  width: 100%;
+.fa-star {
+  color: #ff385c;
+}
+
+.checkout-options > * {
+  font-size: 0.9em;
+  font-weight: 100;
   border-style: solid;
-  border-width: thin;
+  border-width: 1px;
+}
+
+.individual-price-reviews-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px;
+}
+
+.title {
+  font-weight: 900;
+}
+
+.checkout--placeholder {
+  color: grey;
+}
+
+.selection-individual {
   padding: 10px;
+}
+
+.fee-containers {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+#container {
+  height: fit-content;
+  width: 63%;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5%;
+  box-shadow: 2px 2px 2px 2px #f7f7f7;
+}
+
+#date-selection-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+}
+
+#guest-selection-container {
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
 }
 
 #price-and-reviews-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding: 20px 20px 0 20px;
 }
 
-#checkout-options-container{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
+#checkout-options-container {
+  padding: 20px;
 }
 
-#reserve-button {
-  width: 100%
+#checkin-date {
+  border-right: solid;
+  border-width: 1px;
+}
+
+#checkout-button {
+  width: 100%;
+  padding: 0 20px 20px;
+  margin: auto;
+}
+
+#checkout-button div {
+  background-image: var(
+    --dls19-brand-gradient-radial,
+    radial-gradient(
+      circle at center,
+      #ff385c 0%,
+      #e61e4d 27.5%,
+      #e31c5f 40%,
+      #d70466 57.5%,
+      #bd1e59 75%,
+      #bd1e59 100%
+    )
+  );
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 5%;
+  font-size: 1.2em;
 }
 
 #price-summary-container {
   text-align: center;
+  padding: 20px;
 }
 
+#price-breakdown-container {
+  padding-bottom: 20px;
+}
+
+#total-price-container {
+  padding-top: 20px;
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: grey;
+}
+
+#total-price {
+  font-size: 1.2em;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+#price {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+#reviews-container {
+  font-size: 0.8em;
+  display: flex;
+  justify-content: center;
+}
+
+#total-reviews {
+  color: grey;
+}
+
+#disclaimer {
+  width: fit-content;
+  padding: 10px 50px 0px;
+  margin: auto;
+  color: grey;
+  font-size: 0.8em;
+}
+
+#guests-selection-popup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#popup-component {
+  position: relative;
+  padding: 10px 0px 10px 30px;
+  width: 100%;
+}

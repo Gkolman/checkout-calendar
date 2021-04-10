@@ -40,6 +40,8 @@ class DisplayCalendar extends React.Component {
           changeSlider={changeSlider}
           sliderPosition={sliderPosition}
           direction={direction}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
         />
         <div className="bottom-bar">
           <button>keyboard input button</button>
