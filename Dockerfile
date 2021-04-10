@@ -8,6 +8,5 @@ COPY . .
 ENV PORT=3004
 
 EXPOSE 3004
-EXPOSE 27017
 
 CMD ["npm", "start"]
