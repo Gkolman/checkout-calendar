@@ -195,21 +195,23 @@ class App extends React.Component {
     return (
       <div id="wrapper">
         <div id="main-checkout-container">
-          <DisplayCalendar
-            currentDate={date}
-            currentMonth={month}
-            currentYear={year}
-            checkInDate={checkInDate}
-            checkOutDate={checkOutDate}
-            monthsInAdvance={monthsInAdvance}
-            calendarMessage={calendarMessage}
-            calendarSubMessage={calendarSubMessage}
-            sliderPosition={sliderPosition}
-            direction={direction}
-            selectDate={this.selectDate}
-            clearDates={this.clearDates}
-            changeSlider={this.changeSlider}
-          />
+          <div>
+            <DisplayCalendar
+              currentDate={date}
+              currentMonth={month}
+              currentYear={year}
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
+              monthsInAdvance={monthsInAdvance}
+              calendarMessage={calendarMessage}
+              calendarSubMessage={calendarSubMessage}
+              sliderPosition={sliderPosition}
+              direction={direction}
+              selectDate={this.selectDate}
+              clearDates={this.clearDates}
+              changeSlider={this.changeSlider}
+            />
+          </div>
           <CheckoutTool
             currentMonth={month}
             currentYear={year}
