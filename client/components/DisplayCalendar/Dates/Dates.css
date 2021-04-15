@@ -76,9 +76,10 @@ button:focus {
 
 .month-name-container {
   display: flex;
-  width: 100%;
+  width: 92%;
   justify-content: space-between;
   font-size: 1.2em;
+  margin: 0 auto;
 }
 
 @keyframes slideInFromRight {
