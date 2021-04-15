@@ -1,10 +1,31 @@
-.individual-containers {
-  display: grid;
-  grid-template-columns: 4fr 2fr 1fr 2fr;
+.counter-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
 }
+
+.counter-wrapper > div {
+  padding: 0 5px;
+}
+
+.counter-wrapper > div {
+  padding: 0 5px;
+}
+
+.individual-containers {
+  display: flex;
+  justify-content: space-between;
+}
+
+
 
 .counter-containers {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.popup-container-individual-title {
+  display: flex;
+  justify-content: space-between;
 }

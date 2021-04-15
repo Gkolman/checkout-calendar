@@ -39,23 +39,23 @@ li {
 
 #container {
   height: fit-content;
-  width: 63%;
+  width: 80%;
   border-style: solid;
   border-width: 1px;
-  border-radius: 5%;
+  border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #f7f7f7;
 }
 
 #date-selection-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 #guest-selection-container {
-  border-bottom-left-radius: 5%;
-  border-bottom-right-radius: 5%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   display: grid;
   grid-template-columns: 5fr 1fr;
 }
@@ -97,7 +97,7 @@ li {
   color: white;
   text-align: center;
   padding: 20px;
-  border-radius: 5%;
+  border-radius: 10px;
   font-size: 1.2em;
 }
 

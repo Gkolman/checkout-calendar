@@ -193,42 +193,44 @@ class App extends React.Component {
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
     return (
-      <div id="main-checkout-container">
-        <DisplayCalendar
-          currentDate={date}
-          currentMonth={month}
-          currentYear={year}
-          checkInDate={checkInDate}
-          checkOutDate={checkOutDate}
-          monthsInAdvance={monthsInAdvance}
-          calendarMessage={calendarMessage}
-          calendarSubMessage={calendarSubMessage}
-          sliderPosition={sliderPosition}
-          direction={direction}
-          selectDate={this.selectDate}
-          clearDates={this.clearDates}
-          changeSlider={this.changeSlider}
-        />
-        <CheckoutTool
-          currentMonth={month}
-          currentYear={year}
-          checkInDate={checkInDate}
-          checkOutDate={checkOutDate}
-          totalReviews={totalReviewCount}
-          pricePerNight={pricePerNight}
-          serviceFee={serviceFee}
-          cleaningFee={cleaningFee}
-          occupancyFee={occupancyFee}
-          selectedAdults={selectedAdults}
-          selectedChildren={selectedChildren}
-          selectedInfants={selectedInfants}
-          checkoutButtonText={checkoutButtonText}
-          guestSelectionClicked={guestSelectionClicked}
-          guestsAllowed={numberOfGuests.numberOfGuests}
-          averageReviews={averageReviewRatings.averageRating}
-          toggleGuestSelection={this.toggleGuestSelection}
-          handleGuestCounting={this.handleGuestCounting}
-        />
+      <div id="wrapper">
+        <div id="main-checkout-container">
+          <DisplayCalendar
+            currentDate={date}
+            currentMonth={month}
+            currentYear={year}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            monthsInAdvance={monthsInAdvance}
+            calendarMessage={calendarMessage}
+            calendarSubMessage={calendarSubMessage}
+            sliderPosition={sliderPosition}
+            direction={direction}
+            selectDate={this.selectDate}
+            clearDates={this.clearDates}
+            changeSlider={this.changeSlider}
+          />
+          <CheckoutTool
+            currentMonth={month}
+            currentYear={year}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            totalReviews={totalReviewCount}
+            pricePerNight={pricePerNight}
+            serviceFee={serviceFee}
+            cleaningFee={cleaningFee}
+            occupancyFee={occupancyFee}
+            selectedAdults={selectedAdults}
+            selectedChildren={selectedChildren}
+            selectedInfants={selectedInfants}
+            checkoutButtonText={checkoutButtonText}
+            guestSelectionClicked={guestSelectionClicked}
+            guestsAllowed={numberOfGuests.numberOfGuests}
+            averageReviews={averageReviewRatings.averageRating}
+            toggleGuestSelection={this.toggleGuestSelection}
+            handleGuestCounting={this.handleGuestCounting}
+          />
+        </div>
       </div>
     );
   }
