@@ -17,7 +17,9 @@ class GuestCounter extends React.Component {
     return (
       <div id="popup-container">
         <div className="individual-containers" id="adult-container">
-          <div className="popup-container-individual-title">Adults</div>
+          <div className="popup-container-individual-title">
+            <b>Adults</b>
+          </div>
           <div className="counter-wrapper">
             <button>
               <i
@@ -37,7 +39,12 @@ class GuestCounter extends React.Component {
           </div>
         </div>
         <div className="individual-containers" id="children-container">
-          <div className="popup-container-individual-title">Children</div>
+          <div className="popup-container-individual-title" id="children-title">
+            <div>
+              <b>Children</b>
+            </div>
+            <div>Ages 2-12</div>
+          </div>
           <div className="counter-wrapper">
             <button>
               <i
@@ -57,7 +64,12 @@ class GuestCounter extends React.Component {
           </div>
         </div>
         <div className="individual-containers" id="infants-container">
-          <div className="popup-container-individual-title">Infants</div>
+          <div className="popup-container-individual-title">
+            <div>
+              <b>Infants</b>
+            </div>
+            <div>Under 2</div>
+          </div>
           <div className="counter-wrapper">
             <button>
               <i
@@ -74,6 +86,11 @@ class GuestCounter extends React.Component {
                 name="plus-Infants"
               ></i>
             </button>
+          </div>
+        </div>
+        <div className="individual-containers" id="max-guest-container">
+          <div>
+            4 guests maximum. Infants don’t count toward the number of guests.
           </div>
         </div>
       </div>

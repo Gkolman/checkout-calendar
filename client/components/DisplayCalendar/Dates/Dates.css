@@ -76,10 +76,24 @@ button:focus {
 
 .month-name-container {
   display: flex;
-  width: 92%;
+  width: 93%;
   justify-content: space-between;
   font-size: 1.2em;
   margin: 0 auto;
+}
+
+#svg-right-button {
+  height: 24px;
+  width: 24px;
+  display: block;
+  fill: currentcolor;
+}
+
+#svg-left-button {
+  height: 24px;
+  width: 24px;
+  display: block;
+  fill: currentcolor;
 }
 
 @keyframes slideInFromRight {

@@ -39,11 +39,12 @@ li {
 
 #container {
   height: fit-content;
-  width: 70%;
+  width: 100%;
   border-style: solid;
   border-width: 1px;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px #f7f7f7;
+  border-color: #e3e3e3;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 13%);
 }
 
 #date-selection-container {
@@ -58,6 +59,7 @@ li {
   border-bottom-right-radius: 10px;
   display: grid;
   grid-template-columns: 5fr 1fr;
+  position: relative;
 }
 
 #price-and-reviews-container {
@@ -156,7 +158,12 @@ li {
 }
 
 #popup-component {
-  position: relative;
-  padding: 10px 0px 10px 30px;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  position: absolute;
+  top: 55px;
   width: 100%;
 }
+
