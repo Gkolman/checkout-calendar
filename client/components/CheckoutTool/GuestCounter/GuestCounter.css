@@ -1,10 +1,46 @@
-.individual-containers {
-  display: grid;
-  grid-template-columns: 4fr 2fr 1fr 2fr;
+.counter-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
 }
+
+.counter-wrapper .fas {
+  border: 1px solid #e3e3e3;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.counter-wrapper > div {
+  padding: 0 5px;
+}
+
+.counter-wrapper > div {
+  padding: 0 5px;
+}
+
+.individual-containers {
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+  padding: 15px 0;
+}
+
 
 .counter-containers {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#popup-container {
+  padding: 10px;
+}
+
+.popup-container-individual-title {
+
+}
+
+
+#children-title {
+
 }

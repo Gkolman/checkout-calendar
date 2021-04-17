@@ -39,25 +39,27 @@ li {
 
 #container {
   height: fit-content;
-  width: 63%;
+  width: 100%;
   border-style: solid;
   border-width: 1px;
-  border-radius: 5%;
-  box-shadow: 2px 2px 2px 2px #f7f7f7;
+  border-radius: 10px;
+  border-color: #e3e3e3;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 13%);
 }
 
 #date-selection-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 #guest-selection-container {
-  border-bottom-left-radius: 5%;
-  border-bottom-right-radius: 5%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   display: grid;
   grid-template-columns: 5fr 1fr;
+  position: relative;
 }
 
 #price-and-reviews-container {
@@ -97,7 +99,7 @@ li {
   color: white;
   text-align: center;
   padding: 20px;
-  border-radius: 5%;
+  border-radius: 10px;
   font-size: 1.2em;
 }
 
@@ -156,7 +158,12 @@ li {
 }
 
 #popup-component {
-  position: relative;
-  padding: 10px 0px 10px 30px;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  position: absolute;
+  top: 55px;
   width: 100%;
 }
+

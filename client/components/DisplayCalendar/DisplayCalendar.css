@@ -7,8 +7,8 @@
 }
 
 .bottom-bar {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
 }
 
 #calendarMessage {
@@ -18,4 +18,11 @@
 #calendarSubMessage {
   color: grey;
   font-size: 0.8em;
+}
+
+#keyboard-input-svg {
+  display: block;
+  height: 32px;
+  width: 32px;
+  fill: currentcolor;
 }
