@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "dev-start": "nodemon server/server.js",
+    "server-dev": "nodemon server/server.js",
     "react-dev": "webpack --config webpack.config.js --watch --mode=development ",
     "react-prod": "webpack --config webpack.config.js",
     "test": "jest"
