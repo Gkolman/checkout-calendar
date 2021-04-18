@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // require('dotenv').config();
 
-const checkoutDBURI = 'mongodb://mongodb/checkoutDB';
+const checkoutDBURI = 'mongodb://localhost:27017/checkoutDB';
 
 mongoose.connect(checkoutDBURI, {
   useNewUrlParser: true,

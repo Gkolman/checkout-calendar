@@ -27,7 +27,7 @@ class DisplayCalendar extends React.Component {
     } = this.props;
 
     return (
-      <div className="display-calendar-component">
+      <div className="display-calendar-component" data-testid="displaycalendar-1">
         <div id="calendarMessage">{calendarMessage}</div>
         <div id="calendarSubMessage">{calendarSubMessage}</div>
         <Dates

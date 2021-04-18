@@ -1,5 +1,5 @@
 body {
-  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+  font-family: Circular -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 }
 
 i {
@@ -12,10 +12,21 @@ i {
   grid-template-columns: 2fr 1fr;
 }
 
-#wrapper {
+/* #wrapper {
   width: 100%;
   max-width: 1128px;
   height: 100%;
   margin: 0 auto;
   padding-top: 24px;
+} */
+
+#wrapper {
+  height: 100%;
+  padding-top: 48px;
+padding-left: 40px;
+padding-right: 40px;
+max-width: 1280px;
+min-width: 744px;
+margin-left: 20%;
+margin-right: 10%;
 }

@@ -97,7 +97,7 @@ class CheckoutTool extends React.Component {
                   : `${selectedAdults} guests`}
               </div>
             </div>
-            <div id="guests-selection-popup">
+            <div id="guests-selection-popup" onClick={toggleGuestSelection}>
               <div onClick={toggleGuestSelection}>
                 {!guestSelectionClicked ? (
                   <i className="fas fa-angle-down fa-2x"></i>

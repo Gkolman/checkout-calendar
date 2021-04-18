@@ -15,7 +15,7 @@ class GuestCounter extends React.Component {
     } = this.props;
 
     return (
-      <div id="popup-container">
+      <div id="popup-container" data-testid="guestcounter-1">
         <div className="individual-containers" id="adult-container">
           <div className="popup-container-individual-title">
             <b>Adults</b>
