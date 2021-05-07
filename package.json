@@ -7,7 +7,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "server-dev": "nodemon server/server.js",
     "react-dev": "webpack --config webpack.config.js --watch --mode=development ",
     "react-prod": "webpack --config webpack.config.js",
@@ -31,11 +31,14 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cassandra-driver": "^4.6.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.11.18",
+    "pg": "^8.6.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "sequelize": "^6.6.2"
   },
   "version": "1.0.0",
   "main": "index.js",
