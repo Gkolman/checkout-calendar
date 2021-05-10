@@ -5,8 +5,8 @@ const { getListingCheckoutInformation, updateListingInformation,deleteListingInf
 const app = express();
 app.use('/:productId', express.static(path.join(__dirname, '../public')));
 
-// var cassandraDb = require('./models/cassandraDb.js')
-var postgresDb = require('./models/postgresDb.js')
+var cassandraDb = require('./models/cassandraDb.js')
+// var postgresDb = require('./models/postgresDb.js')
 
 
 

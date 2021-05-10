@@ -17,24 +17,49 @@ var connect = (async () => {
 
 const LocationInfo = sequelize.define('locationinfo', {
   // Model attributes are defined here
-  unavailableDates : 'decimal',
-  monthlyDiscount: 'decimal',
-  weeklyDiscount: 'decimal',
-  newListingPromoDiscount: 'decimal',
-  priceForDate: 'decimal',
-  cleaningFee: 'smallint',
-  serviceFee: 'smallint',
-  monthsInAdvance : 'smallint',
-  daysNotice: 'smallint'
+  unavailableDates : {type: DataTypes.DECIMAL},
+  monthlyDiscount:  {type: DataTypes.DECIMAL},
+  weeklyDiscount:  {type: DataTypes.DECIMAL},
+  newListingPromoDiscount:  {type: DataTypes.DECIMAL},
+  priceForDate:  {type: DataTypes.DECIMAL},
+  cleaningFee:  {type: DataTypes.SMALLINT},
+  serviceFee: {type: DataTypes.SMALLINT},
+  monthsInAdvance : {type: DataTypes.SMALLINT},
+  daysNotice: {type: DataTypes.SMALLINT}
+}, {
+  freezeTableName: true
 });
 
-// LocaionInfo.sync();
+var LocationInfoInit = ( async() => {
+  try {
+    await LocationInfo.sync()
+    console.log('LocationInfo initialized')
+    var firstItemInDb = await getDataFromDbWithId(1)
+    if (firstItemInDb.length === 0) {
+      // seed db here
+      seedDb()
+    } else {
+      console.log('firstItemInDb -> ', firstItemInDb)
+    }
+  } catch (error) {
+    console.error('unable to initialize locationinfo', error);
+  }
+})()
 
+var getDataFromDbWithId = async (id) => {
+  try {
+    var data = await LocationInfo.findAll({ where: {id: id}});
+    console.log(`data for id ${id} -> `,data)
+    return data
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
 
 var insertIntoDb = async function() {
   var data = generateDataForLocation()
     try {
-      await LocaionInfo.create({
+      await LocationInfo.create({
         unavailableDates : data.unavailableDates,
         monthlyDiscount: data.monthlyDiscount,
         weeklyDiscount: data.weeklyDiscount,
@@ -50,55 +75,29 @@ var insertIntoDb = async function() {
     }
 }
 
-
-// var checkDb = ( async () => {
-//   LocaionInfo.findAll({})
-//   .then((data) => {
-//     console.log('data in db -> ', data)
-//   })
-//   .catch((err) => {
-//     console.log('coudld not fetch data -> ', err)
-//   })
-// })()
-
-var getDataFromDbWithId = (id) => {
-  return LocaionInfo.findAll({
-      where: {
-        id: id
-      }
-    });
-}
-
-var seedDbWithAmount = (amount) => {
-  console.time('DbSeedTime')
-  for (var i = 0; i < amount; i++) {
-    insertIntoDb()
+var generateDataArray = (amount) => {
+  var storage = []
+  for ( var i = 1; i <= amount; i++) {
+    var data = generateDataForLocation()
+    storage.push(data)
   }
-  console.timeEnd('DbSeedTime')
+  return storage
 }
-
-seedDbWithAmount(10000000)
-// getDataFromDbWithId(1)
-// .then((data) => {
-//   console.log(`data for id`, data)
-// })
-// .catch((err) => {
-//   console.log(`error getting data for id -> `, err)
-// })
-
-
-// Post.findAll({
-//   where: {
-//     authorId: 2
-//   }
-// });
-
-
-// insertIntoDb()
-
-
-
-
+var createBulkData = async () => {
+  var data = generateDataArray(5000)
+  try {
+    await LocationInfo.bulkCreate(data, { validate: true });
+  } catch (error) {
+    console.error('Unable to create bulk data', error);
+  }
+}
+var seedDb = async () => {
+  console.time('seedDB')
+  for (var i = 0 ; i < 2000; i++) {
+    await createBulkData()
+  }
+  console.timeEnd('seedDB')
+}
 
 module.exports = {insertIntoDb}
 

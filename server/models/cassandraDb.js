@@ -5,10 +5,27 @@
 // });
 
 const cassandra = require('cassandra-driver');
-
 const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datastax-desktop', keyspace: 'checkoutcalender'});
 
-    // const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datastax-desktop' });
+// var cassandraDbInitKeyspace = ( async() => {
+//   var querry = `CREATE KEYSPACE rebar
+//     WITH replication = {
+//     'class':'SimpleStrategy',
+//     'replication_factor' : 1
+//   };`
+//   try {
+//     var data = await client.execute(querry)
+//     console.log(`keyspace has been created `)
+//   } catch (error) {
+//     console.log(`error creating keyspace ->`, error)
+//   }
+
+  // create a keyspace ;
+  // use a keyspace;
+  // create a table;
+  // seed db;
+// })()
+
 // client.connect()
 //   .then(function () {
 //     console.log('Connected to cluster with %d host(s): %j', client.hosts.length, client.hosts.keys());
@@ -22,27 +39,36 @@ const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCen
 //     return client.shutdown().then(() => { throw err; });
 //   })
 
-  // var getLocationInfoWithId = (id) =>{
-  //   // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
-  //   var querry = `SELECT * FROM locationInfo WHERE id=1 ORDER BY id DESC LIMIT 5;
-  //   `
-  //   client.execute(querry)
-  //   .then((data) => {
-  //     console.log('data looks like ->', data)
-  //     // console.log('data looks like ->', data[0])
-  //     // return client.shu tdown();
-  //   })
-  //   .catch((err) => {
-  //     console.error('There was an error when connecting', err);
-  //     console.log('keyspace creatio err ->', err)
-  //   });
-  // }
+  var getDataFromCassandraWithId = async (id) => {
+    // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
+    var querry = `SELECT * FROM locationInfo WHERE id=${id} ALLOW FILTERING;`
+    try {
+      var data = await client.execute(querry)
+      console.log(`data for id ${id} -> `, data.rows.length)
+    } catch (error) {
+      console.log(`could not get data for id ${id} -> `, error)
+    }
+  }
+
+  getDataFromCassandraWithId(1)
+
+  var getDataFromCassandra = (async () => {
+    // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
+    var querry = `select * from locationinfo limit 5;`
+    try {
+      var data = await client.execute(querry)
+      console.log(`data for id} -> `, data.length)
+    } catch (error) {
+      console.log(`could not get data for id} -> `, error)
+    }
+  })()
 
   const getRandomInclusiveIntervals = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   var generateDataForLocation = () => {
+
     const daysNoticeOptions = [0, 1, 2, 3, 7];
     const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
     const cleaningFeeOptions = [0.15, 0.3];
@@ -70,52 +96,31 @@ const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCen
     }
   }
 
-  // var insertIntoDbWithId = async function (i) {
-  //   var data = generateDataForLocation()
-  //   var query = `INSERT INTO locationinfo (insertion_time, id, monthlyDiscount, weeklyDiscount, newListingPromoDiscount, priceForDate, cleaningFee, serviceFee, monthsInAdvance, daysNotice) VALUES (${data.insertion_time}, ${i},${data.monthlyDiscount}, ${data.weeklyDiscount},${data.newListingPromoDiscount},${data.priceForDate}, ${data.cleaningFee},${data.serviceFee},${data.monthsInAdvance},${data.daysNotice});`
-  //     try {
-  //       let response = await client.execute(query)
-  //       console.log('data inserted into db')
-  //     } catch(err) {
-  //       console.log('async error ->', err);
-  //     }
-  //   }
-
-    var insertIntoDbWithId = (i) => {
-      var data = generateDataForLocation()
-      var query = `INSERT INTO locationinfo (insertion_time, id, monthlyDiscount, weeklyDiscount, newListingPromoDiscount, priceForDate, cleaningFee, serviceFee, monthsInAdvance, daysNotice) VALUES (${data.insertion_time}, ${i},${data.monthlyDiscount}, ${data.weeklyDiscount},${data.newListingPromoDiscount},${data.priceForDate}, ${data.cleaningFee},${data.serviceFee},${data.monthsInAdvance},${data.daysNotice});`
-      return client.execute(query)
-
+  var insertIntoDbWithId = async function (i) {
+    var data = generateDataForLocation()
+    var query = `INSERT INTO locationinfo (insertion_time, id, monthlyDiscount, weeklyDiscount, newListingPromoDiscount, priceForDate, cleaningFee, serviceFee, monthsInAdvance, daysNotice) VALUES (${data.insertion_time}, ${i},${data.monthlyDiscount},${data.weeklyDiscount},${data.newListingPromoDiscount},${data.priceForDate}, ${data.cleaningFee},${data.serviceFee},${data.monthsInAdvance},${data.daysNotice});`
+      try {
+        await client.execute(query)
+      } catch(err) {
+        console.log('async error ->', err);
       }
+    }
 
-
-  var seedDbWithAmount = (amount) => {
+  var seedDbWithAmount = async (amount) => {
     console.time('db seed')
     for ( var i = 1; i <= amount; i++) {
-      insertIntoDbWithId(i)
-      .then((data) => {
-        console.log('data looks like ->', data)
-        // return client.shu tdown();
-      })
-      .catch((err) => {
-        console.error('There was an error when connecting', err);
-        console.log('keyspace creatio err ->', err)
-      });
+      try {
+        await insertIntoDbWithId(i)
+      } catch (error) {
+        console.error('Unable to insert into db database:', error);
+      }
     }
     console.timeEnd('db seed')
   }
 
-  // seedDbWithAmount(10000000)
+  // seedDbWithAmount(20)
+  // insertIntoDbWithId(1)
 
-  // client.execute(query)
-  // .then((data) => {
-  //   console.log('data looks like ->', data)
-  //   // return client.shu tdown();
-  // })
-  // .catch((err) => {
-  //   console.error('There was an error when connecting', err);
-  //   console.log('keyspace creatio err ->', err)
-  // });
 
   module.exports = {generateDataForLocation}
 
