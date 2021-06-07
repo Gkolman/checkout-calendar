@@ -7,24 +7,13 @@
 const cassandra = require('cassandra-driver');
 const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datastax-desktop', keyspace: 'checkoutcalender'});
 
-// var cassandraDbInitKeyspace = ( async() => {
-//   var querry = `CREATE KEYSPACE rebar
-//     WITH replication = {
-//     'class':'SimpleStrategy',
-//     'replication_factor' : 1
-//   };`
-//   try {
-//     var data = await client.execute(querry)
-//     console.log(`keyspace has been created `)
-//   } catch (error) {
-//     console.log(`error creating keyspace ->`, error)
-//   }
 
-  // create a keyspace ;
-  // use a keyspace;
-  // create a table;
-  // seed db;
-// })()
+const {performance} = require('perf_hooks');
+var csvWriter = require('csv-write-stream')
+var writer = csvWriter()
+var fs = require('fs')
+
+var {generateDataForLocation} = require('./dataGenerationScript.js')
 
 // client.connect()
 //   .then(function () {
@@ -35,16 +24,45 @@ const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCen
 //     // return client.execute('use locationid')
 //   })
 //   .catch(function (err) {
-//     console.error('There was an error when connecting', err);
+//     console.error('There was an error when connecting ->', err);
 //     return client.shutdown().then(() => { throw err; });
 //   })
 
+var initCsvFile = async () => {
+  console.log('initializing csv...')
+  var time = Date.now()
+  writer.pipe(fs.createWriteStream('out.csv'))
+  console.time('initCsvFile')
+  for (var i = 0; i < 10000000; i++) {
+    var data = generateDataForLocation()
+    writer.write({
+        id: i,
+        cleaningfee: data.cleaningFee,
+        daysnotice: data.daysNotice,
+        monthlydiscount: data.monthlyDiscount,
+        monthsinadvance: data.monthsInAdvance,
+        newlistingpromodiscount: data.newListingPromoDiscount,
+        pricefordate: data.priceForDate,
+        servicefee: data.serviceFee,
+        unavailabledates: data.unavailableDates,
+        weeklydiscount: data.weeklyDiscount
+    })
+    try {
+      await new Promise(resolve => setImmediate(resolve))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+    console.timeEnd('initCsvFile')
+  writer.end()
+}//
+
   var getDataFromCassandraWithId = async (id) => {
-    // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
     var querry = `SELECT * FROM locationInfo WHERE id=${id} ALLOW FILTERING;`
     try {
       var data = await client.execute(querry)
-      console.log(`data for id ${id} -> `, data.rows.length)
+      console.log(`data for id ${id} -> `, data.rows)
+      return data
     } catch (error) {
       console.log(`could not get data for id ${id} -> `, error)
     }
@@ -52,74 +70,218 @@ const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCen
 
   getDataFromCassandraWithId(1)
 
-  var getDataFromCassandra = (async () => {
-    // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
-    var querry = `select * from locationinfo limit 5;`
+  var initCassandraDb = (async () => {
     try {
-      var data = await client.execute(querry)
-      console.log(`data for id} -> `, data.length)
+      var data = await getDataFromCassandraWithId(1)
+      console.log('data in db init -> ', data)
     } catch (error) {
-      console.log(`could not get data for id} -> `, error)
+      console.log(`problem initializing db -> `, error)
     }
-  })()
+  })
 
-  const getRandomInclusiveIntervals = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+  // var getDataFromCassandra = (async () => {
+  //   // var querry = `SELECT * FROM locationInfo WHERE id = ${id}`
+  //   var querry = `select * from locationinfo where id = 20 allow filtering;`
+  //   try {
+  //     var data = await client.execute(querry)
+  //     // console.log(`data from cassandra  -> `, data)
+  //     for ( var row of data.rows) {
+  //       console.log(' row id ->', row.id)
+  //     }
+  //   } catch (error) {
+  //     console.log(`could not get data for id -> `, error)
+  //   }
+  // })()
 
-  var generateDataForLocation = () => {
-
-    const daysNoticeOptions = [0, 1, 2, 3, 7];
-    const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
-    const cleaningFeeOptions = [0.15, 0.3];
-    const serviceFeeOptions = [0.1, 0.2];
-
-    let daysNoticeIndex = getRandomInclusiveIntervals(0, 4);
-    let monthsInAdvanceIndex = getRandomInclusiveIntervals(0, 4);
-    let priceForDate = Number.parseFloat(Math.random() * (300 - 75) + 75);
-
-    priceForDate = priceForDate.toString().split('.');
-    priceForDate[1] = (priceForDate[1].slice(0, 2));
-    priceForDate = Number.parseFloat(priceForDate.join('.'));
-    let cleaningFee = parseInt(Number.parseFloat(Math.random() * (cleaningFeeOptions[1] - cleaningFeeOptions[0]) + cleaningFeeOptions[0]).toPrecision(4));
-    let serviceFee = parseInt(Number.parseFloat(Math.random() * (serviceFeeOptions[1] - serviceFeeOptions[0]) + serviceFeeOptions[0]).toPrecision(4));
-    return {
-      insertion_time: Date.now(),
-      monthlyDiscount: 0.49,
-      weeklyDiscount: 0.21,
-      newListingPromoDiscount: 0.20,
-      priceForDate: priceForDate,
-      cleaningFee: cleaningFee,
-      serviceFee: serviceFee,
-      monthsInAdvance: monthsInAdvanceOptions[monthsInAdvanceIndex],
-      daysNotice: daysNoticeOptions[daysNoticeIndex],
+  var getLastInsertedId = async () => {
+    var query = `select * from locationinfo limit 1;`
+    try {
+      var lastRecordInDb = await client.execute(query)
+      console.log('last record -> ',lastRecordInDb.rows[0].id.low)
+      return lastRecordInDb
+    } catch (error) {
+      console.log(`could not insert item into db -> `, error)
     }
   }
-
-  var insertIntoDbWithId = async function (i) {
+  var insertIntoDb = async () => {
+    try {
+      var lastRecordInDb = await getLastInsertedId()
+      var lastIdInDb = lastRecordInDb.rows[0].id.low
+      console.log('right here ->', lastIdInDb)
+      await insertIntoDbWithId(lastIdInDb +1 )
+      .then(() => {
+        console.log(`data inserted into db`)
+      })
+      .catch(() => {
+        console.log(`error inserting into db -> `, error)
+      })
+    } catch (error) {
+      console.log(`could not insert item into db -> `, error)
+    }
+  }
+  var insertIntoDbWithId = async (id) => {
     var data = generateDataForLocation()
-    var query = `INSERT INTO locationinfo (insertion_time, id, monthlyDiscount, weeklyDiscount, newListingPromoDiscount, priceForDate, cleaningFee, serviceFee, monthsInAdvance, daysNotice) VALUES (${data.insertion_time}, ${i},${data.monthlyDiscount},${data.weeklyDiscount},${data.newListingPromoDiscount},${data.priceForDate}, ${data.cleaningFee},${data.serviceFee},${data.monthsInAdvance},${data.daysNotice});`
-      try {
-        await client.execute(query)
-      } catch(err) {
-        console.log('async error ->', err);
-      }
+    var query = `INSERT INTO locationinfo (id, cleaningfee, daysNotice, monthlydiscount, monthsinadvance, newListingPromoDiscount,  pricefordate, serviceFee, unavailabledates, weeklyDiscount) VALUES (${id},${data.cleaningFee}, ${data.daysNotice},${data.monthlyDiscount},${data.monthsInAdvance}, ${data.newListingPromoDiscount},${data.priceForDate},${data.serviceFee},null, ${data.weeklyDiscount});`
+    try {
+      await client.execute(query)
+    } catch(err) {
+      console.log('error inserting item into db -> ', err)
     }
-
-  var seedDbWithAmount = async (amount) => {
-    console.time('db seed')
-    for ( var i = 1; i <= amount; i++) {
-      try {
-        await insertIntoDbWithId(i)
-      } catch (error) {
-        console.error('Unable to insert into db database:', error);
-      }
-    }
-    console.timeEnd('db seed')
   }
+    // insertIntoDb()
 
-  // seedDbWithAmount(20)
-  // insertIntoDbWithId(1)
+var seedDbWithAmount = async (amount) => {
+  console.time('db seed')
+  for ( var i = 1; i <= amount; i++) {
+    await insertIntoDbWithId(i)
+    .then((data) => {
+      // console.log('data looks like ->', data)
+      // return client.shu tdown();
+    })
+    .catch((err) => {
+      console.error('There was an error when connecting', err);
+      console.log('keyspace creatio err ->', err)
+    });
+  }
+  console.timeEnd('db seed')
+}
+
+var test50000GetRecords = async () => {
+  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  var queryTimes = []
+  for (var i = 0; i < 50000; i++) {
+    var start = performance.now();
+    var randomId = getRandomNumber(0,10000000)
+    try {
+      await getDataFromCassandraWithId(randomId)
+      var end = performance.now();
+      var time = end - start;
+      queryTimes.push(time)
+    } catch(err) {
+      console.log('error getting data -> ', err)
+    }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+var updateIdWithData = async (id,data) => {
+  const query = `UPDATE locationinfo SET
+  cleaningfee = ${data.cleaningFee},
+  daysnotice = ${data.daysNotice},
+  monthlydiscount = ${data.monthlyDiscount},
+  monthsinadvance = ${data.monthsInAdvance},
+  newlistingpromodiscount = ${data.newListingPromoDiscount},
+  pricefordate = ${data.priceForDate},
+  servicefee = ${data.serviceFee},
+  weeklydiscount = ${data.weeklyDiscount}
+  WHERE id = ${id};`
+  try {
+    await client.execute(query)
+  } catch(err) {
+    console.log('err ->', err)
+  }
+}
+
+const test50000UpdateQueries = async () => {
+  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  var queryTimes = []
+  for (var i = 0; i < 50000; i++) {
+    var start = performance.now();
+    var randomId = getRandomNumber(0,10000000)
+    try {
+      console.log('randomId id right here ->', randomId)
+      await updateIdWithData(randomId,generateDataForLocation())
+      var end = performance.now();
+      var time = end - start;
+      queryTimes.push(time)
+      // console.log('time -> ', time)
+    } catch(err) {
+      console.log('error getting data -> ', err)
+    }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+var deleteDataWithId = async (id) => {
+  var query = `DELETE FROM locationinfo WHERE id=${id};`
+  try {
+    await client.execute(query)
+    console.log('record deleted')
+  } catch(err) {
+    console.log('error deleting record')
+  }
+}
+var test5000DeleteQueries = async () => {
+  var queryTimes = []
+  for (var i = 1; i <= 50000; i++) {
+    var start = performance.now();
+    try {
+      await deleteDataWithId(i)
+      var end = performance.now();
+      var time = end - start;
+      queryTimes.push(time)
+    } catch(err) {
+      console.log('error getting data -> ', err)
+    }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+// var putDataBack =  async () => {
+//   for (var i = 1; i <= 50000;i++) {
+//     try {
+//       await insertIntoDbWithId(i)
+//     } catch(err) {
+//       console.log('error adding data ')
+//     }
+//   }
+// }
+
+
+
+// getDataFromCassandraWithId(1)
+// deleteDataWithId(1)
+
+// insertIntoDbWithId(1)
+
+// var getLastInsertedId = async () => {
+//   var query = `select * from locationinfo limit 1;`
+//   try {
+//     var lastRecordInDb = await client.execute(query)
+//     console.log('last record -> ',lastRecordInDb.rows[0].id.low)
+//     return lastRecordInDb
+//   } catch (error) {
+//     console.log(`could not insert item into db -> `, error)
+//   }
+// }
+// var insertIntoDb = async () => {
+//   try {
+//     var lastRecordInDb = await getLastInsertedId()
+//     var lastIdInDb = lastRecordInDb.rows[0].id.low
+//     console.log('right here ->', lastIdInDb)
+//     await insertIntoDbWithId(lastIdInDb +1 )
+//     .then(() => {
+//       console.log(`data inserted into db`)
+//     })
+//     .catch(() => {
+//       console.log(`error inserting into db -> `, error)
+//     })
+//   } catch (error) {
+//     console.log(`could not insert item into db -> `, error)
+//   }
+// }
 
 
   module.exports = {generateDataForLocation}

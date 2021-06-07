@@ -1,12 +1,16 @@
 const { Sequelize, DataTypes } = require('sequelize');
-var {generateDataForLocation} = require('./cassandraDb.js')
-
-const sequelize = new Sequelize('checkoutcalender', 'postgres', 'Cl1pClop1@', {
+var dotenv = require('dotenv')
+dotenv.config()
+var dbPassword = process.env.DB_PASS
+console.log('dbPassword -> ', dbPassword)
+const sequelize = new Sequelize('checkoutcalender', 'postgres', dbPassword, {
   host: 'localhost',
   dialect: 'postgres'
 });
+var {generateDataForLocation} = require('./dataGenerationScript.js')
+const {performance} = require('perf_hooks');
 
-var connect = (async () => {
+const connect = (async () => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
@@ -17,20 +21,20 @@ var connect = (async () => {
 
 const LocationInfo = sequelize.define('locationinfo', {
   // Model attributes are defined here
-  unavailableDates : {type: DataTypes.DECIMAL},
-  monthlyDiscount:  {type: DataTypes.DECIMAL},
-  weeklyDiscount:  {type: DataTypes.DECIMAL},
-  newListingPromoDiscount:  {type: DataTypes.DECIMAL},
-  priceForDate:  {type: DataTypes.DECIMAL},
-  cleaningFee:  {type: DataTypes.SMALLINT},
-  serviceFee: {type: DataTypes.SMALLINT},
-  monthsInAdvance : {type: DataTypes.SMALLINT},
-  daysNotice: {type: DataTypes.SMALLINT}
-}, {
+    cleaningFee:  {type: DataTypes.DECIMAL},
+    daysNotice: {type: DataTypes.SMALLINT},
+    monthsInAdvance : {type: DataTypes.SMALLINT},
+    monthlyDiscount: {type: DataTypes.DECIMAL},
+    newListingPromoDiscount:  {type: DataTypes.DECIMAL},
+    priceForDate:  {type: DataTypes.DECIMAL},
+    serviceFee: {type: DataTypes.DECIMAL},
+    unavailableDates : {type: DataTypes.TEXT},
+    weeklyDiscount:  {type: DataTypes.DECIMAL}
+  }, {
   freezeTableName: true
 });
 
-var LocationInfoInit = ( async() => {
+const LocationInfoInit =  async() => {
   try {
     await LocationInfo.sync()
     console.log('LocationInfo initialized')
@@ -44,36 +48,37 @@ var LocationInfoInit = ( async() => {
   } catch (error) {
     console.error('unable to initialize locationinfo', error);
   }
-})()
+}
 
-var getDataFromDbWithId = async (id) => {
+const getDataFromDbWithId = async (id) => {
   try {
-    var data = await LocationInfo.findAll({ where: {id: id}});
-    console.log(`data for id ${id} -> `,data)
+    var data = await LocationInfo.findAll({ where: {id: id}})
+    // console.log(`data for id ${id} -> `,data)
     return data
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 }
-
-var insertIntoDb = async function() {
-  var data = generateDataForLocation()
-    try {
-      await LocationInfo.create({
-        unavailableDates : data.unavailableDates,
-        monthlyDiscount: data.monthlyDiscount,
-        weeklyDiscount: data.weeklyDiscount,
-        newListingPromoDiscount: data.newListingPromoDiscount,
-        priceForDate: data.priceForDate,
-        cleaningFee: data.cleaningFee,
-        serviceFee: data.serviceFee,
-        monthsInAdvance : data.monthsInAdvance,
-        daysNotice: data.daysNotice
-        })
+// getDataFromDbWithId(1)
+const insertIntoDb = async function() {
+  const data = generateDataForLocation()
+  try {
+    await LocationInfo.create({
+      cleaningFee: data.cleaningFee,
+      daysNotice: data.daysNotice,
+      monthlyDiscount: data.monthlyDiscount,
+      monthsInAdvance : data.monthsInAdvance,
+      newListingPromoDiscount: data.newListingPromoDiscount,
+      priceForDate: data.priceForDate,
+      serviceFee: data.serviceFee,
+      unavailableDates : data.unavailableDates,
+      weeklyDiscount: data.weeklyDiscount
+      })
     } catch (error) {
-      console.log('db save error -> ', err)
+      console.log('db save error -> ', error)
     }
 }
+// insertIntoDb()
 
 var generateDataArray = (amount) => {
   var storage = []
@@ -84,22 +89,138 @@ var generateDataArray = (amount) => {
   return storage
 }
 var createBulkData = async () => {
-  var data = generateDataArray(5000)
+  var data = generateDataArray(10000)
   try {
     await LocationInfo.bulkCreate(data, { validate: true });
   } catch (error) {
     console.error('Unable to create bulk data', error);
   }
 }
-var seedDb = async () => {
-  console.time('seedDB')
-  for (var i = 0 ; i < 2000; i++) {
-    await createBulkData()
+// for small queries
+const addAmountToDb = async (amount) => {
+  for (var i = 0; i < amount; i++ ){
+    await insertIntoDb()
   }
+}
+const seedDb = async () => {
+  console.time('seedDB')
+  for (var i = 0 ; i < 1000; i++) {await createBulkData()}
   console.timeEnd('seedDB')
 }
+const getSizeOfDb = async () => {
+  console.time('counting all rows in db')
+  try {
+    var numberOfRows = await LocationInfo.count('*')
+    console.log('numberOfRows in db -> ',numberOfRows )
+    console.timeEnd()
+    return numberOfRows
+  } catch(error) {
+    console.log('error counting all records in db ->', error)
+  }
+}
+getSizeOfDb()
 
-module.exports = {insertIntoDb}
+const updateIdWithData = async (id, data) => {
+  console.log('id -> ', id)
+  try {
+    await LocationInfo.update(data, {where: {id: id}});
+    // console.log('updated id -> ', id)
+  } catch(err) {
+    console.log('error updating data -> ', err)
+  }
+}
+
+const deleteDataWithId = async (id) => {await LocationInfo.destroy({where: {id: id}});}
+
+const deleteNumberOfRecords = async (amount) => {
+  var lastRecordId = await getSizeOfDb()
+  console.log('lastRecordId', lastRecordId)
+  var stoppingPoint = lastRecordId - amount
+  for (var i = lastRecordId; i > stoppingPoint; i--) {
+      await deleteDataWithId(i)
+  }
+  console.log('done deleting')
+}
+// deleteNumberOfRecords(33607)
+// addAmountToDb(2)
+const test50000GetRecords = async () => {
+  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  var queryTimes = []
+  for (var i = 0; i < 50000; i++) {
+    var start = performance.now();
+    var randomId = getRandomNumber(0,10000000)
+    try {
+      await getDataFromDbWithId(randomId)
+      var end = performance.now();
+      var time = end - start;
+      queryTimes.push(time)
+    } catch(err) {
+      console.log('error getting data -> ', err)
+    }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+const test50000UpdateQueries = async () => {
+  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  var queryTimes = []
+  for ( var i = 0; i < 50000; i++) {
+    var start = performance.now();
+    var randomId = getRandomNumber(0,10000000)
+      try {
+        console.log('randomId id right here ->', randomId)
+
+        await updateIdWithData(i,generateDataForLocation())
+        var end = performance.now();
+        var time = end - start;
+        queryTimes.push(time)
+      } catch(err) {
+        console.log('error updating data -> ', err)
+      }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+const test50000DeleteQueries = async () => {
+var amount = 500000
+var queryTimes = []
+  for (var i = 1; i < 50000; i++) {
+    var start = performance.now();
+    try {
+      await deleteDataWithId(i)
+      var end = performance.now();
+      var time = end - start;
+      queryTimes.push(time)
+    } catch(err) {
+      console.log('error -> ', err)
+    }
+  }
+  const totalTime = queryTimes.reduce((accumulator, element) => {
+    return accumulator + element;
+  }, 0);
+  var averageTime = totalTime / queryTimes.length
+  console.log('average time -> ', averageTime)
+}
+
+
+// seedDb()
+
+module.exports = {
+  insertIntoDb,
+  getDataFromDbWithId,
+  updateIdWithData,
+  deleteDataWithId,
+  addAmountToDb,
+  deleteNumberOfRecords,
+}
 
 
 

@@ -56,12 +56,10 @@ const CheckoutDB = mongoose.model('CheckoutDB', checkoutDBSchema);
 const getRandomInclusiveIntervals = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
 const daysNoticeOptions = [0, 1, 2, 3, 7];
 const monthsInAdvanceOptions = [0, 3, 6, 9, 12];
 const cleaningFeeOptions = [0.15, 0.3];
 const serviceFeeOptions = [0.1, 0.2];
-
 const seedCheckoutDB = () => {
   for (let i = 0; i < 100; i++) {
     addListingInformation(i)
