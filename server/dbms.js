@@ -6,6 +6,12 @@ const host = process.env.HOST
 const user = process.env.DBUSER
 const dbPassword = process.env.DB_PASS
 
+console.log('db -> ', db)
+console.log('host -> ', host)
+console.log('user -> ', user)
+console.log('dbPassword -> ', dbPassword)
+
+
 const sequelize = new Sequelize(db, user, dbPassword, {
   host: host,
   dialect: 'postgres',

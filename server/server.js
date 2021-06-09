@@ -1,11 +1,11 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-var port = 3000
+const port = 3000
 
 app.use('/:productId', express.static(path.join(__dirname, '../public')));
-var axios = require('axios');
-var newRelic = require('newrelic');
+const axios = require('axios');
+const newRelic = require('newrelic');
 
 const {
   insertIntoDb,
