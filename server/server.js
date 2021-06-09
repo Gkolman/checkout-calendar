@@ -17,6 +17,25 @@ const {
   getSizeOfDb
 } = require('./dbms.js')
 
+app.get('/checkoutInformation/:productId', (req, res) => {
+  // send new data here
+  var id = req.params.productId
+  getDataFromDbWithId(id)
+  .then((data) => {
+    data = data[0].dataValues
+    data.listingId = data.id
+    console.log('data from get request -> ', data)
+    res.send(data)
+    res.send(data.data)
+  })
+  .catch((error) => {
+    console.log('db: error from get request -> ', error)
+    // res.end()
+    var message = `could not get item with ${id} -> ${error}`
+    res.send(message)
+  })
+})
+
 app.get('/db/size', (req, res) => {
   getSizeOfDb()
   .then((data) => {
