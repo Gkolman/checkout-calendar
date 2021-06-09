@@ -10,7 +10,7 @@ import {
   numberOfGuests,
   totalReviewCount,
   averageReviewRatings,
-} from '../sampleData/sampleData';
+} from '../sampleData.js';
 
 import { months } from './calendarMonths.js';
 
