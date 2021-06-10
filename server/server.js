@@ -3,7 +3,9 @@ const path = require('path');
 const app = express();
 const port = 3000
 
-app.use('/:productId', express.static(path.join(__dirname, '../public')));
+// app.use('/:productId', express.static(path.join(__dirname, '../public')));
+app.use(express.static('../public'));
+
 const axios = require('axios');
 const newRelic = require('newrelic');
 
@@ -17,6 +19,21 @@ const {
   getSizeOfDb
 } = require('./dbms.js')
 
+app.get('/', (req, res) => {
+  console.log('entering bundle request')
+  res.sendFile(path.resolve(__dirname, '../public/index.html'))
+})
+app.get('/bundle', (req, res) => {
+  console.log('entering bundle request')
+  res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
+})
+
+app.get('/:id', (req, res) => {
+  console.log('entering id request')
+  // res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
+  res.sendFile(path.resolve(__dirname, '../public/index.html'))
+})
+
 app.get('/checkoutInformation/:productId', (req, res) => {
   // send new data here
   var id = req.params.productId
@@ -26,7 +43,6 @@ app.get('/checkoutInformation/:productId', (req, res) => {
     data.listingId = data.id
     console.log('data from get request -> ', data)
     res.send(data)
-    res.send(data.data)
   })
   .catch((error) => {
     console.log('db: error from get request -> ', error)

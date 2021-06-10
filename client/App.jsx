@@ -46,13 +46,18 @@ class App extends React.Component {
   componentDidMount() {
     let productId = window.location.pathname.split('/')[1];
 
-    axios.get(`/checkoutInformation/${productId}`).then((response) => {
+    axios.get(`/checkoutInformation/${productId}`)
+    .then((response) => {
+      console.log('response -> ', response)
       this.setState({
         monthsInAdvance: response.data.monthsInAdvance,
         pricePerNight: response.data.priceForDate,
         serviceFee: response.data.serviceFee,
         cleaningFee: response.data.cleaningFee,
       });
+    })
+    .catch((error) => {
+      console.log('error -> ', error)
     });
   }
 

@@ -54,7 +54,7 @@ const LocationInfoInit =  (async() => {
       // seedDb()
       console.log('db is empty')
     } else {
-      console.log('firstItemInDb -> ', firstItemInDb)
+      // console.log('firstItemInDb -> ', firstItemInDb)
     }
   } catch (error) {
     console.error('unable to initialize locationinfo', error);
