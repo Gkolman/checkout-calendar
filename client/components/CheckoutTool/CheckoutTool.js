@@ -38,9 +38,14 @@ class CheckoutTool extends React.Component {
         (checkOutDateTransformed - checkInDateTransformed) / 1000 / 86400;
     }
 
+    console.log('serviceFees -> ', serviceFee)
+    console.log('serviceFees -> ', typeof(serviceFee))
+    console.log('cleaningFees -> ', cleaningFee)
+    console.log('cleaningFees -> ', typeof(cleaningFee))
+
     let basePrice = pricePerNight * duration;
-    let cleaningFees = basePrice * cleaningFee;
-    let serviceFees = basePrice * serviceFee;
+    let cleaningFees = parseInt(cleaningFee)
+    let serviceFees = parseInt(serviceFee);
     let occupancyFees = basePrice * occupancyFee;
     let totalPrice = (
       basePrice +
@@ -48,6 +53,12 @@ class CheckoutTool extends React.Component {
       serviceFees +
       occupancyFees
     ).toFixed(2);
+
+    console.log('serviceFees -> ', serviceFees)
+    console.log('cleaningFees -> ', cleaningFees)
+    console.log('basePrice -> ', basePrice)
+
+
 
     return (
       <div id="container">

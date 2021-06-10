@@ -55,6 +55,8 @@ class App extends React.Component {
         serviceFee: response.data.serviceFee,
         cleaningFee: response.data.cleaningFee,
       });
+      console.log('this state -> ', this.state)
+
     })
     .catch((error) => {
       console.log('error -> ', error)
@@ -195,6 +197,7 @@ class App extends React.Component {
       checkoutButtonText,
       guestSelectionClicked,
     } = this.state;
+    console.log('this.state->,', this.state)
     let [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
 
     return (
