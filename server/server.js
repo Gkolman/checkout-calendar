@@ -28,9 +28,7 @@ app.get('/bundle', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
 })
 
-app.get('/:id', (req, res) => {
-  console.log('entering id request')
-  // res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
+app.get('/locations/:id', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/index.html'))
 })
 
@@ -46,20 +44,19 @@ app.get('/checkoutInformation/:productId', (req, res) => {
   })
   .catch((error) => {
     console.log('db: error from get request -> ', error)
-    // res.end()
     var message = `could not get item with ${id} -> ${error}`
     res.send(message)
   })
 })
 
-app.get('/db/size', (req, res) => {
+app.get('/dbSize', (req, res) => {
   getSizeOfDb()
   .then((data) => {
-    console.log('size of db -> ', data)
-    res.send(data)
+    var message = `number of rows in db -> ${data}`
+    res.send(message)
   })
   .catch((error) => {
-    var message = `could not db size -> ${err}`
+    var message = `could not db size -> ${error}`
     res.send(message)
   })
 })
@@ -105,9 +102,12 @@ app.delete('/db/:id', (req, res) => {
   })
 })
 app.get('/testDb', (req, res) => {
+  console.log('entering testdb',id )
+
   var randomNum = (min, max) => { return Math.floor(Math.random() * (max - min)) + min}
   var id = randomNum(1,10000000)
-  getDataFromDbWithId(1)
+  console.log('entering testdb',id )
+  getDataFromDbWithId(id)
   .then((data) => {
     console.log('data from get request -> ', data)
     res.send(data)

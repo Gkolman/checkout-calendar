@@ -54,9 +54,6 @@ class CheckoutTool extends React.Component {
       occupancyFees
     ).toFixed(2);
 
-    console.log('serviceFees -> ', serviceFees)
-    console.log('cleaningFees -> ', cleaningFees)
-    console.log('basePrice -> ', basePrice)
 
 
 

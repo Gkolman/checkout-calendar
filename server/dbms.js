@@ -126,6 +126,7 @@ const getSizeOfDb = async () => {
     console.timeEnd()
     return numberOfRows
   } catch(error) {
+    console.log('entering error')
     console.log('error counting all records in db ->', error)
   }
 }

@@ -44,23 +44,25 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let productId = window.location.pathname.split('/')[1];
-
-    axios.get(`/checkoutInformation/${productId}`)
-    .then((response) => {
-      console.log('response -> ', response)
-      this.setState({
-        monthsInAdvance: response.data.monthsInAdvance,
-        pricePerNight: response.data.priceForDate,
-        serviceFee: response.data.serviceFee,
-        cleaningFee: response.data.cleaningFee,
+    let productId = parseInt(window.location.pathname.split('locations/')[1]).toString()
+    if (productId === 'NaN') return
+      console.log('typeof(productId)', typeof(productId))
+      console.log('productId', productId)
+      axios.get(`/checkoutInformation/${productId}`)
+      .then((response) => {
+        console.log('response -> ', response)
+        this.setState({
+          monthsInAdvance: response.data.monthsInAdvance,
+          pricePerNight: response.data.priceForDate,
+          serviceFee: response.data.serviceFee,
+          cleaningFee: response.data.cleaningFee,
+        });
+        console.log('this state -> ', this.state)
+      })
+      .catch((error) => {
+        console.log('error -> ', error)
       });
-      console.log('this state -> ', this.state)
 
-    })
-    .catch((error) => {
-      console.log('error -> ', error)
-    });
   }
 
   selectDate(e) {
