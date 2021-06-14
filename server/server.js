@@ -19,9 +19,16 @@ const {
   getSizeOfDb
 } = require('./dbms.js')
 
-app.get('/', (req, res) => {
-  console.log('entering bundle request')
+app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../public/index.html'))
+  // next()
+  // res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
+})
+app.get('/:id(\\d+)', (req, res, next) => {
+  console.log('entering id request')
+  res.sendFile(path.resolve(__dirname, '../public/index.html'))
+  // next()
+  // res.sendFile(path.resolve(__dirname, '../public/bundle.js'))
 })
 app.get('/bundle', (req, res) => {
   console.log('entering bundle request')
@@ -101,9 +108,7 @@ app.delete('/db/:id', (req, res) => {
     res.send(message)
   })
 })
-app.get('/testDb', (req, res) => {
-  console.log('entering testdb',id )
-
+app.get('/testDb/', (req, res) => {
   var randomNum = (min, max) => { return Math.floor(Math.random() * (max - min)) + min}
   var id = randomNum(1,10000000)
   console.log('entering testdb',id )

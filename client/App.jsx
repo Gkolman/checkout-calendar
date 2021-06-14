@@ -44,7 +44,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let productId = parseInt(window.location.pathname.split('locations/')[1]).toString()
+    let productId = parseInt(window.location.pathname.split('/')[1]).toString()
+    console.log('productId', productId)
     if (productId === 'NaN') return
       console.log('typeof(productId)', typeof(productId))
       console.log('productId', productId)
