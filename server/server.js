@@ -36,22 +36,22 @@ app.get('/bundle', (req, res) => {
 })
 
 
-// app.get('/checkoutInformation/:productId', (req, res) => {
-//   // send new data here
-//   var id = req.params.productId
-//   getDataFromDbWithId(id)
-//   .then((data) => {
-//     data = data[0].dataValues
-//     data.listingId = data.id
-//     console.log('data from get request -> ', data)
-//     res.send(data)
-//   })
-//   .catch((error) => {
-//     console.log('db: error from get request -> ', error)
-//     var message = `could not get item with ${id} -> ${error}`
-//     res.send(message)
-//   })
-// })
+app.get('/checkoutInformation/:productId', (req, res) => {
+  // send new data here
+  var id = req.params.productId
+  getDataFromDbWithId(id)
+  .then((data) => {
+    data = data[0].dataValues
+    data.listingId = data.id
+    console.log('data from get request -> ', data)
+    res.send(data)
+  })
+  .catch((error) => {
+    console.log('db: error from get request -> ', error)
+    var message = `could not get item with ${id} -> ${error}`
+    res.send(message)
+  })
+})
 
 app.get('/dbSize', (req, res) => {
   getSizeOfDb()
@@ -65,19 +65,19 @@ app.get('/dbSize', (req, res) => {
   })
 })
 
-// app.get('/db/:id', (req, res) => {
-//   var id = req.params.id;
-//   getDataFromDbWithId(id)
-//   .then((data) => {
-//     var data = data[0].dataValues
-//     data.listingId = data.id
-//     res.send(data)
-//   })
-//   .catch((error) => {
-//     var message = `could not get item with ${id} -> ${error}`
-//     res.send(message)
-//   })
-// })
+app.get('/db/:id', (req, res) => {
+  var id = req.params.id;
+  getDataFromDbWithId(id)
+  .then((data) => {
+    var data = data[0].dataValues
+    data.listingId = data.id
+    res.send(data)
+  })
+  .catch((error) => {
+    var message = `could not get item with ${id} -> ${error}`
+    res.send(message)
+  })
+})
 
 // app.put('/db/:id', (req, res) => {
 //   var id = req.params.id;

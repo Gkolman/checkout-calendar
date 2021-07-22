@@ -11,8 +11,8 @@ const dbPassword = process.env.DB_PASS
 // console.log('user -> ', user)
 // console.log('dbPassword -> ', dbPassword)
 
-const sequelize = new Sequelize(db, user, dbPassword, {
-  host: host,
+const sequelize = new Sequelize('checkoutcalender', 'postgres', dbPassword, {
+  host: 'localhost',
   dialect: 'postgres',
   logging: false,
   port: 5432
@@ -64,13 +64,13 @@ const LocationInfoInit =  (async() => {
 const getDataFromDbWithId = async (id) => {
   try {
     var data = await LocationInfo.findAll({ where: {id: id}})
-    // console.log(`data for id ${id} -> `,data)
+    console.log(`data for id ${id} -> `,data)
     return data
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 }
-// getDataFromDbWithId(1)
+getDataFromDbWithId('9999899')
 const insertIntoDb = async function() {
   const data = generateDataForLocation()
   try {
