@@ -1,41 +1,47 @@
-# AirBnB Clone by Team Phoenix
+# Checkout/pricing: micro-service
 
-> Our team developed an AirBnB clone that mirrors the front end functionality of airbnb.com. This is our first attempt at SOA(service oriented archritecture), and we broke up the listing page into multiple services and worked on each independently. The other related portions of this clone will be found in the related projects section. 
+### Description:
+    Enhanced throughput of service oriented component that contained 80 million+
+    records by 295% from 342 rps to 1009 rps through horizontal scaling. Incorporated
+    k6 load testing software in tandem with newRelic to identify “bottleneck” points
+    in infrastructure. Configured stress testing simulations to generate quantifiable
+    performance data to be measured and documented. Designed proxy server using nginx
+    to delegate network requests across multiple servers to reduce server loads.
+    Diagrammed component architecture using lucidchart.com and documented all findings/
+    improvements
 
-> I was specifically in charge of the listing description and calendar service
+### Tools used:
 
-## Related Projects
+#### Front-end:
+    React-hooks
 
-  - https://github.com/rpt26-fec-phoenix/Jason-photos
-  - https://github.com/rpt26-fec-phoenix/nelson-reviews
-  - https://github.com/rpt26-fec-phoenix/tai-service-navbar
-  - https://github.com/rpt26-fec-phoenix/max-more-places-to-stay
+#### Back-end:
+    Postgres, Sequelize, Nginx, Express
 
-## Table of Contents
+#### Testing:
+    K6, Artillery, New Relic, Lighthouse
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+#### Dev-tools:
+    Webpack, Ubuntu, Aws CLI, Javascript
 
-## Usage
+  ![](/images/sdc.gif)
 
-> Some usage instructions
+### How to start?:
+####  simply clone the mini-apps project copy and pasting this into your terminal and hitting enter
+    git clone https://github.com/rpt26-fec-tianwen/Reviews-component.git
 
-## Requirements
+#### the cd into the folder via
+    cd gage-checkout-calendar-component
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+#### install application dependices
+    npm install
+#### then start the application by running
+    npm start
 
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
+#### look at other reviews for items
+    change the id number in the url from  http://localhost:3000/1 to  http://localhost:3000/2 or 1-9999978
+### Improvements I would make;
+    * Implement more server side rendering
+    * impliment lazy loading
+    * convert to next.js project
 

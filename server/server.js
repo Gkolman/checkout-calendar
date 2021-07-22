@@ -160,4 +160,4 @@ app.get('/testDb/', (req, res) => {
 //   })
 // })
 
-app.listen(port, () => console.log(`server is running on port ${port}`))
+app.listen(port, () => console.log(`app is running on http://localhost:${port}/1`))
