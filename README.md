@@ -28,7 +28,7 @@
 
 ### How to start?:
 ####  simply clone the mini-apps project copy and pasting this into your terminal and hitting enter
-    git clone https://github.com/rpt26-fec-tianwen/Reviews-component.git
+    git clone https://github.com/Gkolman/checkout-calendar
 
 #### the cd into the folder via
     cd gage-checkout-calendar-component
